@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
               </AppText>
             </Box>
             <AppText variant="body2" sx={{ opacity: 0.8, maxWidth: 300 }}>
-              Explore leadership development, coaching, and communication support.
+              Connect with Tammy today and discover what&apos;s possible when learning meets leadership.
             </AppText>
           </Grid>
           
