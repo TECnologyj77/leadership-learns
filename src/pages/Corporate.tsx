@@ -12,6 +12,7 @@ import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
 import heroImg from '../assets/hero.png';
 import { captureContactClicked } from '../analytics/events';
+
 import { corporateTestimonials } from '../content/testimonials';
 
 const Corporate: React.FC = () => {
@@ -29,6 +30,7 @@ const Corporate: React.FC = () => {
                 Strategic leadership development and organizational systems for high-growth teams.
               </AppText>
               <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('corporate_hero')}>
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
                 Get In Touch
               </AppButton>
             </Grid>
