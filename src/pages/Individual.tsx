@@ -11,19 +11,7 @@ import TestimonialCard from '../components/marketing/TestimonialCard';
 import speechCoachingImg from '../assets/services/Speech Coaching.jpg';
 import studentDiscImg from '../assets/services/Student + Career DISC Assessment and Debrief.jpeg';
 import salesDiscImg from '../assets/services/Sales DISC Assessment and Debrief.jpg';
-
-const individualTestimonials = [
-  {
-    quote: "I enjoy working with my public speaking coach. I'm autistic and she understands how to help me become a better public speaker. It's my new job.",
-    author: "Austin Morales",
-    role: "Public Speaking Client"
-  },
-  {
-    quote: "Tammy is very supportive and she provides techniques that are easy to learn which helped me gain confidence. I enhanced my public speaking for work and learned how to respond to questions concisely.",
-    author: "Angela Jones",
-    role: "Professional Coaching Client"
-  }
-];
+import { individualTestimonials } from '../content/testimonials';
 
 const Individual: React.FC = () => {
   return (
