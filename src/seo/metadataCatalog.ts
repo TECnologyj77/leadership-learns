@@ -1,5 +1,3 @@
-import type { BlogPost } from '../types/blog';
-
 export interface RouteMetadataDefinition {
   title: string;
   description: string;
@@ -33,8 +31,8 @@ export const routeMetadata = {
     robots: 'index, follow',
   },
   blog: {
-    title: 'Leadership Learners Blog',
-    description: 'Browse the Leadership Learners blog for articles about leadership, systems, and neurodiversity.',
+    title: 'Blog Coming Soon | Leadership Learners',
+    description: 'Leadership Learners articles are being prepared while the publishing connection is finalized.',
     canonicalPath: '/blog',
     robots: 'noindex, follow',
   },
@@ -45,13 +43,6 @@ export const routeMetadata = {
     robots: 'noindex, follow',
   },
 } satisfies Record<string, RouteMetadataDefinition>;
-
-export const createBlogPostMetadata = (post: BlogPost): RouteMetadataDefinition => ({
-  title: `${post.title} | Leadership Learners`,
-  description: post.excerpt,
-  canonicalPath: `/blog/${post.slug}`,
-  robots: 'noindex, follow',
-});
 
 export const notFoundMetadata: RouteMetadataDefinition = {
   title: 'Page Not Found | Leadership Learners',

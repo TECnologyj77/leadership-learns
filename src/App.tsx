@@ -6,7 +6,6 @@ import Corporate from './pages/Corporate';
 import Individual from './pages/Individual';
 import About from './pages/About';
 import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import HomeStructuredData from './seo/HomeStructuredData';
@@ -63,7 +62,6 @@ const App: React.FC = () => {
             </>
           )}
         />
-        <Route path="/blog/:slug" element={<BlogPost />} />
         <Route
           path="/contact"
           element={(
