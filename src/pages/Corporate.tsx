@@ -11,19 +11,7 @@ import TestimonialCard from '../components/marketing/TestimonialCard';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
 import heroImg from '../assets/hero.png';
-
-const corporateTestimonials = [
-  {
-    quote: "I recommend Tammy Summers and the DISC assessment for any organization that seeks understanding on how to better understand staff (personnel).",
-    author: "Guillermo Salgado",
-    role: "Business Owner"
-  },
-  {
-    quote: "I had the pleasure of hiring Tammy Summers to conduct a DISC assessment for our real estate team. We gained invaluable insights to each other's personalities.",
-    author: "Gisela Sanchez",
-    role: "Business Owner"
-  }
-];
+import { corporateTestimonials } from '../content/testimonials';
 
 const Corporate: React.FC = () => {
   return (
