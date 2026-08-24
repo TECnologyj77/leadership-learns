@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { CheckCircleOutlined as CheckCircleOutlineIcon } from '@mui/icons-material';
+import { Grid } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
@@ -8,7 +8,6 @@ import AppButton from '../components/ui/AppButton';
 import ServiceCard from '../components/marketing/ServiceCard';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
-import leadershipGameImg from '../assets/services/In-Person Leadership Game.jpeg';
 import heroImg from '../assets/hero.png';
 
 const Corporate: React.FC = () => {
@@ -20,13 +19,13 @@ const Corporate: React.FC = () => {
           <Grid container spacing={6} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 7 }}>
               <AppText variant="h1" gutterBottom sx={{ fontWeight: 800 }}>
-                Scale Your Impact, Not Your Stress.
+                Leadership Training for Organizations
               </AppText>
               <AppText variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
-                Strategic leadership development and organizational systems for high-growth teams.
+                Group leadership training workshops and DISC-related services for organizations.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large">
-                Schedule a Consultation
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+                Contact Information
               </AppButton>
             </Grid>
           </Grid>
@@ -36,26 +35,11 @@ const Corporate: React.FC = () => {
       <AppSection variant="light">
         <AppContainer maxWidth="md">
           <AppText variant="h3" sx={{ textAlign: 'center', mb: 4, fontWeight: 700 }}>
-            Leadership is hard. Scaling is harder.
+            Leadership and Management Training
           </AppText>
           <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 6 }}>
-            As organizations grow, communication breaks down, decision-making slows, and founders often find themselves bogged down in operational chaos instead of leading.
+            Leadership Learners provides training for organizations in leadership and management.
           </AppText>
-          <Grid container spacing={3}>
-            {[
-              'Siloed communication across departments',
-              'Founder bottlenecking in decision-making',
-              'Lack of cultural alignment in remote teams',
-              'Inefficient meeting and feedback frameworks'
-            ].map((item) => (
-              <Grid size={{ xs: 12, sm: 6 }} key={item}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <CheckCircleOutlineIcon color="primary" />
-                  <AppText variant="body1">{item}</AppText>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
         </AppContainer>
       </AppSection>
 
@@ -63,90 +47,39 @@ const Corporate: React.FC = () => {
       <AppSection variant="white">
         <AppContainer>
           <AppText variant="h3" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
-            Our Corporate Solutions
+            Corporate Services
           </AppText>
           <Grid container spacing={4}>
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <ServiceCard 
                 title="Group Leadership Training"
-                description="Custom training programs for new managers and senior executives to build high-performance cultures."
+                description="Group leadership training workshops for organizations."
                 image={groupTrainingImg}
-                features={['Executive presence', 'Conflict resolution', 'Delegation frameworks']}
+                features={['Group leadership training']}
               />
             </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <ServiceCard 
                 title="Organizational DISC Assessments"
-                description="In-depth behavioral analysis for teams to improve communication and psychological safety."
+                description="DISC-related assessment services for organizations."
                 image={organizationDiscImg}
-                features={['Team dynamics mapping', 'Communication audits', 'Role alignment']}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <ServiceCard 
-                title="In-Person Leadership Game"
-                description="An interactive, experiential tool that helps teams identify strengths and areas for growth."
-                image={leadershipGameImg}
-                features={['Value alignment', 'Peer-to-peer feedback', 'Strategy sprints']}
+                features={['Behavioral DISC assessments']}
               />
             </Grid>
           </Grid>
         </AppContainer>
       </AppSection>
 
-      <AppSection variant="light">
-        <AppContainer>
-          <Grid container spacing={8} sx={{ alignItems: 'center' }}>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <Box 
-                sx={{ 
-                  bgcolor: 'primary.main', 
-                  height: 400, 
-                  borderRadius: 4,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white'
-                }}
-              >
-                <AppText variant="h6">Outcome Visualization</AppText>
-              </Box>
-            </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
-              <AppText variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-                Measurable results for your organization.
-              </AppText>
-              <List>
-                {[
-                  'Reduced founder dependency for day-to-day decisions.',
-                  'Faster project completion through clearer communication.',
-                  'Improved employee retention and engagement.',
-                  'Scalable culture that survives rapid growth.'
-                ].map((text, i) => (
-                  <ListItem key={i} disablePadding sx={{ mb: 2 }}>
-                    <ListItemIcon sx={{ minWidth: 40 }}>
-                      <CheckCircleOutlineIcon color="primary" />
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
-          </Grid>
-        </AppContainer>
-      </AppSection>
-
-      {/* Booking CTA */}
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" gutterBottom>
-            Ready to lead with clarity?
+            Explore Corporate Services
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Book a discovery call to discuss your organization's unique challenges.
+            Contact details and the inquiry process are being confirmed.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large">
-            Book a Call
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            Contact Information
           </AppButton>
         </AppContainer>
       </AppSection>
