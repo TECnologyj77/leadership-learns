@@ -15,7 +15,7 @@ const About: React.FC = () => {
         <AppContainer>
           <Grid container spacing={8} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <AppText variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+              <AppText component="h1" variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
                 Meet Tammy Summers
               </AppText>
               <AppText variant="h5" color="primary.main" gutterBottom sx={{ fontWeight: 600 }}>

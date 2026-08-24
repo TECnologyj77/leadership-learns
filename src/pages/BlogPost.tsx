@@ -1,21 +1,24 @@
 import React from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Box, Chip, Divider } from '@mui/material';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import { blogPosts } from '../lib/blog-data';
+import BlogPostMetadata from '../seo/BlogPostMetadata';
+import NotFound from './NotFound';
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
-    return <Navigate to="/blog" replace />;
+    return <NotFound />;
   }
 
   return (
     <>
+      <BlogPostMetadata post={post} />
       <AppSection variant="white">
         <AppContainer maxWidth="md">
           <Box sx={{ mb: 4 }}>
@@ -24,7 +27,7 @@ const BlogPost: React.FC = () => {
               color={post.category === 'Corporate' ? 'primary' : 'secondary'} 
               sx={{ mb: 2 }} 
             />
-            <AppText variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+            <AppText component="h1" variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
               {post.title}
             </AppText>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
