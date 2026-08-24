@@ -10,6 +10,7 @@ import AppContainer from '../components/ui/AppContainer';
 import CoachingPathCard from '../components/marketing/CoachingPathCard';
 import VideoPlayer from '../components/ui/VideoPlayer';
 import overallVideo from '../assets/Overall Video (9x16).mp4';
+import { captureContactClicked } from '../analytics/events';
 
 const Home: React.FC = () => {
   return (
@@ -93,7 +94,7 @@ const Home: React.FC = () => {
             Explore the corporate or individual coaching path that fits your needs.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/contact">
+            <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('home_final')}>
               Contact Information
             </AppButton>
           </Box>

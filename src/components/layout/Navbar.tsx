@@ -19,6 +19,7 @@ import AppButton from '../ui/AppButton';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
 import logo from '../../assets/logo.jpg';
+import { captureContactClicked } from '../../analytics/events';
 
 const NavLink = styled(RouterLink)(({ theme }) => ({
   textDecoration: 'none',
@@ -55,6 +56,11 @@ const Navbar: React.FC = () => {
     setMobileOpen(false);
   };
 
+  const handleMobileContactClick = () => {
+    captureContactClicked('navbar');
+    handleDrawerClose();
+  };
+
   const drawer = (
     <Box component="nav" aria-label="Mobile navigation" sx={{ textAlign: 'center', p: 2 }}>
       <Box 
@@ -86,7 +92,7 @@ const Navbar: React.FC = () => {
           <ListItemButton 
             component={RouterLink} 
             to="/contact"
-            onClick={handleDrawerClose}
+            onClick={handleMobileContactClick}
             sx={{ textAlign: 'center' }}
           >
             <ListItemText primary="Contact" />
@@ -143,6 +149,7 @@ const Navbar: React.FC = () => {
                 color="primary" 
                 component={RouterLink} 
                 to="/contact"
+                onClick={() => captureContactClicked('navbar')}
               >
                 Contact
               </AppButton>

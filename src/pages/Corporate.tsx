@@ -9,6 +9,7 @@ import ServiceCard from '../components/marketing/ServiceCard';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
 import heroImg from '../assets/hero.png';
+import { captureContactClicked } from '../analytics/events';
 
 const Corporate: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const Corporate: React.FC = () => {
               <AppText variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
                 Group leadership training workshops and DISC-related services for organizations.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('corporate_hero')}>
                 Contact Information
               </AppButton>
             </Grid>
@@ -78,7 +79,7 @@ const Corporate: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Contact details and the inquiry process are being confirmed.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('corporate_footer')}>
             Contact Information
           </AppButton>
         </AppContainer>

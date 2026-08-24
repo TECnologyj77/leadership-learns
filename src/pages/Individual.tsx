@@ -9,6 +9,7 @@ import ServiceCard from '../components/marketing/ServiceCard';
 import speechCoachingImg from '../assets/services/Speech Coaching.jpg';
 import studentDiscImg from '../assets/services/Student + Career DISC Assessment and Debrief.jpeg';
 import salesDiscImg from '../assets/services/Sales DISC Assessment and Debrief.jpg';
+import { captureContactClicked } from '../analytics/events';
 
 const Individual: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ const Individual: React.FC = () => {
               <AppText variant="h5" color="text.secondary" sx={{ mb: 4 }}>
                 Individual coaching for the neurodivergent community, including speech coaching, confidence building, and social-skills support.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('individual_hero')}>
                 Contact Information
               </AppButton>
             </Grid>
@@ -76,7 +77,7 @@ const Individual: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Contact details and the inquiry process are being confirmed.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('individual_footer')}>
             Contact Information
           </AppButton>
         </AppContainer>

@@ -6,6 +6,7 @@ import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
 import tammyImg from '../assets/tammy.jpg';
+import { captureContactClicked } from '../analytics/events';
 
 const About: React.FC = () => {
   return (
@@ -97,7 +98,7 @@ const About: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Explore the blog for leadership insights or view the latest contact information.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('about_footer')}>
             Contact Information
           </AppButton>
         </AppContainer>
