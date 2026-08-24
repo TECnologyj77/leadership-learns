@@ -7,9 +7,23 @@ import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
 import ServiceCard from '../components/marketing/ServiceCard';
+import TestimonialCard from '../components/marketing/TestimonialCard';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
 import heroImg from '../assets/hero.png';
+
+const corporateTestimonials = [
+  {
+    quote: "I recommend Tammy Summers and the DISC assessment for any organization that seeks understanding on how to better understand staff (personnel).",
+    author: "Guillermo Salgado",
+    role: "Business Owner"
+  },
+  {
+    quote: "I had the pleasure of hiring Tammy Summers to conduct a DISC assessment for our real estate team. We gained invaluable insights to each other's personalities.",
+    author: "Gisela Sanchez",
+    role: "Business Owner"
+  }
+];
 
 const Corporate: React.FC = () => {
   return (
@@ -124,6 +138,22 @@ const Corporate: React.FC = () => {
                 ))}
               </List>
             </Grid>
+          </Grid>
+        </AppContainer>
+      </AppSection>
+
+      {/* Testimonials */}
+      <AppSection variant="white">
+        <AppContainer>
+          <AppText variant="h3" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
+            Client Success
+          </AppText>
+          <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
+            {corporateTestimonials.map((testimonial) => (
+              <Grid size={{ xs: 12, md: 6 }} key={testimonial.author}>
+                <TestimonialCard {...testimonial} />
+              </Grid>
+            ))}
           </Grid>
         </AppContainer>
       </AppSection>
