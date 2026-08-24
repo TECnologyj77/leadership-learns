@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Paper } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
@@ -7,6 +7,7 @@ import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
 import tammyImg from '../assets/tammy.jpg';
 import { captureContactClicked } from '../analytics/events';
+import maxwellImg from '../assets/maxwell.jpg';
 
 const About: React.FC = () => {
   return (
@@ -20,11 +21,36 @@ const About: React.FC = () => {
                 Meet Tammy Summers
               </AppText>
               <AppText variant="h5" color="primary.main" gutterBottom sx={{ fontWeight: 600 }}>
-                Business Professor and Coach
+                Certified Leadership Coach &amp; Educator
               </AppText>
-              <AppText variant="body1" sx={{ mb: 2 }}>
-                Tammy serves organizations and individuals through leadership training workshops, speech coaching, and DISC-related services.
+              <AppText variant="body1" paragraph>
+                Tammy Summers brings a unique blend of leadership expertise, educational passion, and specialized communication training that creates meaningful change for individuals and organizations alike.
               </AppText>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: { xs: 'flex-start', sm: 'center' },
+                  gap: 3,
+                  mt: 4,
+                }}
+              >
+                <Box
+                  component="img"
+                  src={maxwellImg}
+                  alt="Tammy Summers with members of the John Maxwell Team"
+                  sx={{
+                    width: { xs: '100%', sm: 220 },
+                    maxWidth: 264,
+                    height: 'auto',
+                    borderRadius: 2,
+                    boxShadow: 2,
+                  }}
+                />
+                <AppText variant="body2" color="text.secondary" sx={{ maxWidth: 320 }}>
+                  Certified member of the John Maxwell Team, delivering world-class leadership curriculum.
+                </AppText>
+              </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <Box 
@@ -48,11 +74,11 @@ const About: React.FC = () => {
           <AppText variant="h3" gutterBottom sx={{ textAlign: 'center', fontWeight: 700 }}>
             Making Complex Concepts Accessible
           </AppText>
-          <AppText variant="body1" sx={{ mb: 2, fontSize: '1.1rem', textAlign: 'center' }}>
-            Tammy is a full-time business professor at Imperial Valley College.
+          <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem', textAlign: 'center' }}>
+            As a business law professor at Imperial Valley College, Tammy transformed how 35 students engage with a notoriously challenging subject.
           </AppText>
           <AppText variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-            Her work includes leadership and management training for organizations as well as coaching for the neurodivergent community.
+            &quot;Learning isn&apos;t passive—it&apos;s experiential, collaborative, and immediately applicable.&quot; This is the Tammy Summers approach. Her classroom buzzes with group discussions where students become teachers, sharing their unique perspectives and building collective knowledge.
           </AppText>
         </AppContainer>
       </AppSection>
@@ -66,25 +92,56 @@ const About: React.FC = () => {
                 <AppText variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
                   Empowering Every Voice
                 </AppText>
-                <AppText variant="body1" sx={{ mb: 2 }}>
-                  Tammy offers speech coaching, confidence building, and social-skills support for the neurodivergent community.
+                <AppText variant="body1" paragraph>
+                  Tammy&apos;s most profound work centers on neurodivergent individuals discovering and strengthening their voices. She believes deeply that every voice has power and deserves to be heard.
                 </AppText>
-                <AppText variant="body1" sx={{ mb: 2 }}>
-                  DISC-related services are also available for individuals, including sales and entrepreneur DISC.
+                <AppText variant="body1" paragraph>
+                  Using Pivotal Response Treatment (PRT), she targets the foundations of communication—motivation, self-initiation, self-management, and responding to multiple cues.
+                </AppText>
+                <AppText variant="body1">
+                  Tammy also helps master our &quot;second language&quot;—body language. She helps individuals master both verbal and non-verbal communication, building the confidence and clarity that transforms how they connect with the world.
                 </AppText>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
               <AppText variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-                Two Service Paths
+                Two Paths, One Philosophy.
               </AppText>
-              <AppText variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-                Leadership Learners serves clients in two areas: training for organizations in leadership and management, and individual coaching for the neurodivergent community.
+              <AppText variant="body1" color="text.secondary" paragraph>
+                Why do we serve both corporate teams and neurodivergent individuals? Because they are two sides of the same coin.
               </AppText>
               <AppText variant="body1" color="text.secondary">
-                Details about the public contact process are being confirmed.
+                Organizations are just collections of brains. If you don&apos;t understand how a single brain works, you can&apos;t build a system for a thousand brains. Our work bridges the gap between human potential and organizational reality.
               </AppText>
             </Grid>
+          </Grid>
+        </AppContainer>
+      </AppSection>
+
+      {/* Values */}
+      <AppSection variant="light">
+        <AppContainer>
+          <AppText variant="h3" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
+            Our Values
+          </AppText>
+          <Grid container spacing={4}>
+            {[
+              { title: 'Structured Clarity', desc: 'We believe structure is the foundation of freedom.' },
+              { title: 'Radical Empathy', desc: 'We start by understanding the "why" behind the friction.' },
+              { title: 'Evidence-Based', desc: 'Our methods are rooted in organizational psychology and neuroscience.' },
+              { title: 'Sustainable Growth', desc: 'If it causes burnout, it isn\'t a system—it\'s a liability.' },
+            ].map((value) => (
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={value.title}>
+                <Paper sx={{ p: 4, height: '100%', textAlign: 'center' }}>
+                  <AppText variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
+                    {value.title}
+                  </AppText>
+                  <AppText variant="body2" color="text.secondary">
+                    {value.desc}
+                  </AppText>
+                </Paper>
+              </Grid>
+            ))}
           </Grid>
         </AppContainer>
       </AppSection>
@@ -96,10 +153,10 @@ const About: React.FC = () => {
             Join the conversation.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Explore the blog for leadership insights or view the latest contact information.
+            Follow our blog for weekly insights or get in touch to start your journey.
           </AppText>
           <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('about_footer')}>
-            Contact Information
+            Get In Touch
           </AppButton>
         </AppContainer>
       </AppSection>
