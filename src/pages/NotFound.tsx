@@ -30,7 +30,7 @@ const NotFound: React.FC = () => {
             <AppButton component={RouterLink} to="/corporate" variant="outlined" color="primary">
               Corporate Services
             </AppButton>
-            <AppButton component={RouterLink} to="/individual" variant="outlined" color="secondary">
+            <AppButton component={RouterLink} to="/individual" variant="outlined" color="primary">
               Individual Coaching
             </AppButton>
           </Box>
