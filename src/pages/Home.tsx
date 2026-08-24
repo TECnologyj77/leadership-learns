@@ -9,7 +9,8 @@ import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import CoachingPathCard from '../components/marketing/CoachingPathCard';
 import VideoPlayer from '../components/ui/VideoPlayer';
-import overallVideo from '../assets/Overall Video (9x16).mp4';
+import homeVideo from '../assets/home-video-optimized.mp4';
+import homeVideoPoster from '../assets/home-video-poster.jpg';
 
 const Home: React.FC = () => {
   return (
@@ -51,7 +52,7 @@ const Home: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <VideoPlayer src={overallVideo} variant="vertical" />
+                <VideoPlayer src={homeVideo} poster={homeVideoPoster} variant="vertical" />
               </Box>
             </Grid>
           </Grid>
