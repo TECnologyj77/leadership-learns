@@ -4,6 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
 import logo from '../../assets/logo.jpg';
+import { captureContactClicked } from '../../analytics/events';
 
 const Footer: React.FC = () => {
   return (
@@ -44,7 +45,7 @@ const Footer: React.FC = () => {
             </AppText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Link component={RouterLink} to="/about" color="inherit" underline="hover" variant="body2">About Us</Link>
-              <Link component={RouterLink} to="/contact" color="inherit" underline="hover" variant="body2">Contact</Link>
+              <Link component={RouterLink} to="/contact" onClick={() => captureContactClicked('footer')} color="inherit" underline="hover" variant="body2">Contact</Link>
             </Box>
           </Grid>
 

@@ -11,6 +11,8 @@ import TestimonialCard from '../components/marketing/TestimonialCard';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
 import heroImg from '../assets/hero.png';
+import { captureContactClicked } from '../analytics/events';
+
 import { corporateTestimonials } from '../content/testimonials';
 
 const Corporate: React.FC = () => {
@@ -27,6 +29,7 @@ const Corporate: React.FC = () => {
               <AppText variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
                 Strategic leadership development and organizational systems for high-growth teams.
               </AppText>
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('corporate_hero')}>
               <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
                 Get In Touch
               </AppButton>
@@ -154,7 +157,7 @@ const Corporate: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch to discuss your organization's unique challenges.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('corporate_footer')}>
             Get In Touch
           </AppButton>
         </AppContainer>

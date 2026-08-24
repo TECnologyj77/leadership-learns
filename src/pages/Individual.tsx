@@ -11,6 +11,7 @@ import TestimonialCard from '../components/marketing/TestimonialCard';
 import speechCoachingImg from '../assets/services/Speech Coaching.jpg';
 import studentDiscImg from '../assets/services/Student + Career DISC Assessment and Debrief.jpeg';
 import salesDiscImg from '../assets/services/Sales DISC Assessment and Debrief.jpg';
+import { captureContactClicked } from '../analytics/events';
 import { individualTestimonials } from '../content/testimonials';
 
 const Individual: React.FC = () => {
@@ -28,7 +29,7 @@ const Individual: React.FC = () => {
               <AppText variant="h5" color="text.secondary" sx={{ mb: 4 }}>
                 1:1 Coaching for neurodivergent professionals and individuals. Discover and strengthen your voice through authentic connection.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('individual_hero')}>
                 Start Your Journey
               </AppButton>
             </Grid>
@@ -212,7 +213,7 @@ const Individual: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch to see if neurodivergent coaching is right for you.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" onClick={() => captureContactClicked('individual_footer')}>
             Get In Touch
           </AppButton>
         </AppContainer>
