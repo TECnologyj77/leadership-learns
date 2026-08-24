@@ -95,7 +95,7 @@ const About: React.FC = () => {
             Join the conversation.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Explore the blog for leadership insights or view the latest contact information.
+            Explore the available coaching paths or view the latest contact information.
           </AppText>
           <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
             Contact Information
