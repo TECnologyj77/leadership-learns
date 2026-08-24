@@ -23,16 +23,12 @@ const CoachingPathCard: React.FC<CoachingPathCardProps> = ({
 }) => {
   return (
     <Paper 
-      component={RouterLink as any} 
-      to={path} 
       sx={{ 
         p: 4,
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-        cursor: 'pointer',
-        textDecoration: 'none',
         '&:hover': {
           transform: 'translateY(-8px)',
           boxShadow: 10,
@@ -52,6 +48,8 @@ const CoachingPathCard: React.FC<CoachingPathCardProps> = ({
         variant="contained" 
         color={variant === 'corporate' ? 'primary' : 'secondary'}
         fullWidth
+        component={RouterLink}
+        to={path}
       >
         {buttonText}
       </AppButton>
