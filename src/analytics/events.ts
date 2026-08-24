@@ -16,7 +16,3 @@ export const captureContactClicked = (location: ContactClickLocation): void => {
     location,
   });
 };
-
-export const captureContactFormSubmitted = (): void => {
-  captureAnalyticsEvent('contact_form_submitted');
-};
