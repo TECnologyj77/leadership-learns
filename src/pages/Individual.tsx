@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Box, List, ListItem, ListItemIcon, ListItemText, Paper } from '@mui/material';
 import { CheckCircleOutlined as CheckCircleOutlineIcon, Psychology as PsychologyIcon, Speed as SpeedIcon, SelfImprovement as SelfImprovementIcon } from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
@@ -10,19 +11,7 @@ import TestimonialCard from '../components/marketing/TestimonialCard';
 import speechCoachingImg from '../assets/services/Speech Coaching.jpg';
 import studentDiscImg from '../assets/services/Student + Career DISC Assessment and Debrief.jpeg';
 import salesDiscImg from '../assets/services/Sales DISC Assessment and Debrief.jpg';
-
-const individualTestimonials = [
-  {
-    quote: "I enjoy working with my public speaking coach. I'm autistic and she understands how to help me become a better public speaker. It's my new job.",
-    author: "Austin Morales",
-    role: "Public Speaking Client"
-  },
-  {
-    quote: "Tammy is very supportive and she provides techniques that are easy to learn which helped me gain confidence. I enhanced my public speaking for work and learned how to respond to questions concisely.",
-    author: "Angela Jones",
-    role: "Professional Coaching Client"
-  }
-];
+import { individualTestimonials } from '../content/testimonials';
 
 const Individual: React.FC = () => {
   return (
@@ -39,7 +28,7 @@ const Individual: React.FC = () => {
               <AppText variant="h5" color="text.secondary" sx={{ mb: 4 }}>
                 1:1 Coaching for neurodivergent professionals and individuals. Discover and strengthen your voice through authentic connection.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large">
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
                 Start Your Journey
               </AppButton>
             </Grid>
@@ -124,8 +113,8 @@ const Individual: React.FC = () => {
             Client Success
           </AppText>
           <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
-            {individualTestimonials.map((testimonial, i) => (
-              <Grid size={{ xs: 12, md: 6 }} key={i}>
+            {individualTestimonials.map((testimonial) => (
+              <Grid size={{ xs: 12, md: 6 }} key={testimonial.author}>
                 <TestimonialCard {...testimonial} />
               </Grid>
             ))}
@@ -196,10 +185,10 @@ const Individual: React.FC = () => {
               </List>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <Box 
-                sx={{ 
-                  bgcolor: 'secondary.main', 
-                  height: 400, 
+              <Box
+                sx={{
+                  bgcolor: 'secondary.main',
+                  height: 400,
                   borderRadius: 4,
                   display: 'flex',
                   alignItems: 'center',
@@ -215,17 +204,16 @@ const Individual: React.FC = () => {
         </AppContainer>
       </AppSection>
 
-      {/* Booking CTA */}
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" gutterBottom>
             Reclaim your focus.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Schedule a free 20-minute consultation to see if neurodivergent coaching is right for you.
+            Get in touch to see if neurodivergent coaching is right for you.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large">
-            Check Availability
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            Get In Touch
           </AppButton>
         </AppContainer>
       </AppSection>

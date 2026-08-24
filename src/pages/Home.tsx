@@ -11,24 +11,7 @@ import CoachingPathCard from '../components/marketing/CoachingPathCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
 import VideoPlayer from '../components/ui/VideoPlayer';
 import overallVideo from '../assets/Overall Video (9x16).mp4';
-
-const testimonials = [
-  {
-    quote: "I recommend Tammy Summers and the DISC assessment for any organization that seeks understanding on how to better understand staff (personnel).",
-    author: "Guillermo Salgado",
-    role: "Business Owner"
-  },
-  {
-    quote: "I had the pleasure of hiring Tammy Summers to conduct a DISC assessment for our real estate team. We gained invaluable insights to each other's personalities.",
-    author: "Gisela Sanchez",
-    role: "Business Owner"
-  },
-  {
-    quote: "I enjoy working with my public speaking coach. I'm autistic and she understands how to help me become a better public speaker.",
-    author: "Austin Morales",
-    role: "Public Speaking Client"
-  }
-];
+import { homeTestimonials } from '../content/testimonials';
 
 const Home: React.FC = () => {
   return (
@@ -39,7 +22,7 @@ const Home: React.FC = () => {
           <Grid container spacing={8} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 7 }}>
               <AppText variant="h1" gutterBottom sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 800 }}>
-                Clarity and Growth for <br /> 
+                Clarity and Growth for <br />
                 <Box component="span" sx={{ color: 'primary.main' }}>Modern Leaders</Box>
               </AppText>
               <AppText variant="h5" color="text.secondary" sx={{ mb: 4, maxWidth: 600 }}>
@@ -92,14 +75,14 @@ const Home: React.FC = () => {
               </AppText>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <Box 
-                sx={{ 
-                  bgcolor: 'background.default', 
-                  height: 300, 
-                  borderRadius: 4, 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center' 
+              <Box
+                sx={{
+                  bgcolor: 'background.default',
+                  height: 300,
+                  borderRadius: 4,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <AppText variant="h6" color="text.secondary">Visual Illustration Placeholder</AppText>
@@ -123,7 +106,7 @@ const Home: React.FC = () => {
           </Box>
         </AppContainer>
       </AppSection>
-      
+
       {/* Testimonials */}
       <AppSection variant="light">
         <AppContainer>
@@ -131,8 +114,8 @@ const Home: React.FC = () => {
             Success Stories
           </AppText>
           <Grid container spacing={4}>
-            {testimonials.map((testimonial, i) => (
-              <Grid size={{ xs: 12, md: 4 }} key={i}>
+            {homeTestimonials.map((testimonial) => (
+              <Grid size={{ xs: 12, md: 4 }} key={testimonial.author}>
                 <TestimonialCard {...testimonial} />
               </Grid>
             ))}

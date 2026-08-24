@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
               </AppText>
             </Box>
             <AppText variant="body2" sx={{ opacity: 0.8, maxWidth: 300 }}>
-              Connect with Tammy today and discover what's possible when learning meets leadership.
+              Connect with Tammy today and discover what&apos;s possible when learning meets leadership.
             </AppText>
           </Grid>
           
@@ -48,18 +48,6 @@ const Footer: React.FC = () => {
             </Box>
           </Grid>
 
-          <Grid size={{ xs: 12, md: 4 }}>
-            <AppText variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-              Newsletter
-            </AppText>
-            <AppText variant="body2" sx={{ opacity: 0.8, mb: 2 }}>
-              Get leadership insights and executive function tips delivered to your inbox.
-            </AppText>
-            {/* Email capture placeholder */}
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              {/* Future: EmailCapture component */}
-            </Box>
-          </Grid>
         </Grid>
         
         <Divider sx={{ my: 4, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
@@ -68,10 +56,6 @@ const Footer: React.FC = () => {
           <AppText variant="body2" sx={{ opacity: 0.6 }}>
             © {new Date().getFullYear()} Leadership Learners. All rights reserved.
           </AppText>
-          <Box sx={{ display: 'flex', gap: 3 }}>
-            <Link href="#" color="inherit" underline="hover" variant="body2" sx={{ opacity: 0.6 }}>Privacy Policy</Link>
-            <Link href="#" color="inherit" underline="hover" variant="body2" sx={{ opacity: 0.6 }}>Terms of Service</Link>
-          </Box>
         </Box>
       </AppContainer>
     </Box>

@@ -1,15 +1,17 @@
 import React from 'react';
 import { Grid, Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { CheckCircleOutlined as CheckCircleOutlineIcon } from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
 import ServiceCard from '../components/marketing/ServiceCard';
+import TestimonialCard from '../components/marketing/TestimonialCard';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
-import leadershipGameImg from '../assets/services/In-Person Leadership Game.jpeg';
 import heroImg from '../assets/hero.png';
+import { corporateTestimonials } from '../content/testimonials';
 
 const Corporate: React.FC = () => {
   return (
@@ -25,8 +27,8 @@ const Corporate: React.FC = () => {
               <AppText variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
                 Strategic leadership development and organizational systems for high-growth teams.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large">
-                Schedule a Consultation
+              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+                Get In Touch
               </AppButton>
             </Grid>
           </Grid>
@@ -66,7 +68,7 @@ const Corporate: React.FC = () => {
             Our Corporate Solutions
           </AppText>
           <Grid container spacing={4}>
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <ServiceCard 
                 title="Group Leadership Training"
                 description="Custom training programs for new managers and senior executives to build high-performance cultures."
@@ -74,20 +76,12 @@ const Corporate: React.FC = () => {
                 features={['Executive presence', 'Conflict resolution', 'Delegation frameworks']}
               />
             </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <ServiceCard 
                 title="Organizational DISC Assessments"
                 description="In-depth behavioral analysis for teams to improve communication and psychological safety."
                 image={organizationDiscImg}
                 features={['Team dynamics mapping', 'Communication audits', 'Role alignment']}
-              />
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <ServiceCard 
-                title="In-Person Leadership Game"
-                description="An interactive, experiential tool that helps teams identify strengths and areas for growth."
-                image={leadershipGameImg}
-                features={['Value alignment', 'Peer-to-peer feedback', 'Strategy sprints']}
               />
             </Grid>
           </Grid>
@@ -98,10 +92,10 @@ const Corporate: React.FC = () => {
         <AppContainer>
           <Grid container spacing={8} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <Box 
-                sx={{ 
-                  bgcolor: 'primary.main', 
-                  height: 400, 
+              <Box
+                sx={{
+                  bgcolor: 'primary.main',
+                  height: 400,
                   borderRadius: 4,
                   display: 'flex',
                   alignItems: 'center',
@@ -136,17 +130,32 @@ const Corporate: React.FC = () => {
         </AppContainer>
       </AppSection>
 
-      {/* Booking CTA */}
+      {/* Testimonials */}
+      <AppSection variant="white">
+        <AppContainer>
+          <AppText variant="h3" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
+            Client Success
+          </AppText>
+          <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
+            {corporateTestimonials.map((testimonial) => (
+              <Grid size={{ xs: 12, md: 6 }} key={testimonial.author}>
+                <TestimonialCard {...testimonial} />
+              </Grid>
+            ))}
+          </Grid>
+        </AppContainer>
+      </AppSection>
+
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" gutterBottom>
             Ready to lead with clarity?
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Book a discovery call to discuss your organization's unique challenges.
+            Get in touch to discuss your organization's unique challenges.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large">
-            Book a Call
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            Get In Touch
           </AppButton>
         </AppContainer>
       </AppSection>

@@ -48,14 +48,19 @@ const Navbar: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setMobileOpen((open) => !open);
+  };
+
+  const handleDrawerClose = () => {
+    setMobileOpen(false);
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', p: 2 }}>
+    <Box component="nav" aria-label="Mobile navigation" sx={{ textAlign: 'center', p: 2 }}>
       <Box 
         component={RouterLink} 
-        to="/" 
+        to="/"
+        onClick={handleDrawerClose}
         sx={{ 
           display: 'flex', 
           justifyContent: 'center', 
@@ -70,6 +75,7 @@ const Navbar: React.FC = () => {
             <ListItemButton 
               component={RouterLink} 
               to={item.path}
+              onClick={handleDrawerClose}
               sx={{ textAlign: 'center' }}
             >
               <ListItemText primary={item.name} />
@@ -80,6 +86,7 @@ const Navbar: React.FC = () => {
           <ListItemButton 
             component={RouterLink} 
             to="/contact"
+            onClick={handleDrawerClose}
             sx={{ textAlign: 'center' }}
           >
             <ListItemText primary="Contact" />
@@ -137,13 +144,15 @@ const Navbar: React.FC = () => {
                 component={RouterLink} 
                 to="/contact"
               >
-                Get Started
+                Contact
               </AppButton>
             </Box>
           ) : (
             <IconButton
               color="inherit"
-              aria-label="open drawer"
+              aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-controls="mobile-navigation"
+              aria-expanded={mobileOpen}
               edge="start"
               onClick={handleDrawerToggle}
             >
@@ -156,7 +165,7 @@ const Navbar: React.FC = () => {
       <Drawer
         variant="temporary"
         open={mobileOpen}
-        onClose={handleDrawerToggle}
+        onClose={handleDrawerClose}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
@@ -165,7 +174,7 @@ const Navbar: React.FC = () => {
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
         }}
       >
-        {drawer}
+        <Box id="mobile-navigation">{drawer}</Box>
       </Drawer>
     </AppBar>
   );
