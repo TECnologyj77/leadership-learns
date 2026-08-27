@@ -10,7 +10,7 @@ const Contact: React.FC = () => {
       <AppSection variant="light">
         <AppContainer maxWidth="sm">
           <Box sx={{ mb: 8, textAlign: 'center' }}>
-            <AppText variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+            <AppText component="h1" variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
               Contact Leadership Learners
             </AppText>
             <AppText variant="h5" color="text.secondary">
