@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Box, Link, Divider } from '@mui/material';
+import { Grid, Box, Link, Divider, Stack } from '@mui/material';
+import { PhoneOutlined as PhoneOutlinedIcon, MailOutlined as MailOutlinedIcon } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
@@ -25,6 +26,28 @@ const Footer: React.FC = () => {
             <AppText variant="body2" sx={{ opacity: 0.8, maxWidth: 300 }}>
               Connect with Tammy today and discover what&apos;s possible when learning meets leadership.
             </AppText>
+            <Stack spacing={1} sx={{ mt: 2 }}>
+              <Link
+                href="tel:+18586036709"
+                color="inherit"
+                underline="hover"
+                variant="body2"
+                sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}
+              >
+                <PhoneOutlinedIcon fontSize="small" />
+                (858) 603-6709
+              </Link>
+              <Link
+                href="mailto:t.summers@leadershiplearners.org"
+                color="inherit"
+                underline="hover"
+                variant="body2"
+                sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, wordBreak: 'break-word' }}
+              >
+                <MailOutlinedIcon fontSize="small" />
+                t.summers@leadershiplearners.org
+              </Link>
+            </Stack>
           </Grid>
           
           <Grid size={{ xs: 6, md: 2 }}>
