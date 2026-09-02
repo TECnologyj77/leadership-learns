@@ -1,0 +1,15 @@
+# The production domain (leadershiplearners.com) is confirmed, but
+# Leadership Learners has not launched yet (confirmed with the project
+# owner). Every environment, including whatever is currently deployed as
+# "production," is blocked from crawling and indexing until that changes.
+#
+# Deploy previews and the staging branch get an additional layer of
+# protection at request time (see scripts/write-staging-headers.mjs), but
+# this file is the one switch that governs the real production deploy.
+#
+# To go live, replace everything below with:
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://leadershiplearners.com/sitemap.xml
+User-agent: *
+Disallow: /

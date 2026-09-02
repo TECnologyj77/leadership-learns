@@ -46,8 +46,9 @@ const Blog: React.FC = () => {
                     <AppButton 
                       component={RouterLink} 
                       to={`/blog/${post.slug}`}
-                      variant="text" 
+                      variant="text"
                       color="primary"
+                      aria-label={`Read more: ${post.title}`}
                     >
                       Read More
                     </AppButton>

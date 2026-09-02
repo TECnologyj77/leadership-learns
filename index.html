@@ -4,7 +4,83 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>leadership-learns-mock</title>
+
+    <!--
+      Static, non-JS-visible defaults for the homepage. src/components/seo/RouteSeo.tsx
+      overwrites all of this per route once React mounts (see its own comment for why
+      Organization/WebSite/Person stay static here instead of moving there).
+
+      SITE_URL below is the confirmed production domain (leadershiplearners.com), but the
+      site is not public yet — see src/lib/site-config.ts, the source of truth for the
+      React app. If the domain ever changes again, keep this file's SITE_URL literal and
+      scripts/generate-sitemap.mjs's copy in sync with site-config.ts.
+    -->
+    <title>Leadership Learners | Leadership Training & Coaching</title>
+    <meta
+      name="description"
+      content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://leadershiplearners.com/" />
+
+    <meta property="og:site_name" content="Leadership Learners" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Leadership Learners | Leadership Training & Coaching" />
+    <meta
+      property="og:description"
+      content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
+    />
+    <meta property="og:url" content="https://leadershiplearners.com/" />
+    <meta property="og:image" content="https://leadershiplearners.com/og-logo.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Leadership Learners | Leadership Training & Coaching" />
+    <meta
+      name="twitter:description"
+      content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
+    />
+    <meta name="twitter:image" content="https://leadershiplearners.com/og-logo.jpg" />
+
+    <!-- Organization, WebSite and Person facts, confirmed elsewhere on the site
+         (Footer/Contact for contact details, About for Tammy's role). Email keeps its
+         real leadershiplearners.org address — that's the confirmed contact address,
+         separate from the leadershiplearners.com site domain. No address, ratings, or
+         social profiles are included — none are confirmed. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://leadershiplearners.com/#organization",
+            "name": "Leadership Learners",
+            "url": "https://leadershiplearners.com/",
+            "logo": "https://leadershiplearners.com/og-logo.jpg",
+            "email": "t.summers@leadershiplearners.org",
+            "telephone": "+18586036709"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://leadershiplearners.com/#website",
+            "url": "https://leadershiplearners.com/",
+            "name": "Leadership Learners",
+            "publisher": { "@id": "https://leadershiplearners.com/#organization" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://leadershiplearners.com/#tammy-summers",
+            "name": "Tammy Summers",
+            "jobTitle": "Leadership Trainer, Coach & Business Professor",
+            "worksFor": [
+              { "@type": "Organization", "name": "Leadership Learners" },
+              { "@type": "CollegeOrUniversity", "name": "Imperial Valley College" }
+            ],
+            "image": "https://leadershiplearners.com/og-tammy.jpg",
+            "url": "https://leadershiplearners.com/about"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
