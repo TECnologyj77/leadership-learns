@@ -22,11 +22,11 @@ const Home: React.FC = () => {
           <Grid container spacing={8} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 7 }}>
               <AppText variant="h1" gutterBottom sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 800 }}>
-                Clarity and Growth for <br />
-                <Box component="span" sx={{ color: 'primary.main' }}>Modern Leaders</Box>
+                Clarity for Your Team. <br />
+                <Box component="span" sx={{ color: 'primary.main' }}>Confidence in Your Voice.</Box>
               </AppText>
               <AppText variant="h5" color="text.secondary" sx={{ mb: 4, maxWidth: 600 }}>
-                Specialized coaching to help you build structure, lead with authority, and align with your true identity.
+                Leadership Learners helps organizations develop stronger managers, and helps individuals &mdash; including neurodivergent adults &mdash; communicate with confidence. Training, coaching, and DISC assessments led by Tammy Summers.
               </AppText>
               <Grid container spacing={3} sx={{ mt: 2 }}>
                 <Grid size={{ xs: 12, sm: 6 }}>
@@ -127,10 +127,10 @@ const Home: React.FC = () => {
       <AppSection variant="white" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-            Ready to Start Your Journey?
+            Not sure where to start?
           </AppText>
           <AppText variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            Choose the path that fits your current needs and let's build something great together.
+            Read more about the path that fits your situation &mdash; or get in touch and tell Tammy what you&apos;re working on.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/corporate">
@@ -138,6 +138,9 @@ const Home: React.FC = () => {
             </AppButton>
             <AppButton variant="outlined" color="secondary" size="large" component={RouterLink} to="/individual">
               Individual Path
+            </AppButton>
+            <AppButton variant="text" color="primary" size="large" component={RouterLink} to="/contact">
+              Get In Touch
             </AppButton>
           </Box>
         </AppContainer>

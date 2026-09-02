@@ -67,6 +67,21 @@ const About: React.FC = () => {
         </AppContainer>
       </AppSection>
 
+      {/* Authority: leadership track record */}
+      <AppSection variant="white">
+        <AppContainer maxWidth="md">
+          <AppText variant="h3" gutterBottom sx={{ textAlign: 'center', fontWeight: 700 }}>
+            A Leader Who Develops Leaders
+          </AppText>
+          <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem', textAlign: 'center' }}>
+            With over 45 talented professionals guided across the US and Philippines in the biotechnology sector, Tammy&apos;s leadership journey began in her Girl Scout days and has flourished into a career defined by one principle: helping others reach their full potential.
+          </AppText>
+          <AppText variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
+            Her track record speaks volumes&mdash;numerous team members promoted, careers launched, and talents discovered under her mentorship.
+          </AppText>
+        </AppContainer>
+      </AppSection>
+
       {/* Philosophy */}
       <AppSection variant="white">
         <AppContainer maxWidth="md">
@@ -152,11 +167,16 @@ const About: React.FC = () => {
             Join the conversation.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Follow our blog for weekly insights or get in touch to start your journey.
+            Read the blog for insights on leadership and neurodiversity, or get in touch to start a conversation.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-            Get In Touch
-          </AppButton>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              Get In Touch
+            </AppButton>
+            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
+              Read the Blog
+            </AppButton>
+          </Box>
         </AppContainer>
       </AppSection>
     </>

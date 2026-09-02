@@ -8,6 +8,7 @@ import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
 import ServiceCard from '../components/marketing/ServiceCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
+import ProcessSteps from '../components/marketing/ProcessSteps';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
 import heroImg from '../assets/hero.png';
@@ -146,6 +147,35 @@ const Corporate: React.FC = () => {
         </AppContainer>
       </AppSection>
 
+      {/* Plan: what working together looks like */}
+      <AppSection variant="light">
+        <AppContainer maxWidth="md">
+          <AppText variant="h3" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
+            How we start
+          </AppText>
+          <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 8 }}>
+            No lengthy onboarding. A conversation first, then work shaped around your organization.
+          </AppText>
+          <ProcessSteps
+            color="primary"
+            steps={[
+              {
+                title: 'Reach out',
+                description: 'Call or email Tammy and describe your team and where things are breaking down.',
+              },
+              {
+                title: 'Talk it through',
+                description: 'Tammy listens first, then suggests which service fits the problem you actually have.',
+              },
+              {
+                title: 'Begin the work',
+                description: 'Group leadership training, a workshop, or DISC assessments, matched to your organization.',
+              },
+            ]}
+          />
+        </AppContainer>
+      </AppSection>
+
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" gutterBottom>
@@ -154,9 +184,14 @@ const Corporate: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch to discuss your organization's unique challenges.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-            Get In Touch
-          </AppButton>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              Get In Touch
+            </AppButton>
+            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
+              Read the Blog
+            </AppButton>
+          </Box>
         </AppContainer>
       </AppSection>
     </>

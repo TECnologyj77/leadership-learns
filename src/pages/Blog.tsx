@@ -58,6 +58,20 @@ const Blog: React.FC = () => {
           </Grid>
         </AppContainer>
       </AppSection>
+
+      <AppSection variant="dark" sx={{ textAlign: 'center' }}>
+        <AppContainer maxWidth="sm">
+          <AppText variant="h3" gutterBottom>
+            Have a question of your own?
+          </AppText>
+          <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
+            Get in touch and tell Tammy what you or your team are working on.
+          </AppText>
+          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            Get In Touch
+          </AppButton>
+        </AppContainer>
+      </AppSection>
     </>
   );
 };

@@ -8,6 +8,7 @@ import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
 import ServiceCard from '../components/marketing/ServiceCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
+import ProcessSteps from '../components/marketing/ProcessSteps';
 import speechCoachingImg from '../assets/services/Speech Coaching.jpg';
 import studentDiscImg from '../assets/services/Student + Career DISC Assessment and Debrief.jpeg';
 import salesDiscImg from '../assets/services/Sales DISC Assessment and Debrief.jpg';
@@ -29,7 +30,7 @@ const Individual: React.FC = () => {
                 1:1 Coaching for neurodivergent professionals and individuals. Discover and strengthen your voice through authentic connection.
               </AppText>
               <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-                Start Your Journey
+                Get In Touch
               </AppButton>
             </Grid>
           </Grid>
@@ -204,6 +205,35 @@ const Individual: React.FC = () => {
         </AppContainer>
       </AppSection>
 
+      {/* Plan: what working together looks like */}
+      <AppSection variant="white">
+        <AppContainer maxWidth="md">
+          <AppText variant="h3" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
+            What starting looks like
+          </AppText>
+          <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 8 }}>
+            No forms to fill in and nothing to prepare. You set the pace.
+          </AppText>
+          <ProcessSteps
+            color="secondary"
+            steps={[
+              {
+                title: 'Reach out',
+                description: 'Call or email Tammy. However you are most comfortable getting in touch is fine.',
+              },
+              {
+                title: 'Talk it through',
+                description: 'Share what you would like to work on — speaking up at work, conversations, interviews, or confidence.',
+              },
+              {
+                title: 'Begin the work',
+                description: '1:1 coaching built around your own interests and goals, not a fixed curriculum.',
+              },
+            ]}
+          />
+        </AppContainer>
+      </AppSection>
+
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" gutterBottom>
@@ -212,9 +242,14 @@ const Individual: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch to see if neurodivergent coaching is right for you.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-            Get In Touch
-          </AppButton>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              Get In Touch
+            </AppButton>
+            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
+              Read the Blog
+            </AppButton>
+          </Box>
         </AppContainer>
       </AppSection>
     </>
