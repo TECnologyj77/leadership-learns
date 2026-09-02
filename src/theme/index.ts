@@ -51,12 +51,24 @@ const theme = createTheme({
     borderRadius: 4,
   },
   components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          // One high-contrast focus ring that stays visible on white, light and navy sections.
+          '&.Mui-focusVisible': {
+            outline: '3px solid #A77F20',
+            outlineOffset: 2,
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
           padding: '10px 24px',
           borderRadius: 8,
           fontSize: '1rem',
+          minHeight: 44, // comfortable touch target on mobile
         },
       },
     },

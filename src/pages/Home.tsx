@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Paper } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import BusinessIcon from '@mui/icons-material/Business';
 import PersonIcon from '@mui/icons-material/Person';
@@ -9,47 +9,33 @@ import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import CoachingPathCard from '../components/marketing/CoachingPathCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
+import ProcessSteps from '../components/marketing/ProcessSteps';
 import VideoPlayer from '../components/ui/VideoPlayer';
 import overallVideo from '../assets/Overall Video (9x16).mp4';
+import tammyImg from '../assets/tammy.jpg';
 import { homeTestimonials } from '../content/testimonials';
 
 const Home: React.FC = () => {
   return (
     <>
-      {/* Hero with dual-path selection */}
+      {/* Hero: what this is, who it is for, and one clear next step */}
       <AppSection variant="light" sx={{ py: { xs: 8, md: 12 } }}>
         <AppContainer>
-          <Grid container spacing={8} sx={{ alignItems: 'center' }}>
+          <Grid container spacing={{ xs: 6, md: 8 }} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 7 }}>
               <AppText variant="h1" gutterBottom sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 800 }}>
                 Clarity for Your Team. <br />
                 <Box component="span" sx={{ color: 'primary.main' }}>Confidence in Your Voice.</Box>
               </AppText>
-              <AppText variant="h5" color="text.secondary" sx={{ mb: 4, maxWidth: 600 }}>
-                Leadership Learners helps organizations develop stronger managers, and helps individuals &mdash; including neurodivergent adults &mdash; communicate with confidence. Training, coaching, and DISC assessments led by Tammy Summers.
+              <AppText variant="h5" component="p" color="text.secondary" sx={{ mb: 3, maxWidth: 600 }}>
+                Leadership Learners helps organizations develop stronger managers, and helps individuals &mdash; including neurodivergent adults &mdash; communicate with confidence.
               </AppText>
-              <Grid container spacing={3} sx={{ mt: 2 }}>
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <CoachingPathCard 
-                    title="Corporate Leadership"
-                    description="Development for executives and teams. Scale your organization with structured clarity."
-                    path="/corporate"
-                    buttonText="Explore Corporate"
-                    icon={<BusinessIcon sx={{ fontSize: 40 }} />}
-                    variant="corporate"
-                  />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <CoachingPathCard 
-                    title="Individual Coaching"
-                    description="1:1 coaching for neurodivergent professionals. Build systems that work with your brain."
-                    path="/individual"
-                    buttonText="Explore Individual"
-                    icon={<PersonIcon sx={{ fontSize: 40 }} />}
-                    variant="individual"
-                  />
-                </Grid>
-              </Grid>
+              <AppText variant="body1" sx={{ mb: 4, maxWidth: 600, fontWeight: 600 }}>
+                Training, coaching, and DISC assessments led by Tammy Summers.
+              </AppText>
+              <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/contact">
+                Contact Tammy
+              </AppButton>
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -60,33 +46,113 @@ const Home: React.FC = () => {
         </AppContainer>
       </AppSection>
 
+      {/* Path selection: the two audiences, side by side */}
       <AppSection variant="white">
         <AppContainer>
-          <Grid container spacing={8} sx={{ alignItems: 'center' }}>
+          <Box sx={{ textAlign: 'center', mb: { xs: 5, md: 8 }, maxWidth: 720, mx: 'auto' }}>
+            <AppText variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+              Which path fits you?
+            </AppText>
+            <AppText variant="body1" color="text.secondary">
+              Two ways to work with Tammy. Choose the one that sounds like your situation.
+            </AppText>
+          </Box>
+          <Grid container spacing={4} sx={{ alignItems: 'stretch' }}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <AppText variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
-                Stop feeling overwhelmed by complex systems.
-              </AppText>
-              <AppText variant="body1" color="text.secondary" paragraph>
-                Whether you're managing a global team or trying to manage your own executive function, the root cause of friction is often a lack of clear systems.
-              </AppText>
-              <AppText variant="body1" color="text.secondary">
-                We bridge the gap between where you are and where you want to be using evidence-based coaching and organizational psychology.
-              </AppText>
+              <CoachingPathCard
+                audience="For organizations & teams"
+                title="Corporate Leadership"
+                description="Development for executives and teams. Scale your organization with structured clarity."
+                items={['Group Leadership Training', 'Organizational DISC Assessments']}
+                path="/corporate"
+                buttonText="Explore Corporate"
+                icon={<BusinessIcon sx={{ fontSize: 40 }} />}
+                variant="corporate"
+              />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
+              <CoachingPathCard
+                audience="For individuals & neurodivergent professionals"
+                title="Individual Coaching"
+                description="1:1 coaching for neurodivergent professionals and individuals. Strengthen your voice, your confidence, and your everyday communication."
+                items={['Speech Coaching', 'Student & Career DISC', 'Sales & Entrepreneur DISC']}
+                path="/individual"
+                buttonText="Explore Individual"
+                icon={<PersonIcon sx={{ fontSize: 40 }} />}
+                variant="individual"
+              />
+            </Grid>
+          </Grid>
+        </AppContainer>
+      </AppSection>
+
+      {/* Problem, framed for each audience */}
+      <AppSection variant="light">
+        <AppContainer maxWidth="md">
+          <Box sx={{ textAlign: 'center', mb: { xs: 5, md: 8 } }}>
+            <AppText variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+              Most friction starts with communication.
+            </AppText>
+            <AppText variant="body1" color="text.secondary">
+              Whether you are leading a team or working to be heard in one, the same thing tends to be in the way: people not understanding each other, and not knowing how to fix it.
+            </AppText>
+          </Box>
+          <Grid container spacing={4}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Paper sx={{ p: 4, height: '100%', borderLeft: '4px solid', borderLeftColor: 'primary.main' }}>
+                <AppText variant="overline" component="p" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                  In organizations
+                </AppText>
+                <AppText variant="body1">
+                  As organizations grow, communication breaks down, decision-making slows, and founders often find themselves bogged down in operational chaos instead of leading.
+                </AppText>
+              </Paper>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Paper sx={{ p: 4, height: '100%', borderLeft: '4px solid', borderLeftColor: 'secondary.main' }}>
+                <AppText variant="overline" component="p" sx={{ color: 'secondary.dark', fontWeight: 700 }}>
+                  For individuals
+                </AppText>
+                <AppText variant="body1">
+                  You have brilliant ideas but struggle to vocalize them in meetings, and public speaking feels like an insurmountable wall between you and your career goals.
+                </AppText>
+              </Paper>
+            </Grid>
+          </Grid>
+        </AppContainer>
+      </AppSection>
+
+      {/* Guide: Tammy, before the visitor is asked to act */}
+      <AppSection variant="white">
+        <AppContainer>
+          <Grid container spacing={{ xs: 5, md: 8 }} sx={{ alignItems: 'center' }}>
+            <Grid size={{ xs: 12, md: 5 }}>
               <Box
-                sx={{
-                  bgcolor: 'background.default',
-                  height: 300,
-                  borderRadius: 4,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                <AppText variant="h6" color="text.secondary">Visual Illustration Placeholder</AppText>
-              </Box>
+                component="img"
+                src={tammyImg}
+                alt="Tammy Summers, leadership trainer and coach"
+                sx={{ width: '100%', borderRadius: 4, boxShadow: 4, display: 'block' }}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 7 }}>
+              <AppText variant="overline" component="p" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.08em' }}>
+                Your guide
+              </AppText>
+              <AppText variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+                Meet Tammy Summers
+              </AppText>
+              <AppText variant="h6" component="p" color="primary.main" gutterBottom sx={{ fontWeight: 600 }}>
+                Leadership Trainer, Coach &amp; Business Professor
+              </AppText>
+              <AppText variant="body1" paragraph>
+                Tammy Summers brings a unique blend of leadership expertise, educational passion, and specialized communication training that creates meaningful change for individuals and organizations alike.
+              </AppText>
+              <AppText variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+                Whether you need facilitation for your team, specialized training for working with children and adults with autism, or someone who can make any subject engaging and actionable, Tammy delivers results through authentic connection and proven methodology.
+              </AppText>
+              <AppButton variant="outlined" color="primary" size="large" component={RouterLink} to="/about">
+                Meet Tammy
+              </AppButton>
             </Grid>
           </Grid>
         </AppContainer>
@@ -110,8 +176,11 @@ const Home: React.FC = () => {
       {/* Testimonials */}
       <AppSection variant="light">
         <AppContainer>
-          <AppText variant="h3" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
+          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
             Success Stories
+          </AppText>
+          <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: { xs: 5, md: 8 } }}>
+            Business owners and individual clients, in their own words.
           </AppText>
           <Grid container spacing={4}>
             {homeTestimonials.map((testimonial) => (
@@ -123,24 +192,50 @@ const Home: React.FC = () => {
         </AppContainer>
       </AppSection>
 
-      {/* Final CTA section */}
-      <AppSection variant="white" sx={{ textAlign: 'center' }}>
+      {/* Plan: what happens after reaching out */}
+      <AppSection variant="white">
+        <AppContainer maxWidth="md">
+          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
+            How working with Tammy starts
+          </AppText>
+          <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: { xs: 5, md: 8 } }}>
+            The same first step for both paths: a conversation, then work shaped around you.
+          </AppText>
+          <ProcessSteps
+            color="primary"
+            steps={[
+              {
+                title: 'Reach out',
+                description: 'Call or email Tammy and describe what you or your team are working on.',
+              },
+              {
+                title: 'Talk it through',
+                description: 'Tammy listens first, then suggests which service fits the problem you actually have.',
+              },
+              {
+                title: 'Begin the work',
+                description: 'Corporate training and DISC assessments, or 1:1 coaching built around your goals.',
+              },
+            ]}
+          />
+        </AppContainer>
+      </AppSection>
+
+      {/* Final CTA */}
+      <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
-          <AppText variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
+          <AppText variant="h3" component="h2" gutterBottom>
             Not sure where to start?
           </AppText>
-          <AppText variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            Read more about the path that fits your situation &mdash; or get in touch and tell Tammy what you&apos;re working on.
+          <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
+            Tell Tammy what you or your team are working on, and she will suggest the path that fits.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/corporate">
-              Corporate Path
+            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              Contact Tammy
             </AppButton>
-            <AppButton variant="outlined" color="secondary" size="large" component={RouterLink} to="/individual">
-              Individual Path
-            </AppButton>
-            <AppButton variant="text" color="primary" size="large" component={RouterLink} to="/contact">
-              Get In Touch
+            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
+              Read the Blog
             </AppButton>
           </Box>
         </AppContainer>

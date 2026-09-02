@@ -37,7 +37,7 @@ const ProcessSteps: React.FC<ProcessStepsProps> = ({ steps, color = 'primary' })
                 {index + 1}
               </AppText>
             </Box>
-            <AppText variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
+            <AppText variant="h6" component="h3" gutterBottom sx={{ fontWeight: 700 }}>
               {step.title}
             </AppText>
             <AppText variant="body2" color="text.secondary">

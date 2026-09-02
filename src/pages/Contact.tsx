@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Paper, Stack, Link } from '@mui/material';
+import { Box, Paper, Stack } from '@mui/material';
 import { PhoneOutlined as PhoneOutlinedIcon, MailOutlined as MailOutlinedIcon } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
@@ -17,42 +17,39 @@ const Contact: React.FC = () => {
       <AppSection variant="light">
         <AppContainer maxWidth="sm">
           <Box sx={{ mb: 8, textAlign: 'center' }}>
-            <AppText variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              Contact Leadership Learners
+            <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
+              Contact Tammy
             </AppText>
-            <AppText variant="h5" color="text.secondary">
+            <AppText variant="h5" component="p" color="text.secondary">
               Reach out to Tammy directly by phone or email to start a conversation.
             </AppText>
           </Box>
 
-          <Paper sx={{ p: 4, borderRadius: 3 }}>
-            <Stack spacing={3} sx={{ alignItems: 'flex-start' }}>
+          <Paper sx={{ p: { xs: 3, md: 4 }, borderRadius: 3 }}>
+            <Stack spacing={2}>
               <AppButton
                 variant="contained"
                 color="primary"
                 size="large"
+                fullWidth
                 href={PHONE_HREF}
                 startIcon={<PhoneOutlinedIcon />}
+                sx={{ justifyContent: 'flex-start', py: 2 }}
               >
                 Call {PHONE_DISPLAY}
               </AppButton>
 
-              <Box>
-                <AppText variant="overline" color="text.secondary">
-                  Email
-                </AppText>
-                <AppText variant="h6" sx={{ fontWeight: 700, wordBreak: 'break-word' }}>
-                  <Link
-                    href={`mailto:${EMAIL}`}
-                    color="primary.main"
-                    underline="hover"
-                    sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}
-                  >
-                    <MailOutlinedIcon fontSize="small" />
-                    {EMAIL}
-                  </Link>
-                </AppText>
-              </Box>
+              <AppButton
+                variant="outlined"
+                color="primary"
+                size="large"
+                fullWidth
+                href={`mailto:${EMAIL}`}
+                startIcon={<MailOutlinedIcon />}
+                sx={{ justifyContent: 'flex-start', py: 2, wordBreak: 'break-word', textAlign: 'left' }}
+              >
+                Email {EMAIL}
+              </AppButton>
 
               <AppText variant="body2" color="text.secondary">
                 For corporate leadership work or individual and neurodivergent support, email or call
@@ -61,9 +58,12 @@ const Contact: React.FC = () => {
             </Stack>
           </Paper>
 
-          <Box sx={{ mt: 6, textAlign: 'center' }}>
+          <Box sx={{ mt: 8, textAlign: 'center' }}>
+            <AppText variant="h5" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+              Want to learn more first?
+            </AppText>
             <AppText variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-              Want to learn more first? Explore how Tammy works with each type of client.
+              Explore how Tammy works with each type of client.
             </AppText>
             <Stack
               direction={{ xs: 'column', sm: 'row' }}
@@ -71,10 +71,10 @@ const Contact: React.FC = () => {
               sx={{ justifyContent: 'center' }}
             >
               <AppButton variant="contained" color="primary" component={RouterLink} to="/corporate">
-                Corporate Leadership
+                Explore Corporate
               </AppButton>
-              <AppButton variant="outlined" color="secondary" component={RouterLink} to="/individual">
-                Individual &amp; Neurodivergent Support
+              <AppButton variant="contained" color="secondary" component={RouterLink} to="/individual">
+                Explore Individual
               </AppButton>
             </Stack>
           </Box>

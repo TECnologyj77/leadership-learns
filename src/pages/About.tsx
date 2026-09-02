@@ -16,11 +16,11 @@ const About: React.FC = () => {
         <AppContainer>
           <Grid container spacing={8} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <AppText variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+              <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
                 Meet Tammy Summers
               </AppText>
-              <AppText variant="h5" color="primary.main" gutterBottom sx={{ fontWeight: 600 }}>
-                Certified Leadership Coach &amp; Educator
+              <AppText variant="h5" component="p" color="primary.main" gutterBottom sx={{ fontWeight: 600 }}>
+                Transforming Learning Through Authentic Connection
               </AppText>
               <AppText variant="body1" paragraph>
                 Tammy Summers brings a unique blend of leadership expertise, educational passion, and specialized communication training that creates meaningful change for individuals and organizations alike.
@@ -55,7 +55,7 @@ const About: React.FC = () => {
               <Box 
                 component="img" 
                 src={tammyImg} 
-                alt="Tammy Summers" 
+                alt="Tammy Summers, leadership trainer and coach" 
                 sx={{ 
                   width: '100%', 
                   borderRadius: 4, 
@@ -70,7 +70,7 @@ const About: React.FC = () => {
       {/* Authority: leadership track record */}
       <AppSection variant="white">
         <AppContainer maxWidth="md">
-          <AppText variant="h3" gutterBottom sx={{ textAlign: 'center', fontWeight: 700 }}>
+          <AppText variant="h3" component="h2" gutterBottom sx={{ textAlign: 'center', fontWeight: 700 }}>
             A Leader Who Develops Leaders
           </AppText>
           <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem', textAlign: 'center' }}>
@@ -83,13 +83,13 @@ const About: React.FC = () => {
       </AppSection>
 
       {/* Philosophy */}
-      <AppSection variant="white">
+      <AppSection variant="light">
         <AppContainer maxWidth="md">
-          <AppText variant="h3" gutterBottom sx={{ textAlign: 'center', fontWeight: 700 }}>
+          <AppText variant="h3" component="h2" gutterBottom sx={{ textAlign: 'center', fontWeight: 700 }}>
             Making Complex Concepts Accessible
           </AppText>
           <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem', textAlign: 'center' }}>
-            As a business law professor at Imperial Valley College, Tammy transformed how 35 students engage with a notoriously challenging subject.
+            Now a full-time business professor at Imperial Valley College, Tammy transformed how 35 students engage with business law, a notoriously challenging subject.
           </AppText>
           <AppText variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
             &quot;Learning isn&apos;t passive—it&apos;s experiential, collaborative, and immediately applicable.&quot; This is the Tammy Summers approach. Her classroom buzzes with group discussions where students become teachers, sharing their unique perspectives and building collective knowledge.
@@ -98,12 +98,12 @@ const About: React.FC = () => {
       </AppSection>
 
       {/* Specialized Focus */}
-      <AppSection variant="light">
+      <AppSection variant="white">
         <AppContainer>
           <Grid container spacing={8} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 2, md: 1 } }}>
               <Box sx={{ p: 4, bgcolor: 'background.paper', borderRadius: 4, boxShadow: 2 }}>
-                <AppText variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
+                <AppText variant="h5" component="h3" gutterBottom sx={{ fontWeight: 700 }}>
                   Empowering Every Voice
                 </AppText>
                 <AppText variant="body1" paragraph>
@@ -118,7 +118,7 @@ const About: React.FC = () => {
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
-              <AppText variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
+              <AppText variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
                 Two Paths, One Philosophy.
               </AppText>
               <AppText variant="body1" color="text.secondary" paragraph>
@@ -132,26 +132,39 @@ const About: React.FC = () => {
         </AppContainer>
       </AppSection>
 
-      {/* Values */}
-      <AppSection variant="light">
+       <AppSection variant="light">
         <AppContainer>
-          <AppText variant="h3" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
-            Our Values
+          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: { xs: 5, md: 8 }, fontWeight: 700 }}>
+            Mission, Vision &amp; Values
           </AppText>
-          <Grid container spacing={4}>
-            {[
-              { title: 'Structured Clarity', desc: 'We believe structure is the foundation of freedom.' },
-              { title: 'Radical Empathy', desc: 'We start by understanding the "why" behind the friction.' },
-              { title: 'Evidence-Based', desc: 'Our methods are rooted in organizational psychology and neuroscience.' },
-              { title: 'Sustainable Growth', desc: 'If it causes burnout, it isn\'t a system—it\'s a liability.' },
-            ].map((value) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={value.title}>
-                <Paper sx={{ p: 4, height: '100%', textAlign: 'center' }}>
-                  <AppText variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
-                    {value.title}
-                  </AppText>
-                  <AppText variant="body2" color="text.secondary">
-                    {value.desc}
+          <Grid container spacing={4} sx={{ mb: { xs: 5, md: 8 } }}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Paper sx={{ p: 4, height: '100%' }}>
+                <AppText variant="overline" component="p" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.08em' }}>
+                  Our mission
+                </AppText>
+                <AppText variant="body1">
+                  We provide innovative leadership and development tools that enhance team performance, build trust and create a customer-centric environment that drives business and individual success.
+                </AppText>
+              </Paper>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Paper sx={{ p: 4, height: '100%' }}>
+                <AppText variant="overline" component="p" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.08em' }}>
+                  Our vision
+                </AppText>
+                <AppText variant="body1">
+                  We inspire and equip individuals and teams to lead themselves and others, fostering a culture of continuous development.
+                </AppText>
+              </Paper>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
+            {['Trust', 'Transparency', 'Integrity'].map((value) => (
+              <Grid size={{ xs: 12, sm: 4 }} key={value}>
+                <Paper sx={{ p: 4, height: '100%', textAlign: 'center', borderTop: '4px solid', borderTopColor: 'secondary.main' }}>
+                  <AppText variant="h6" component="h3" sx={{ fontWeight: 700 }}>
+                    {value}
                   </AppText>
                 </Paper>
               </Grid>
@@ -163,7 +176,7 @@ const About: React.FC = () => {
       {/* CTA */}
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
-          <AppText variant="h3" gutterBottom>
+          <AppText variant="h3" component="h2" gutterBottom>
             Join the conversation.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
@@ -171,7 +184,7 @@ const About: React.FC = () => {
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-              Get In Touch
+              Contact Tammy
             </AppButton>
             <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
               Read the Blog

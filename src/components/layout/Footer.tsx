@@ -6,6 +6,9 @@ import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
 import logo from '../../assets/logo.jpg';
 
+// Comfortable tap area for the stacked footer links on touch screens.
+const footerLinkSx = { display: 'inline-flex', alignItems: 'center', minHeight: 36 } as const;
+
 const Footer: React.FC = () => {
   return (
     <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', pt: 8, pb: 4 }}>
@@ -19,7 +22,7 @@ const Footer: React.FC = () => {
                 alt="Leadership Learners" 
                 sx={{ height: 40, borderRadius: 1, bgcolor: 'white', p: 0.5 }} 
               />
-              <AppText variant="h6" sx={{ fontWeight: 700 }}>
+              <AppText variant="h6" component="p" sx={{ fontWeight: 700 }}>
                 Leadership Learners
               </AppText>
             </Box>
@@ -32,7 +35,7 @@ const Footer: React.FC = () => {
                 color="inherit"
                 underline="hover"
                 variant="body2"
-                sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}
+                sx={{ ...footerLinkSx, gap: 1 }}
               >
                 <PhoneOutlinedIcon fontSize="small" />
                 (858) 603-6709
@@ -42,7 +45,7 @@ const Footer: React.FC = () => {
                 color="inherit"
                 underline="hover"
                 variant="body2"
-                sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, wordBreak: 'break-word' }}
+                sx={{ ...footerLinkSx, gap: 1, wordBreak: 'break-word' }}
               >
                 <MailOutlinedIcon fontSize="small" />
                 t.summers@leadershiplearners.org
@@ -51,23 +54,23 @@ const Footer: React.FC = () => {
           </Grid>
           
           <Grid size={{ xs: 6, md: 2 }}>
-            <AppText variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+            <AppText variant="subtitle1" component="h2" sx={{ fontWeight: 600, mb: 2 }}>
               Solutions
             </AppText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Link component={RouterLink} to="/corporate" color="inherit" underline="hover" variant="body2">Corporate</Link>
-              <Link component={RouterLink} to="/individual" color="inherit" underline="hover" variant="body2">Individual</Link>
-              <Link component={RouterLink} to="/blog" color="inherit" underline="hover" variant="body2">Blog</Link>
+              <Link component={RouterLink} to="/corporate" color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>Corporate</Link>
+              <Link component={RouterLink} to="/individual" color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>Individual</Link>
+              <Link component={RouterLink} to="/blog" color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>Blog</Link>
             </Box>
           </Grid>
 
           <Grid size={{ xs: 6, md: 2 }}>
-            <AppText variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+            <AppText variant="subtitle1" component="h2" sx={{ fontWeight: 600, mb: 2 }}>
               Company
             </AppText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Link component={RouterLink} to="/about" color="inherit" underline="hover" variant="body2">About Us</Link>
-              <Link component={RouterLink} to="/contact" color="inherit" underline="hover" variant="body2">Contact</Link>
+              <Link component={RouterLink} to="/about" color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>About Us</Link>
+              <Link component={RouterLink} to="/contact" color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>Contact Tammy</Link>
             </Box>
           </Grid>
 

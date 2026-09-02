@@ -8,16 +8,18 @@ interface ServiceCardProps {
   features?: string[];
   icon?: React.ReactNode;
   image?: string;
+  /** Describes what the photo shows; falls back to the service name. */
+  imageAlt?: string;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, features, icon, image }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, features, icon, image, imageAlt }) => {
   return (
     <Paper sx={{ height: '100%', borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
       {image && (
         <Box 
           component="img" 
           src={image} 
-          alt={title} 
+          alt={imageAlt ?? title} 
           sx={{ 
             width: '100%', 
             height: 200, 
@@ -29,7 +31,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, features,
         <Box sx={{ color: 'primary.main', mb: 2 }}>
           {icon}
         </Box>
-        <AppText variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
+        <AppText variant="h5" component="h3" gutterBottom sx={{ fontWeight: 700 }}>
           {title}
         </AppText>
         <AppText variant="body2" color="text.secondary" sx={{ mb: 3 }}>

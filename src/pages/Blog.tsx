@@ -14,10 +14,10 @@ const Blog: React.FC = () => {
       <AppSection variant="light">
         <AppContainer>
           <Box sx={{ mb: 8, textAlign: 'center' }}>
-            <AppText variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+            <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
               The Clear Mind Blog
             </AppText>
-            <AppText variant="h5" color="text.secondary">
+            <AppText variant="h5" component="p" color="text.secondary">
               Insights on leadership, systems, and neurodiversity.
             </AppText>
           </Box>
@@ -33,7 +33,7 @@ const Blog: React.FC = () => {
                       color={post.category === 'Corporate' ? 'primary' : 'secondary'}
                     />
                   </Box>
-                  <AppText variant="h5" gutterBottom sx={{ fontWeight: 700, flexGrow: 1 }}>
+                  <AppText variant="h5" component="h2" gutterBottom sx={{ fontWeight: 700, flexGrow: 1 }}>
                     {post.title}
                   </AppText>
                   <AppText variant="body2" color="text.secondary" sx={{ mb: 3 }}>
@@ -61,14 +61,14 @@ const Blog: React.FC = () => {
 
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
-          <AppText variant="h3" gutterBottom>
+          <AppText variant="h3" component="h2" gutterBottom>
             Have a question of your own?
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch and tell Tammy what you or your team are working on.
           </AppText>
           <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-            Get In Touch
+            Contact Tammy
           </AppButton>
         </AppContainer>
       </AppSection>

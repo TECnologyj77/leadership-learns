@@ -26,8 +26,16 @@ const NavLink = styled(RouterLink)(({ theme }) => ({
   fontWeight: 500,
   fontSize: '0.95rem',
   transition: 'color 0.2s',
+  display: 'inline-flex',
+  alignItems: 'center',
+  minHeight: 44,
   '&:hover': {
     color: theme.palette.primary.main,
+  },
+  '&:focus-visible': {
+    outline: `3px solid ${theme.palette.secondary.main}`,
+    outlineOffset: 4,
+    borderRadius: 2,
   },
   '&.active': {
     color: theme.palette.primary.main,
@@ -82,17 +90,18 @@ const Navbar: React.FC = () => {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding>
-          <ListItemButton 
-            component={RouterLink} 
-            to="/contact"
-            onClick={handleDrawerClose}
-            sx={{ textAlign: 'center' }}
-          >
-            <ListItemText primary="Contact" />
-          </ListItemButton>
-        </ListItem>
       </List>
+      <AppButton
+        variant="contained"
+        color="primary"
+        fullWidth
+        component={RouterLink}
+        to="/contact"
+        onClick={handleDrawerClose}
+        sx={{ mt: 2 }}
+      >
+        Contact Tammy
+      </AppButton>
     </Box>
   );
 
@@ -120,6 +129,7 @@ const Navbar: React.FC = () => {
             />
             <AppText 
               variant="h6" 
+              component="span" 
               sx={{ 
                 fontWeight: 700, 
                 color: 'primary.main', 
@@ -144,7 +154,7 @@ const Navbar: React.FC = () => {
                 component={RouterLink} 
                 to="/contact"
               >
-                Contact
+                Contact Tammy
               </AppButton>
             </Box>
           ) : (
@@ -155,6 +165,7 @@ const Navbar: React.FC = () => {
               aria-expanded={mobileOpen}
               edge="start"
               onClick={handleDrawerToggle}
+              sx={{ width: 48, height: 48 }}
             >
               <MenuIcon />
             </IconButton>
