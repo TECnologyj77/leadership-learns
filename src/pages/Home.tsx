@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Paper } from '@mui/material';
+import { Grid, Box, Link, Paper } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import BusinessIcon from '@mui/icons-material/Business';
 import PersonIcon from '@mui/icons-material/Person';
@@ -24,11 +24,11 @@ const Home: React.FC = () => {
           <Grid container spacing={{ xs: 6, md: 8 }} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 7 }}>
               <AppText variant="h1" gutterBottom sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 800 }}>
-                Clarity for Your Team. <br />
-                <Box component="span" sx={{ color: 'primary.main' }}>Confidence in Your Voice.</Box>
+                Build a stronger team.{' '}
+                <Box component="span" sx={{ display: { md: 'block' }, color: 'primary.main' }}>Speak with more confidence.</Box>
               </AppText>
               <AppText variant="h5" component="p" color="text.secondary" sx={{ mb: 3, maxWidth: 600 }}>
-                Leadership Learners helps organizations develop stronger managers, and helps individuals &mdash; including neurodivergent adults &mdash; communicate with confidence.
+                Leadership training for managers and teams, plus one-to-one communication coaching for individuals, including neurodivergent adults.
               </AppText>
               <AppText variant="body1" sx={{ mb: 4, maxWidth: 600, fontWeight: 600 }}>
                 Training, coaching, and DISC assessments led by Tammy Summers.
@@ -36,6 +36,32 @@ const Home: React.FC = () => {
               <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/contact">
                 Contact Tammy
               </AppButton>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  columnGap: 3,
+                  rowGap: 1,
+                  mt: 2,
+                  '& a': {
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    minHeight: 44,
+                    py: 1,
+                    fontWeight: 600,
+                    textUnderlineOffset: '0.2em',
+                    '&:focus-visible': {
+                      outline: '2px solid',
+                      outlineColor: 'primary.main',
+                      outlineOffset: 4,
+                      borderRadius: 1,
+                    },
+                  },
+                }}
+              >
+                <Link component={RouterLink} to="/corporate">Develop my team</Link>
+                <Link component={RouterLink} to="/individual">Build my communication skills</Link>
+              </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -54,30 +80,30 @@ const Home: React.FC = () => {
               Which path fits you?
             </AppText>
             <AppText variant="body1" color="text.secondary">
-              Two ways to work with Tammy. Choose the one that sounds like your situation.
+              Choose support for your team or for your own communication goals.
             </AppText>
           </Box>
           <Grid container spacing={4} sx={{ alignItems: 'stretch' }}>
             <Grid size={{ xs: 12, md: 6 }}>
               <CoachingPathCard
-                audience="For organizations & teams"
-                title="Corporate Leadership"
-                description="Development for executives and teams. Scale your organization with structured clarity."
+                audience="For managers & teams"
+                title="Leadership Training"
+                description="Develop your leadership skills and help your team communicate more clearly through group training and DISC assessments."
                 items={['Group Leadership Training', 'Organizational DISC Assessments']}
                 path="/corporate"
-                buttonText="Explore Corporate"
+                buttonText="Explore leadership training"
                 icon={<BusinessIcon sx={{ fontSize: 40 }} />}
                 variant="corporate"
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <CoachingPathCard
-                audience="For individuals & neurodivergent professionals"
-                title="Individual Coaching"
-                description="1:1 coaching for neurodivergent professionals and individuals. Strengthen your voice, your confidence, and your everyday communication."
+                audience="For individuals"
+                title="Communication Coaching"
+                description="Build confidence in public speaking and everyday conversations with one-to-one coaching, including support for neurodivergent adults."
                 items={['Speech Coaching', 'Student & Career DISC', 'Sales & Entrepreneur DISC']}
                 path="/individual"
-                buttonText="Explore Individual"
+                buttonText="Explore individual coaching"
                 icon={<PersonIcon sx={{ fontSize: 40 }} />}
                 variant="individual"
               />
