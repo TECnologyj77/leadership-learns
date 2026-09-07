@@ -44,14 +44,14 @@ const Individual: React.FC = () => {
       <AppSection variant="white">
         <AppContainer maxWidth="md">
           <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
-            Do you struggle to connect?
+            When getting your message across feels difficult
           </AppText>
           <Grid container spacing={4}>
             {[
-              'You have brilliant ideas but struggle to vocalize them in meetings.',
-              'Social cues and body language feel like a "second language" you haven\'t mastered.',
-              'You feel like you are working 2x harder than others to be understood.',
-              'Public speaking feels like an insurmountable wall between you and your career goals.'
+              'Finding the words you want in meetings or everyday conversations.',
+              'Feeling nervous before a presentation or when you\'re put on the spot.',
+              'Leaving a conversation unsure whether you were understood.',
+              'Finding communication advice that fits the way you think and express yourself.'
             ].map((text, i) => (
               <Grid size={{ xs: 12, sm: 6 }} key={i}>
                 <Paper sx={{ p: 3, height: '100%', borderLeft: '4px solid', borderLeftColor: 'secondary.main' }}>
@@ -60,6 +60,9 @@ const Individual: React.FC = () => {
               </Grid>
             ))}
           </Grid>
+          <AppText variant="body1" sx={{ textAlign: 'center', mt: 4 }}>
+            You deserve support that helps you communicate in ways that work for you.
+          </AppText>
         </AppContainer>
       </AppSection>
 

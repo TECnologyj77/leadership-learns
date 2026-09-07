@@ -74,7 +74,7 @@ const Home: React.FC = () => {
 
       {/* Path selection: the two audiences, side by side */}
       <AppSection variant="white">
-        <AppContainer>
+        <AppContainer maxWidth="xl">
           <Box sx={{ textAlign: 'center', mb: { xs: 5, md: 8 }, maxWidth: 720, mx: 'auto' }}>
             <AppText variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
               Which path fits you?
@@ -114,23 +114,26 @@ const Home: React.FC = () => {
 
       {/* Problem, framed for each audience */}
       <AppSection variant="light">
-        <AppContainer maxWidth="md">
+        <AppContainer maxWidth="xl">
           <Box sx={{ textAlign: 'center', mb: { xs: 5, md: 8 } }}>
             <AppText variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              Most friction starts with communication.
+              It's frustrating when your message doesn't get through.
             </AppText>
             <AppText variant="body1" color="text.secondary">
-              Whether you are leading a team or working to be heard in one, the same thing tends to be in the way: people not understanding each other, and not knowing how to fix it.
+              Misunderstandings can leave teams stuck and individuals feeling unheard.
             </AppText>
           </Box>
           <Grid container spacing={4}>
             <Grid size={{ xs: 12, md: 6 }}>
               <Paper sx={{ p: 4, height: '100%', borderLeft: '4px solid', borderLeftColor: 'primary.main' }}>
                 <AppText variant="overline" component="p" sx={{ color: 'primary.main', fontWeight: 700 }}>
-                  In organizations
+                  For managers &amp; teams
                 </AppText>
                 <AppText variant="body1">
-                  As organizations grow, communication breaks down, decision-making slows, and founders often find themselves bogged down in operational chaos instead of leading.
+                  You want to lead well, but unclear expectations and difficult conversations can leave your team pulling in different directions. It's frustrating when you keep coming back to the same misunderstandings.
+                </AppText>
+                <AppText variant="body1" sx={{ mt: 2 }}>
+                  Your team deserves clear direction and the support to work well together.
                 </AppText>
               </Paper>
             </Grid>
@@ -140,7 +143,10 @@ const Home: React.FC = () => {
                   For individuals
                 </AppText>
                 <AppText variant="body1">
-                  You have brilliant ideas but struggle to vocalize them in meetings, and public speaking feels like an insurmountable wall between you and your career goals.
+                  Finding the words you want in a meeting, presentation, or everyday conversation can be difficult. Being misunderstood can leave you frustrated or hesitant to speak up.
+                </AppText>
+                <AppText variant="body1" sx={{ mt: 2 }}>
+                  You deserve support that helps you communicate in ways that work for you.
                 </AppText>
               </Paper>
             </Grid>
