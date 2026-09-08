@@ -4,7 +4,7 @@ import { PhoneOutlined as PhoneOutlinedIcon, MailOutlined as MailOutlinedIcon } 
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
-import logo from '../../assets/logo.jpg';
+import logo from '../../assets/logo.svg';
 
 // Comfortable tap area for the stacked footer links on touch screens.
 const footerLinkSx = { display: 'inline-flex', alignItems: 'center', minHeight: 36 } as const;
@@ -16,11 +16,12 @@ const Footer: React.FC = () => {
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1.5 }}>
-              <Box 
-                component="img" 
-                src={logo} 
-                alt="Leadership Learners" 
-                sx={{ height: 40, borderRadius: 1, bgcolor: 'white', p: 0.5 }} 
+              {/* The heading beside it names the brand, so the mark is decorative. */}
+              <Box
+                component="img"
+                src={logo}
+                alt=""
+                sx={{ height: 40 }}
               />
               <AppText variant="h6" component="p" sx={{ fontWeight: 700 }}>
                 Leadership Learners

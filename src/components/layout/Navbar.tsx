@@ -18,7 +18,7 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import AppButton from '../ui/AppButton';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
-import logo from '../../assets/logo.jpg';
+import logo from '../../assets/logo.svg';
 
 const NavLink = styled(RouterLink)(({ theme }) => ({
   textDecoration: 'none',
@@ -69,13 +69,23 @@ const Navbar: React.FC = () => {
         component={RouterLink} 
         to="/"
         onClick={handleDrawerClose}
-        sx={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          my: 2 
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1,
+          my: 2,
+          textDecoration: 'none'
         }}
       >
-        <Box component="img" src={logo} alt="Leadership Learners" sx={{ height: 40 }} />
+        <Box component="img" src={logo} alt="" sx={{ height: 32 }} />
+        <AppText
+          variant="subtitle1"
+          component="span"
+          sx={{ fontWeight: 700, color: 'primary.main', fontSize: '1rem', whiteSpace: 'nowrap' }}
+        >
+          Leadership Learners
+        </AppText>
       </Box>
       <List>
         {navItems.map((item) => (
@@ -109,23 +119,26 @@ const Navbar: React.FC = () => {
     <AppBar position="sticky" color="default" elevation={1} sx={{ bgcolor: 'background.paper' }}>
       <AppContainer>
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0 } }}>
-          <Box 
-            component={RouterLink} 
-            to="/" 
-            sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              textDecoration: 'none' 
+          <Box
+            component={RouterLink}
+            to="/"
+            aria-label="Leadership Learners"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none'
             }}
           >
-            <Box 
-              component="img" 
-              src={logo} 
-              alt="Leadership Learners" 
-              sx={{ 
+            {/* The wordmark beside it names this link; the aria-label above covers
+                the narrow widths where that text is hidden. */}
+            <Box
+              component="img"
+              src={logo}
+              alt=""
+              sx={{
                 height: { xs: 32, md: 40 },
                 mr: 1
-              }} 
+              }}
             />
             <AppText 
               variant="h6" 

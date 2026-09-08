@@ -6,7 +6,7 @@ import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
 import tammyImg from '../assets/tammy.jpg';
-import maxwellImg from '../assets/maxwell.jpg';
+import tammyWithMaxwellImg from '../assets/tammy_with_jon.png';
 
 const About: React.FC = () => {
   return (
@@ -25,31 +25,6 @@ const About: React.FC = () => {
               <AppText variant="body1" paragraph>
                 Tammy Summers brings a unique blend of leadership expertise, educational passion, and specialized communication training that creates meaningful change for individuals and organizations alike.
               </AppText>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: { xs: 'column', sm: 'row' },
-                  alignItems: { xs: 'flex-start', sm: 'center' },
-                  gap: 3,
-                  mt: 4,
-                }}
-              >
-                <Box
-                  component="img"
-                  src={maxwellImg}
-                  alt="Tammy Summers with members of the John Maxwell Team"
-                  sx={{
-                    width: { xs: '100%', sm: 220 },
-                    maxWidth: 264,
-                    height: 'auto',
-                    borderRadius: 2,
-                    boxShadow: 2,
-                  }}
-                />
-                <AppText variant="body2" color="text.secondary" sx={{ maxWidth: 320 }}>
-                  Certified member of the John Maxwell Team, delivering world-class leadership curriculum.
-                </AppText>
-              </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <Box 
@@ -69,16 +44,51 @@ const About: React.FC = () => {
 
       {/* Authority: leadership track record */}
       <AppSection variant="white">
-        <AppContainer maxWidth="md">
-          <AppText variant="h3" component="h2" gutterBottom sx={{ textAlign: 'center', fontWeight: 700 }}>
-            A Leader Who Develops Leaders
-          </AppText>
-          <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem', textAlign: 'center' }}>
-            With over 45 talented professionals guided across the US and Philippines in the biotechnology sector, Tammy&apos;s leadership journey began in her Girl Scout days and has flourished into a career defined by one principle: helping others reach their full potential.
-          </AppText>
-          <AppText variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
-            Her track record speaks volumes&mdash;numerous team members promoted, careers launched, and talents discovered under her mentorship.
-          </AppText>
+        <AppContainer>
+          <Grid container spacing={{ xs: 5, md: 8 }} sx={{ alignItems: 'center' }}>
+            <Grid size={{ xs: 12, md: 5 }} sx={{ order: { xs: 2, md: 1 } }}>
+              <Box
+                component="img"
+                src={tammyWithMaxwellImg}
+                alt="Tammy Summers with John C. Maxwell at the Maxwell Leadership Certified Team event in Orlando, Florida, March 2024"
+                sx={{
+                  display: 'block',
+                  width: '100%',
+                  maxWidth: { xs: 300, md: 380 },
+                  mx: 'auto',
+                  height: 'auto',
+                  borderRadius: 4,
+                  boxShadow: 4,
+                }}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 7 }} sx={{ order: { xs: 1, md: 2 } }}>
+              <AppText variant="h3" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+                A Leader Who Develops Leaders
+              </AppText>
+              <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem' }}>
+                With over 45 talented professionals guided across the US and Philippines in the biotechnology sector, Tammy&apos;s leadership journey began in her Girl Scout days and has flourished into a career defined by one principle: helping others reach their full potential.
+              </AppText>
+              <AppText variant="body1" paragraph sx={{ color: 'text.secondary' }}>
+                Her track record speaks volumes&mdash;numerous team members promoted, careers launched, and talents discovered under her mentorship.
+              </AppText>
+              <Box
+                sx={{
+                  mt: 4,
+                  pl: 3,
+                  borderLeft: '4px solid',
+                  borderColor: 'secondary.main',
+                }}
+              >
+                <AppText variant="overline" component="p" sx={{ color: 'primary.main', fontWeight: 700, letterSpacing: '0.08em' }}>
+                  Maxwell Leadership Certified Team
+                </AppText>
+                <AppText variant="body1" color="text.secondary">
+                  Pictured with John C. Maxwell in Orlando, March 2024. As a certified member of the Maxwell Leadership Team, Tammy delivers world-class leadership curriculum.
+                </AppText>
+              </Box>
+            </Grid>
+          </Grid>
         </AppContainer>
       </AppSection>
 

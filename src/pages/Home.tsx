@@ -10,10 +10,12 @@ import AppContainer from '../components/ui/AppContainer';
 import CoachingPathCard from '../components/marketing/CoachingPathCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
 import ProcessSteps from '../components/marketing/ProcessSteps';
+import ClientLogo from '../components/marketing/ClientLogo';
 import VideoPlayer from '../components/ui/VideoPlayer';
 import overallVideo from '../assets/Overall Video (9x16).mp4';
 import tammyImg from '../assets/tammy.jpg';
 import { homeTestimonials } from '../content/testimonials';
+import { homeClients } from '../content/clients';
 
 const Home: React.FC = () => {
   return (
@@ -199,11 +201,21 @@ const Home: React.FC = () => {
           <AppText variant="h3" gutterBottom sx={{ color: 'primary.contrastText', fontWeight: 700 }}>
             Trusted by Leaders & Business Owners.
           </AppText>
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 6, flexWrap: 'wrap', opacity: 0.9, mt: 4 }}>
-            <AppText variant="h5" sx={{ fontWeight: 600 }}>The Brasslamp</AppText>
-            <AppText variant="h5" sx={{ fontWeight: 600 }}>Imperial Valley College</AppText>
-            <AppText variant="h5" sx={{ fontWeight: 600 }}>Biotech Partners</AppText>
-            <AppText variant="h5" sx={{ fontWeight: 600 }}>Real Estate Dynamics</AppText>
+          <Box
+            sx={{
+              // Wrapping tiles size themselves to however many clients there are,
+              // and drop to fewer per row rather than overflowing on narrow screens.
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'stretch',
+              gap: { xs: 2.5, md: 4 },
+              mt: { xs: 4, md: 6 },
+            }}
+          >
+            {homeClients.map((client) => (
+              <ClientLogo key={client.name} client={client} />
+            ))}
           </Box>
         </AppContainer>
       </AppSection>
