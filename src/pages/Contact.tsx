@@ -52,8 +52,7 @@ const Contact: React.FC = () => {
               </AppButton>
 
               <AppText variant="body2" color="text.secondary">
-                For corporate leadership work or individual and neurodivergent support, email or call
-                and let Tammy know which fits your needs.
+                You can start by sharing whether you're looking for support for yourself or your team, and what you'd like to improve. Ask about the service, cost, and next steps.
               </AppText>
             </Stack>
           </Paper>

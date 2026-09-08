@@ -36,6 +36,9 @@ const Home: React.FC = () => {
               <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/contact">
                 Contact Tammy
               </AppButton>
+              <AppText variant="body2" color="text.secondary" sx={{ mt: 2, maxWidth: 600 }}>
+                Call or email to discuss your goals and the support you're looking for.
+              </AppText>
               <Box
                 sx={{
                   display: 'flex',
@@ -192,7 +195,7 @@ const Home: React.FC = () => {
 
       {/* Authority Section */}
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
-        <AppContainer maxWidth="md">
+        <AppContainer maxWidth="lg">
           <AppText variant="h3" gutterBottom sx={{ color: 'primary.contrastText', fontWeight: 700 }}>
             Trusted by Leaders & Business Owners.
           </AppText>
@@ -228,25 +231,25 @@ const Home: React.FC = () => {
       <AppSection variant="white">
         <AppContainer maxWidth="md">
           <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
-            How working with Tammy starts
+            Your next step starts with a conversation.
           </AppText>
           <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: { xs: 5, md: 8 } }}>
-            The same first step for both paths: a conversation, then work shaped around you.
+            Whether you're looking for support for yourself or your team, start by sharing what you'd like to improve.
           </AppText>
           <ProcessSteps
             color="primary"
             steps={[
               {
-                title: 'Reach out',
-                description: 'Call or email Tammy and describe what you or your team are working on.',
+                title: 'Tell Tammy your goal',
+                description: 'Call or email Tammy about what you or your team would like to improve.',
               },
               {
-                title: 'Talk it through',
-                description: 'Tammy listens first, then suggests which service fits the problem you actually have.',
+                title: 'Choose the right support',
+                description: 'Discuss which service fits your goals, and ask about the approach, cost, and next steps.',
               },
               {
-                title: 'Begin the work',
-                description: 'Corporate training and DISC assessments, or 1:1 coaching built around your goals.',
+                title: 'Begin working together',
+                description: 'Start the training, coaching, or DISC assessment you\'ve discussed.',
               },
             ]}
           />
@@ -257,17 +260,14 @@ const Home: React.FC = () => {
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" component="h2" gutterBottom>
-            Not sure where to start?
+            Take the next step toward clearer communication.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Tell Tammy what you or your team are working on, and she will suggest the path that fits.
+            Tell Tammy what you or your team would like to improve, and discuss which support fits your goals.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
               Contact Tammy
-            </AppButton>
-            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
-              Read the Blog
             </AppButton>
           </Box>
         </AppContainer>

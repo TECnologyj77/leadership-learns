@@ -158,17 +158,27 @@ const Navbar: React.FC = () => {
               </AppButton>
             </Box>
           ) : (
-            <IconButton
-              color="inherit"
-              aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-controls="mobile-navigation"
-              aria-expanded={mobileOpen}
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ width: 48, height: 48 }}
-            >
-              <MenuIcon />
-            </IconButton>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
+              <AppButton
+                variant="contained"
+                color="primary"
+                component={RouterLink}
+                to="/contact"
+                sx={{ minHeight: 44, px: 2, whiteSpace: 'nowrap' }}
+              >
+                Contact Tammy
+              </AppButton>
+              <IconButton
+                color="inherit"
+                aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-controls="mobile-navigation"
+                aria-expanded={mobileOpen}
+                onClick={handleDrawerToggle}
+                sx={{ width: 48, height: 48 }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
           )}
         </Toolbar>
       </AppContainer>

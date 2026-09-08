@@ -35,6 +35,9 @@ const Individual: React.FC = () => {
               <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
                 Contact Tammy
               </AppButton>
+              <AppText variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                Call or email to discuss your communication goals and coaching or assessment options.
+              </AppText>
             </Grid>
           </Grid>
         </AppContainer>
@@ -198,25 +201,25 @@ const Individual: React.FC = () => {
       <AppSection variant="white">
         <AppContainer maxWidth="md">
           <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
-            What starting looks like
+            How to get started with individual support
           </AppText>
           <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 8 }}>
-            No forms to fill in and nothing to prepare. You set the pace.
+            Start with a call or email about what you'd like to work on.
           </AppText>
           <ProcessSteps
             color="secondary"
             steps={[
               {
-                title: 'Reach out',
-                description: 'Call or email Tammy. However you are most comfortable getting in touch is fine.',
+                title: 'Tell Tammy your goal',
+                description: 'Call or email Tammy about your communication goals, such as speaking up, presentations, or everyday conversations.',
               },
               {
-                title: 'Talk it through',
-                description: 'Share what you would like to work on — speaking up at work, conversations, interviews, or confidence.',
+                title: 'Choose the right support',
+                description: 'Discuss whether coaching or a DISC assessment fits your goals. Ask about the approach, cost, and next steps.',
               },
               {
-                title: 'Begin the work',
-                description: '1:1 coaching built around your own interests and goals, not a fixed curriculum.',
+                title: 'Begin working together',
+                description: 'Start the coaching or assessment you\'ve discussed.',
               },
             ]}
           />
@@ -226,17 +229,14 @@ const Individual: React.FC = () => {
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" component="h2" gutterBottom>
-            Reclaim your focus.
+            Take the next step toward speaking with confidence.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Get in touch to see if neurodivergent coaching is right for you.
+            Contact Tammy to discuss public speaking, everyday communication, or understanding your communication style.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
               Contact Tammy
-            </AppButton>
-            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
-              Read the Blog
             </AppButton>
           </Box>
         </AppContainer>

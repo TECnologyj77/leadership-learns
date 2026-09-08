@@ -33,6 +33,9 @@ const Corporate: React.FC = () => {
               <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
                 Contact Tammy
               </AppButton>
+              <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
+                Call or email to discuss leadership training or DISC assessments for your team.
+              </AppText>
             </Grid>
           </Grid>
         </AppContainer>
@@ -136,25 +139,25 @@ const Corporate: React.FC = () => {
       <AppSection variant="light">
         <AppContainer maxWidth="md">
           <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
-            How we start
+            How to get started with your team
           </AppText>
           <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 8 }}>
-            No lengthy onboarding. A conversation first, then work shaped around your organization.
+            Start with a conversation about your team and what you'd like to improve.
           </AppText>
           <ProcessSteps
             color="primary"
             steps={[
               {
-                title: 'Reach out',
-                description: 'Call or email Tammy and describe your team and where things are breaking down.',
+                title: 'Tell Tammy your goal',
+                description: 'Call or email Tammy about your team and the leadership or communication skills you\'d like to develop.',
               },
               {
-                title: 'Talk it through',
-                description: 'Tammy listens first, then suggests which service fits the problem you actually have.',
+                title: 'Choose the right support',
+                description: 'Discuss whether group training, a workshop, or DISC assessments fit your team. Ask about the approach, cost, and next steps.',
               },
               {
-                title: 'Begin the work',
-                description: 'Group leadership training, a workshop, or DISC assessments, matched to your organization.',
+                title: 'Begin working together',
+                description: 'Start the training, workshop, or assessments you\'ve discussed.',
               },
             ]}
           />
@@ -164,17 +167,14 @@ const Corporate: React.FC = () => {
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="sm">
           <AppText variant="h3" component="h2" gutterBottom>
-            Ready to lead with clarity?
+            Take the next step in developing your team.
           </AppText>
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Get in touch to discuss your organization's unique challenges.
+            Contact Tammy to discuss leadership training, workshops, or DISC assessments for your team.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
               Contact Tammy
-            </AppButton>
-            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
-              Read the Blog
             </AppButton>
           </Box>
         </AppContainer>
