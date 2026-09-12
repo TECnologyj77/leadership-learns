@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   AppBar, 
   Toolbar, 
@@ -14,6 +14,7 @@ import {
   styled
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import { NavLink as RouterLink } from 'react-router-dom';
 import AppButton from '../ui/AppButton';
 import AppText from '../ui/AppText';
@@ -32,14 +33,11 @@ const NavLink = styled(RouterLink)(({ theme }) => ({
   '&:hover': {
     color: theme.palette.primary.main,
   },
-  '&:focus-visible': {
-    outline: `3px solid ${theme.palette.secondary.main}`,
-    outlineOffset: 4,
-    borderRadius: 2,
-  },
   '&.active': {
     color: theme.palette.primary.main,
     fontWeight: 700,
+    textDecoration: 'underline',
+    textUnderlineOffset: '0.3em',
   },
 }));
 
@@ -54,6 +52,17 @@ const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--site-header-height', `${header.offsetHeight}px`);
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen((open) => !open);
@@ -64,7 +73,12 @@ const Navbar: React.FC = () => {
   };
 
   const drawer = (
-    <Box component="nav" aria-label="Mobile navigation" sx={{ textAlign: 'center', p: 2 }}>
+    <Box component="nav" aria-label="Primary navigation" sx={{ textAlign: 'center', p: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <IconButton aria-label="Close navigation menu" onClick={handleDrawerClose} sx={{ width: 44, height: 44 }}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <Box 
         component={RouterLink} 
         to="/"
@@ -74,6 +88,7 @@ const Navbar: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
           gap: 1,
+          flexWrap: 'wrap',
           my: 2,
           textDecoration: 'none'
         }}
@@ -94,7 +109,17 @@ const Navbar: React.FC = () => {
               component={RouterLink} 
               to={item.path}
               onClick={handleDrawerClose}
-              sx={{ textAlign: 'center' }}
+              sx={{
+                textAlign: 'center',
+                '&.active': {
+                  bgcolor: 'action.selected',
+                  '& .MuiListItemText-primary': {
+                    fontWeight: 700,
+                    textDecoration: 'underline',
+                    textUnderlineOffset: '0.3em',
+                  },
+                },
+              }}
             >
               <ListItemText primary={item.name} />
             </ListItemButton>
@@ -116,7 +141,7 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <AppBar position="sticky" color="default" elevation={1} sx={{ bgcolor: 'background.paper' }}>
+    <AppBar ref={headerRef} component="header" position="sticky" color="default" elevation={1} sx={{ bgcolor: 'background.paper' }}>
       <AppContainer>
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0 } }}>
           <Box
@@ -155,7 +180,7 @@ const Navbar: React.FC = () => {
           </Box>
 
           {!isMobile ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <Box component="nav" aria-label="Primary navigation" sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               {navItems.map((item) => (
                 <NavLink key={item.name} to={item.path}>
                   {item.name}
@@ -184,7 +209,8 @@ const Navbar: React.FC = () => {
               <IconButton
                 color="inherit"
                 aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                aria-controls="mobile-navigation"
+                aria-controls={mobileOpen ? 'mobile-navigation' : undefined}
+                aria-haspopup="dialog"
                 aria-expanded={mobileOpen}
                 onClick={handleDrawerToggle}
                 sx={{ width: 48, height: 48 }}
@@ -196,20 +222,18 @@ const Navbar: React.FC = () => {
         </Toolbar>
       </AppContainer>
 
-      <Drawer
+      {isMobile && <Drawer
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerClose}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
+        slotProps={{ paper: { role: 'dialog', 'aria-modal': true, 'aria-label': 'Navigation menu' } }}
         sx={{
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
         }}
       >
         <Box id="mobile-navigation">{drawer}</Box>
-      </Drawer>
+      </Drawer>}
     </AppBar>
   );
 };

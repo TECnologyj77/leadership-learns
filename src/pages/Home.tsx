@@ -144,7 +144,7 @@ const Home: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
               <Paper sx={{ p: 4, height: '100%', borderLeft: '4px solid', borderLeftColor: 'secondary.main' }}>
-                <AppText variant="overline" component="p" sx={{ color: 'secondary.dark', fontWeight: 700 }}>
+                <AppText variant="overline" component="p" sx={{ color: 'gold.text', fontWeight: 700 }}>
                   For individuals
                 </AppText>
                 <AppText variant="body1">
@@ -198,7 +198,7 @@ const Home: React.FC = () => {
       {/* Authority Section */}
       <AppSection variant="dark" sx={{ textAlign: 'center' }}>
         <AppContainer maxWidth="lg">
-          <AppText variant="h3" gutterBottom sx={{ color: 'primary.contrastText', fontWeight: 700 }}>
+          <AppText variant="h3" component="h2" gutterBottom sx={{ color: 'primary.contrastText', fontWeight: 700 }}>
             Trusted by Leaders & Business Owners.
           </AppText>
           <Box

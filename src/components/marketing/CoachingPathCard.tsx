@@ -45,6 +45,7 @@ const CoachingPathCard: React.FC<CoachingPathCardProps> = ({
           transform: 'translateY(-8px)',
           boxShadow: 10,
         },
+        '@media (prefers-reduced-motion: reduce)': { '&:hover': { transform: 'none' } },
       }}
     >
       <Box sx={{ p: { xs: 3, md: 4 }, display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -54,7 +55,7 @@ const CoachingPathCard: React.FC<CoachingPathCardProps> = ({
         {audience && (
           <AppText
             variant="overline"
-            sx={{ color: `${accent}.dark`, fontWeight: 700, letterSpacing: '0.08em' }}
+            sx={{ color: accent === 'secondary' ? 'gold.text' : 'primary.dark', fontWeight: 700, letterSpacing: '0.08em' }}
           >
             {audience}
           </AppText>

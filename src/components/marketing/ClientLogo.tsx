@@ -59,6 +59,7 @@ const ClientLogo: React.FC<ClientLogoProps> = ({ client }) => {
         boxShadow: 2,
         transition: 'box-shadow 200ms ease, transform 200ms ease',
         '&:hover': { boxShadow: 6, transform: 'translateY(-2px)' },
+        '@media (prefers-reduced-motion: reduce)': { '&:hover': { transform: 'none' } },
       }}
     >
       {logo ? (

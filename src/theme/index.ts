@@ -1,13 +1,38 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    gold: { accent: string; text: string; hover: string; pressed: string };
+  }
+  interface PaletteOptions {
+    gold?: Palette['gold'];
+  }
+}
+
+// Accent gold works for fills, large text and icons. Use text gold on light
+// surfaces only; it does not have sufficient contrast against the brand navy.
+const gold = {
+  accent: '#A77F20',
+  text: '#745816',
+  hover: '#AD8526',
+  pressed: '#B58C2B',
+};
+const focusRing = {
+  outline: '3px solid #1E3A5F',
+  outlineOffset: 3,
+  boxShadow: '0 0 0 3px #FFFFFF',
+};
+
 const theme = createTheme({
   palette: {
+    gold,
     primary: {
       main: '#1E3A5F',
       contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#A77F20',
+      main: gold.accent,
+      dark: gold.text,
       contrastText: '#1C1C1C',
     },
     background: {
@@ -51,14 +76,26 @@ const theme = createTheme({
     borderRadius: 4,
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: { scrollPaddingTop: 'calc(var(--site-header-height, 64px) + 16px)' },
+        body: { overflowWrap: 'anywhere' },
+        ':where(a, button, video, summary, [tabindex]):focus-visible': focusRing,
+        '@media (prefers-reduced-motion: reduce)': {
+          '*, *::before, *::after': {
+            animationDuration: '0.01ms !important',
+            animationIterationCount: '1 !important',
+            transitionDuration: '0.01ms !important',
+            scrollBehavior: 'auto !important',
+          },
+        },
+      },
+    },
     MuiButtonBase: {
       styleOverrides: {
         root: {
-          // One high-contrast focus ring that stays visible on white, light and navy sections.
-          '&.Mui-focusVisible': {
-            outline: '3px solid #A77F20',
-            outlineOffset: 2,
-          },
+          // Two bands remain distinguishable on light, navy and gold surfaces.
+          '&.Mui-focusVisible': focusRing,
         },
       },
     },
@@ -69,6 +106,22 @@ const theme = createTheme({
           borderRadius: 8,
           fontSize: '1rem',
           minHeight: 44, // comfortable touch target on mobile
+          '&.MuiButton-containedSecondary': {
+            color: '#1C1C1C',
+            backgroundColor: gold.accent,
+            '&:hover': { backgroundColor: gold.hover },
+            '&:active': { backgroundColor: gold.pressed },
+          },
+          '&.MuiButton-outlinedSecondary, &.MuiButton-textSecondary': {
+            color: gold.text,
+            '&:hover': { backgroundColor: 'rgba(116, 88, 22, 0.06)' },
+            '&:active': { backgroundColor: 'rgba(116, 88, 22, 0.12)' },
+          },
+          '&.MuiButton-outlinedSecondary': { borderColor: gold.text },
+          '&.Mui-disabled': {
+            color: 'rgba(0, 0, 0, 0.26)',
+            '&.MuiButton-contained': { backgroundColor: 'rgba(0, 0, 0, 0.12)' },
+          },
         },
       },
     },

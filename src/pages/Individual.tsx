@@ -22,7 +22,7 @@ const Individual: React.FC = () => {
         <AppContainer>
           <Grid container spacing={6} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 7 }}>
-              <AppText variant="overline" component="p" sx={{ color: 'secondary.dark', fontWeight: 700, letterSpacing: '0.08em' }}>
+              <AppText variant="overline" component="p" sx={{ color: 'gold.text', fontWeight: 700, letterSpacing: '0.08em' }}>
                 For individuals & neurodivergent professionals
               </AppText>
               <AppText variant="h1" gutterBottom sx={{ color: 'secondary.main', fontWeight: 800 }}>
