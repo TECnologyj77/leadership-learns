@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build && node scripts/write-staging-headers.mjs"
+  publish = "dist"
+
+# Serve React Router paths from the SPA while leaving existing static assets intact.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+

@@ -5,6 +5,9 @@ node_modules/
 
 # Testing
 coverage/
+.artifacts/
+test-results/
+playwright-report/
 
 # Production
 dist/
@@ -45,3 +48,6 @@ Thumbs.db
 
 # Vite
 vite.config.ts.timestamp-*
+
+# Local Netlify state
+.netlify/
