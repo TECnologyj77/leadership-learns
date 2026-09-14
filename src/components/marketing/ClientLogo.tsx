@@ -3,10 +3,6 @@ import { Box } from '@mui/material';
 import AppText from '../ui/AppText';
 import type { Client, ClientMark } from '../../content/clients';
 
-/**
- * Placeholder marks drawn in `currentColor`, used until a client's real
- * artwork is supplied via the `logo` field in `content/clients.ts`.
- */
 const marks: Record<ClientMark, React.ReactNode> = {
   college: (
     <>
@@ -43,8 +39,6 @@ const ClientLogo: React.FC<ClientLogoProps> = ({ client }) => {
   return (
     <Box
       sx={{
-        // A white tile keeps supplied artwork legible on the navy section —
-        // most brand logos are drawn for a light background.
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

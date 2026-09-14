@@ -7,7 +7,6 @@ import AppContainer from '../ui/AppContainer';
 import logo from '../../assets/logo.svg';
 import { trackCta } from '../../lib/analytics';
 
-// Comfortable tap area for the stacked footer links on touch screens.
 const footerLinkSx = { display: 'inline-flex', alignItems: 'center', minHeight: 36 } as const;
 
 const Footer: React.FC = () => {
@@ -17,7 +16,6 @@ const Footer: React.FC = () => {
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1.5 }}>
-              {/* The heading beside it names the brand, so the mark is decorative. */}
               <Box
                 component="img"
                 src={logo}

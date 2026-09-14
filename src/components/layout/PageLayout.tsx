@@ -11,8 +11,6 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
   const { pathname } = useLocation();
 
-  // A CTA clicked at the bottom of a long page should land at the top of the
-  // next page, not halfway down it.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
