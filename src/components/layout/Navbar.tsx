@@ -127,6 +127,7 @@ const Navbar: React.FC = () => {
         ))}
       </List>
       <AppButton
+        analytics={{ id: 'nav_drawer_contact', location: 'mobile_drawer', intent: 'contact' }}
         variant="contained"
         color="primary"
         fullWidth
@@ -186,8 +187,9 @@ const Navbar: React.FC = () => {
                   {item.name}
                 </NavLink>
               ))}
-              <AppButton 
-                variant="contained" 
+              <AppButton
+                analytics={{ id: 'nav_desktop_contact', location: 'desktop_nav', intent: 'contact' }}
+                variant="contained"
                 color="primary" 
                 component={RouterLink} 
                 to="/contact"
@@ -198,6 +200,7 @@ const Navbar: React.FC = () => {
           ) : (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
               <AppButton
+                analytics={{ id: 'nav_mobile_contact', location: 'mobile_nav', intent: 'contact' }}
                 variant="contained"
                 color="primary"
                 component={RouterLink}

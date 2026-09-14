@@ -30,7 +30,7 @@ const Corporate: React.FC = () => {
               <AppText variant="h5" component="p" sx={{ mb: 4, opacity: 0.9 }}>
                 Strategic leadership development and organizational systems for high-growth teams.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              <AppButton analytics={{ id: 'corporate_hero_contact', location: 'hero', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
                 Contact Tammy
               </AppButton>
               <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
@@ -173,7 +173,7 @@ const Corporate: React.FC = () => {
             Contact Tammy to discuss leadership training, workshops, or DISC assessments for your team.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            <AppButton analytics={{ id: 'corporate_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
               Contact Tammy
             </AppButton>
           </Box>

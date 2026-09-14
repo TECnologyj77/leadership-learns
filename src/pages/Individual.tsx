@@ -32,7 +32,7 @@ const Individual: React.FC = () => {
               <AppText variant="h5" component="p" color="text.secondary" sx={{ mb: 4 }}>
                 1:1 Coaching for neurodivergent professionals and individuals. Discover and strengthen your voice through authentic connection.
               </AppText>
-              <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+              <AppButton analytics={{ id: 'individual_hero_contact', location: 'hero', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
                 Contact Tammy
               </AppButton>
               <AppText variant="body2" color="text.secondary" sx={{ mt: 2 }}>
@@ -235,7 +235,7 @@ const Individual: React.FC = () => {
             Contact Tammy to discuss public speaking, everyday communication, or understanding your communication style.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            <AppButton analytics={{ id: 'individual_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
               Contact Tammy
             </AppButton>
           </Box>

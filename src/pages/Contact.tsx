@@ -28,6 +28,7 @@ const Contact: React.FC = () => {
           <Paper sx={{ p: { xs: 3, md: 4 }, borderRadius: 3 }}>
             <Stack spacing={2}>
               <AppButton
+                analytics={{ id: 'contact_phone', location: 'contact_details', intent: 'contact', contactMethod: 'phone' }}
                 variant="contained"
                 color="primary"
                 size="large"
@@ -40,6 +41,7 @@ const Contact: React.FC = () => {
               </AppButton>
 
               <AppButton
+                analytics={{ id: 'contact_email', location: 'contact_details', intent: 'contact', contactMethod: 'email' }}
                 variant="outlined"
                 color="primary"
                 size="large"
@@ -69,10 +71,10 @@ const Contact: React.FC = () => {
               spacing={2}
               sx={{ justifyContent: 'center' }}
             >
-              <AppButton variant="contained" color="primary" component={RouterLink} to="/corporate">
+              <AppButton analytics={{ id: 'contact_explore_corporate', location: 'explore_services', intent: 'corporate' }} variant="contained" color="primary" component={RouterLink} to="/corporate">
                 Explore Corporate
               </AppButton>
-              <AppButton variant="contained" color="secondary" component={RouterLink} to="/individual">
+              <AppButton analytics={{ id: 'contact_explore_individual', location: 'explore_services', intent: 'individual' }} variant="contained" color="secondary" component={RouterLink} to="/individual">
                 Explore Individual
               </AppButton>
             </Stack>

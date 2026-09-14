@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
 import logo from '../../assets/logo.svg';
+import { trackCta } from '../../lib/analytics';
 
 // Comfortable tap area for the stacked footer links on touch screens.
 const footerLinkSx = { display: 'inline-flex', alignItems: 'center', minHeight: 36 } as const;
@@ -33,6 +34,7 @@ const Footer: React.FC = () => {
             <Stack spacing={1} sx={{ mt: 2 }}>
               <Link
                 href="tel:+18586036709"
+                onClick={() => trackCta({ id: 'footer_phone', location: 'footer', intent: 'contact', contactMethod: 'phone' })}
                 color="inherit"
                 underline="hover"
                 variant="body2"
@@ -43,6 +45,7 @@ const Footer: React.FC = () => {
               </Link>
               <Link
                 href="mailto:t.summers@leadershiplearners.org"
+                onClick={() => trackCta({ id: 'footer_email', location: 'footer', intent: 'contact', contactMethod: 'email' })}
                 color="inherit"
                 underline="hover"
                 variant="body2"
@@ -71,7 +74,7 @@ const Footer: React.FC = () => {
             </AppText>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Link component={RouterLink} to="/about" color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>About Us</Link>
-              <Link component={RouterLink} to="/contact" color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>Contact Tammy</Link>
+              <Link component={RouterLink} to="/contact" onClick={() => trackCta({ id: 'footer_contact', location: 'footer', intent: 'contact' })} color="inherit" underline="hover" variant="body2" sx={footerLinkSx}>Contact Tammy</Link>
             </Box>
           </Grid>
 

@@ -80,8 +80,9 @@ const CoachingPathCard: React.FC<CoachingPathCardProps> = ({
             ))}
           </Box>
         )}
-        <AppButton 
-          variant="contained" 
+        <AppButton
+          analytics={{ id: `service_card_${variant}`, location: 'service_paths', intent: variant }}
+          variant="contained"
           color={accent}
           size="large"
           fullWidth

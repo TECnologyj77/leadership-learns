@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PageLayout from './components/layout/PageLayout';
 import RouteSeo from './components/seo/RouteSeo';
+import RouteAnalytics from './components/marketing/RouteAnalytics';
 import Home from './pages/Home';
 import Corporate from './pages/Corporate';
 import Individual from './pages/Individual';
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   return (
     <PageLayout>
       <RouteSeo />
+      <RouteAnalytics />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/corporate" element={<Corporate />} />

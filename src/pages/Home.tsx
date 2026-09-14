@@ -12,6 +12,7 @@ import TestimonialCard from '../components/marketing/TestimonialCard';
 import ProcessSteps from '../components/marketing/ProcessSteps';
 import ClientLogo from '../components/marketing/ClientLogo';
 import VideoPlayer from '../components/ui/VideoPlayer';
+import { trackCta } from '../lib/analytics';
 import overallVideo from '../assets/Overall Video (9x16).mp4';
 import tammyImg from '../assets/tammy.jpg';
 import { homeTestimonials } from '../content/testimonials';
@@ -35,7 +36,7 @@ const Home: React.FC = () => {
               <AppText variant="body1" sx={{ mb: 4, maxWidth: 600, fontWeight: 600 }}>
                 Training, coaching, and DISC assessments led by Tammy Summers.
               </AppText>
-              <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/contact">
+              <AppButton analytics={{ id: 'home_hero_contact', location: 'hero', intent: 'contact' }} variant="contained" color="primary" size="large" component={RouterLink} to="/contact">
                 Contact Tammy
               </AppButton>
               <AppText variant="body2" color="text.secondary" sx={{ mt: 2, maxWidth: 600 }}>
@@ -64,8 +65,8 @@ const Home: React.FC = () => {
                   },
                 }}
               >
-                <Link component={RouterLink} to="/corporate">Develop my team</Link>
-                <Link component={RouterLink} to="/individual">Build my communication skills</Link>
+                <Link component={RouterLink} to="/corporate" onClick={() => trackCta({ id: 'home_hero_corporate', location: 'hero', intent: 'corporate' })}>Develop my team</Link>
+                <Link component={RouterLink} to="/individual" onClick={() => trackCta({ id: 'home_hero_individual', location: 'hero', intent: 'individual' })}>Build my communication skills</Link>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
@@ -187,7 +188,7 @@ const Home: React.FC = () => {
               <AppText variant="body1" color="text.secondary" sx={{ mb: 4 }}>
                 Whether you need facilitation for your team, specialized training for working with children and adults with autism, or someone who can make any subject engaging and actionable, Tammy delivers results through authentic connection and proven methodology.
               </AppText>
-              <AppButton variant="outlined" color="primary" size="large" component={RouterLink} to="/about">
+              <AppButton analytics={{ id: 'home_meet_tammy', location: 'guide', intent: 'about' }} variant="outlined" color="primary" size="large" component={RouterLink} to="/about">
                 Meet Tammy
               </AppButton>
             </Grid>
@@ -278,7 +279,7 @@ const Home: React.FC = () => {
             Tell Tammy what you or your team would like to improve, and discuss which support fits your goals.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            <AppButton analytics={{ id: 'home_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
               Contact Tammy
             </AppButton>
           </Box>

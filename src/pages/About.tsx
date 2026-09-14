@@ -193,7 +193,7 @@ const About: React.FC = () => {
             Read the blog for insights on leadership and neurodiversity, or get in touch to start a conversation.
           </AppText>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+            <AppButton analytics={{ id: 'about_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
               Contact Tammy
             </AppButton>
             <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">

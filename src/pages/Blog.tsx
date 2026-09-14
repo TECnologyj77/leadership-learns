@@ -68,7 +68,7 @@ const Blog: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch and tell Tammy what you or your team are working on.
           </AppText>
-          <AppButton variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
+          <AppButton analytics={{ id: 'blog_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
             Contact Tammy
           </AppButton>
         </AppContainer>

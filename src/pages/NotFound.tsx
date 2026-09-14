@@ -23,7 +23,7 @@ const NotFound: React.FC = () => {
           <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/">
             Back to Home
           </AppButton>
-          <AppButton variant="outlined" color="secondary" size="large" component={RouterLink} to="/contact">
+          <AppButton analytics={{ id: 'not_found_contact', location: 'recovery', intent: 'contact' }} variant="outlined" color="secondary" size="large" component={RouterLink} to="/contact">
             Contact Tammy
           </AppButton>
         </Box>
