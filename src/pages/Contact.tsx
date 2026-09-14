@@ -1,8 +1,15 @@
 import React from 'react';
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, Stack } from '@mui/material';
+import { PhoneOutlined as PhoneOutlinedIcon, MailOutlined as MailOutlinedIcon } from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
+import AppButton from '../components/ui/AppButton';
+
+const PHONE_DISPLAY = '(858) 603-6709';
+const PHONE_HREF = 'tel:+18586036709';
+const EMAIL = 't.summers@leadershiplearners.org';
 
 const Contact: React.FC = () => {
   return (
@@ -10,22 +17,68 @@ const Contact: React.FC = () => {
       <AppSection variant="light">
         <AppContainer maxWidth="sm">
           <Box sx={{ mb: 8, textAlign: 'center' }}>
-            <AppText variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              Contact Leadership Learners
+            <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
+              Contact Tammy
             </AppText>
-            <AppText variant="h5" color="text.secondary">
-              Public contact details and the inquiry process are being confirmed.
+            <AppText variant="h5" component="p" color="text.secondary">
+              Reach out to Tammy directly by phone or email to start a conversation.
             </AppText>
           </Box>
 
-          <Paper sx={{ p: 4, borderRadius: 3 }}>
-            <AppText variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
-              Contact details are coming soon
-            </AppText>
-            <AppText variant="body1" color="text.secondary">
-              Tammy is confirming the phone number, email address, and inquiry instructions to use on the website. They will be added after approval.
-            </AppText>
+          <Paper sx={{ p: { xs: 3, md: 4 }, borderRadius: 3 }}>
+            <Stack spacing={2}>
+              <AppButton
+                analytics={{ id: 'contact_phone', location: 'contact_details', intent: 'contact', contactMethod: 'phone' }}
+                variant="contained"
+                color="primary"
+                size="large"
+                fullWidth
+                href={PHONE_HREF}
+                startIcon={<PhoneOutlinedIcon />}
+                sx={{ justifyContent: 'flex-start', py: 2 }}
+              >
+                Call {PHONE_DISPLAY}
+              </AppButton>
+
+              <AppButton
+                analytics={{ id: 'contact_email', location: 'contact_details', intent: 'contact', contactMethod: 'email' }}
+                variant="outlined"
+                color="primary"
+                size="large"
+                fullWidth
+                href={`mailto:${EMAIL}`}
+                startIcon={<MailOutlinedIcon />}
+                sx={{ justifyContent: 'flex-start', py: 2, wordBreak: 'break-word', textAlign: 'left' }}
+              >
+                Email {EMAIL}
+              </AppButton>
+
+              <AppText variant="body2" color="text.secondary">
+                You can start by sharing whether you're looking for support for yourself or your team, and what you'd like to improve. Ask about the service, cost, and next steps.
+              </AppText>
+            </Stack>
           </Paper>
+
+          <Box sx={{ mt: 8, textAlign: 'center' }}>
+            <AppText variant="h5" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
+              Want to learn more first?
+            </AppText>
+            <AppText variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+              Explore how Tammy works with each type of client.
+            </AppText>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              sx={{ justifyContent: 'center' }}
+            >
+              <AppButton analytics={{ id: 'contact_explore_corporate', location: 'explore_services', intent: 'corporate' }} variant="contained" color="primary" component={RouterLink} to="/corporate">
+                Explore Corporate
+              </AppButton>
+              <AppButton analytics={{ id: 'contact_explore_individual', location: 'explore_services', intent: 'individual' }} variant="contained" color="secondary" component={RouterLink} to="/individual">
+                Explore Individual
+              </AppButton>
+            </Stack>
+          </Box>
         </AppContainer>
       </AppSection>
     </>

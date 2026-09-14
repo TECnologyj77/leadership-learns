@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   AppBar, 
   Toolbar, 
@@ -14,11 +14,12 @@ import {
   styled
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import { NavLink as RouterLink } from 'react-router-dom';
 import AppButton from '../ui/AppButton';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
-import logo from '../../assets/logo.jpg';
+import logo from '../../assets/logo.svg';
 
 const NavLink = styled(RouterLink)(({ theme }) => ({
   textDecoration: 'none',
@@ -26,12 +27,17 @@ const NavLink = styled(RouterLink)(({ theme }) => ({
   fontWeight: 500,
   fontSize: '0.95rem',
   transition: 'color 0.2s',
+  display: 'inline-flex',
+  alignItems: 'center',
+  minHeight: 44,
   '&:hover': {
     color: theme.palette.primary.main,
   },
   '&.active': {
     color: theme.palette.primary.main,
     fontWeight: 700,
+    textDecoration: 'underline',
+    textUnderlineOffset: '0.3em',
   },
 }));
 
@@ -46,6 +52,17 @@ const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--site-header-height', `${header.offsetHeight}px`);
+    });
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen((open) => !open);
@@ -56,18 +73,34 @@ const Navbar: React.FC = () => {
   };
 
   const drawer = (
-    <Box component="nav" aria-label="Mobile navigation" sx={{ textAlign: 'center', p: 2 }}>
+    <Box component="nav" aria-label="Primary navigation" sx={{ textAlign: 'center', p: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <IconButton aria-label="Close navigation menu" onClick={handleDrawerClose} sx={{ width: 44, height: 44 }}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
       <Box 
         component={RouterLink} 
         to="/"
         onClick={handleDrawerClose}
-        sx={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          my: 2 
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1,
+          flexWrap: 'wrap',
+          my: 2,
+          textDecoration: 'none'
         }}
       >
-        <Box component="img" src={logo} alt="Leadership Learners" sx={{ height: 40 }} />
+        <Box component="img" src={logo} alt="" sx={{ height: 32 }} />
+        <AppText
+          variant="subtitle1"
+          component="span"
+          sx={{ fontWeight: 700, color: 'primary.main', fontSize: '1rem', whiteSpace: 'nowrap' }}
+        >
+          Leadership Learners
+        </AppText>
       </Box>
       <List>
         {navItems.map((item) => (
@@ -76,50 +109,66 @@ const Navbar: React.FC = () => {
               component={RouterLink} 
               to={item.path}
               onClick={handleDrawerClose}
-              sx={{ textAlign: 'center' }}
+              sx={{
+                textAlign: 'center',
+                '&.active': {
+                  bgcolor: 'action.selected',
+                  '& .MuiListItemText-primary': {
+                    fontWeight: 700,
+                    textDecoration: 'underline',
+                    textUnderlineOffset: '0.3em',
+                  },
+                },
+              }}
             >
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding>
-          <ListItemButton 
-            component={RouterLink} 
-            to="/contact"
-            onClick={handleDrawerClose}
-            sx={{ textAlign: 'center' }}
-          >
-            <ListItemText primary="Contact" />
-          </ListItemButton>
-        </ListItem>
       </List>
+      <AppButton
+        analytics={{ id: 'nav_drawer_contact', location: 'mobile_drawer', intent: 'contact' }}
+        variant="contained"
+        color="primary"
+        fullWidth
+        component={RouterLink}
+        to="/contact"
+        onClick={handleDrawerClose}
+        sx={{ mt: 2 }}
+      >
+        Contact Tammy
+      </AppButton>
     </Box>
   );
 
   return (
-    <AppBar position="sticky" color="default" elevation={1} sx={{ bgcolor: 'background.paper' }}>
+    <AppBar ref={headerRef} component="header" position="sticky" color="default" elevation={1} sx={{ bgcolor: 'background.paper' }}>
       <AppContainer>
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0 } }}>
-          <Box 
-            component={RouterLink} 
-            to="/" 
-            sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              textDecoration: 'none' 
+          <Box
+            component={RouterLink}
+            to="/"
+            aria-label="Leadership Learners"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none'
             }}
           >
-            <Box 
-              component="img" 
-              src={logo} 
-              alt="Leadership Learners" 
-              sx={{ 
+            {/* The wordmark beside it names this link; the aria-label above covers
+                the narrow widths where that text is hidden. */}
+            <Box
+              component="img"
+              src={logo}
+              alt=""
+              sx={{
                 height: { xs: 32, md: 40 },
                 mr: 1
-              }} 
+              }}
             />
             <AppText 
               variant="h6" 
+              component="span" 
               sx={{ 
                 fontWeight: 700, 
                 color: 'primary.main', 
@@ -132,50 +181,62 @@ const Navbar: React.FC = () => {
           </Box>
 
           {!isMobile ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <Box component="nav" aria-label="Primary navigation" sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               {navItems.map((item) => (
                 <NavLink key={item.name} to={item.path}>
                   {item.name}
                 </NavLink>
               ))}
-              <AppButton 
-                variant="contained" 
+              <AppButton
+                analytics={{ id: 'nav_desktop_contact', location: 'desktop_nav', intent: 'contact' }}
+                variant="contained"
                 color="primary" 
                 component={RouterLink} 
                 to="/contact"
               >
-                Contact
+                Contact Tammy
               </AppButton>
             </Box>
           ) : (
-            <IconButton
-              color="inherit"
-              aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-controls="mobile-navigation"
-              aria-expanded={mobileOpen}
-              edge="start"
-              onClick={handleDrawerToggle}
-            >
-              <MenuIcon />
-            </IconButton>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
+              <AppButton
+                analytics={{ id: 'nav_mobile_contact', location: 'mobile_nav', intent: 'contact' }}
+                variant="contained"
+                color="primary"
+                component={RouterLink}
+                to="/contact"
+                sx={{ minHeight: 44, px: 2, whiteSpace: 'nowrap' }}
+              >
+                Contact Tammy
+              </AppButton>
+              <IconButton
+                color="inherit"
+                aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-controls={mobileOpen ? 'mobile-navigation' : undefined}
+                aria-haspopup="dialog"
+                aria-expanded={mobileOpen}
+                onClick={handleDrawerToggle}
+                sx={{ width: 48, height: 48 }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
           )}
         </Toolbar>
       </AppContainer>
 
-      <Drawer
+      {isMobile && <Drawer
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerClose}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
+        slotProps={{ paper: { role: 'dialog', 'aria-modal': true, 'aria-label': 'Navigation menu' } }}
         sx={{
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
         }}
       >
         <Box id="mobile-navigation">{drawer}</Box>
-      </Drawer>
+      </Drawer>}
     </AppBar>
   );
 };
