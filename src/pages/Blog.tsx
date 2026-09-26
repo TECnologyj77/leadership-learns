@@ -34,9 +34,6 @@ const Blog: React.FC = () => {
 
           {data === null && (
             <Box aria-busy="true">
-              <AppText role="status" variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 4 }}>
-                Loading posts…
-              </AppText>
               <Grid container spacing={4} aria-hidden="true">
                 {[0, 1, 2].map((index) => (
                   <Grid size={gridItemSize} key={index}>

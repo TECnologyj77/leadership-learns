@@ -51,7 +51,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Inter", "Manrope", "Roboto", "Helvetica", "Arial", sans-serif',
+    // "Inter Fallback" (theme/fonts.css) is Arial sized to match Inter, so text doesn't reflow when Inter loads.
+    fontFamily: '"Inter", "Inter Fallback", "Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
       fontWeight: 700,
       letterSpacing: '-0.02em',

@@ -5,6 +5,11 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Start Inter downloading with the HTML rather than after first render; these are the Latin files main.tsx loads. -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2" />
+
     <!--
       Static, non-JS-visible defaults for the homepage. src/components/seo/RouteSeo.tsx
       overwrites all of this per route once React mounts (see its own comment for why
