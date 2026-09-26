@@ -23,7 +23,7 @@ netlify/lib/ricos-to-blocks.ts   rich content -> BlogBlock[] (+ reported content
         v
 netlify/lib/blog-service.ts      fresh data, else last-known-good copy (Netlify Blobs), else unavailable
         |
-        +--> /blog, /post/:slug      netlify/functions/blog-pages.mjs  full server-rendered HTML, hydrated by React
+        +--> /blog, /post/:slug      netlify/functions/blog-pages.mts  full server-rendered HTML, hydrated by React
         +--> /api/blog/posts[/:slug] netlify/functions/blog-post(s).mts JSON for in-app navigation
         +--> /sitemap.xml            netlify/functions/sitemap.mts     static routes + live archive
 ```

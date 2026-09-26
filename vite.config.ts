@@ -13,7 +13,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
   return {
     plugins: [react(), blogFunctionsDev()],
     // `vite build --ssr` (second step of `npm run build`) bundles the app's
-    // server renderer and the built index.html for netlify/functions/blog-pages.mjs.
+    // server renderer and the built index.html for netlify/functions/blog-pages.mts.
     build: isSsrBuild
       ? {
           outDir: 'netlify/ssr',

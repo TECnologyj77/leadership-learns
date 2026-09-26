@@ -23,5 +23,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["vite.config.ts", "netlify/**/*.ts", "netlify/**/*.mts", "scripts/**/*.ts"],
-  "exclude": ["netlify/ssr"]
+  "exclude": ["netlify/ssr", "netlify/functions/blog-pages.mts"]
 }
