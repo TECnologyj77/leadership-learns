@@ -28,5 +28,10 @@ export default defineConfig(({ mode, isSsrBuild }) => {
           },
         }
       : undefined,
+    // Bundle React Router into the SSR output. Netlify traces (doesn't bundle)
+    // npm packages for functions; React Router's `module-sync` export
+    // condition made the trace pack dist/index.mjs while the function runtime
+    // loaded dist/index.js, so /blog and /post/* crashed with 502.
+    ssr: isSsrBuild ? { noExternal: ['react-router', 'react-router-dom'] } : undefined,
   }
 })
