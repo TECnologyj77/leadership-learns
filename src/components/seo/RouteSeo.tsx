@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { applyPageMeta, findRouteSeo, TAMMY_OG_IMAGE } from '../../lib/seo';
-import { notFoundSeo } from '../../lib/site-config';
-import { blogPosts } from '../../lib/blog-data';
+import { applyPageMeta, notFoundMeta, staticRouteMeta } from '../../lib/seo';
+import { slugFromPostPath } from '../../lib/blog-paths';
 
 /**
  * Renders nothing. On every route change, sets document title, meta
  * description, canonical link, robots, Open Graph/Twitter tags, and
- * BreadcrumbList/Article JSON-LD for the current page.
+ * BreadcrumbList JSON-LD for the current page.
+ *
+ * Article pages (/post/<slug>) are skipped: their metadata depends on the
+ * loaded post, so BlogPost applies it (and the server already rendered it
+ * into the HTML for direct requests).
  *
  * Organization/WebSite/Person structured data don't change per route, so
  * they're static <script> tags in index.html instead — that also keeps them
@@ -18,54 +21,9 @@ const RouteSeo = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const staticEntry = findRouteSeo(pathname);
-
-    if (staticEntry) {
-      applyPageMeta({
-        path: pathname,
-        title: staticEntry.title,
-        description: staticEntry.description,
-        robots: staticEntry.robots,
-        canonicalPath: pathname,
-        ogImage: pathname === '/about' ? TAMMY_OG_IMAGE : undefined,
-        breadcrumb:
-          pathname === '/'
-            ? undefined
-            : [
-                { name: 'Home', path: '/' },
-                { name: staticEntry.breadcrumb, path: pathname },
-              ],
-      });
-      return;
-    }
-
-    const blogSlug = /^\/blog\/([^/]+)$/.exec(pathname)?.[1];
-    const post = blogSlug ? blogPosts.find((p) => p.slug === blogSlug) : undefined;
-
-    if (post) {
-      applyPageMeta({
-        path: pathname,
-        title: `${post.title} | Leadership Learners`,
-        description: post.excerpt,
-        canonicalPath: pathname,
-        ogType: 'article',
-        breadcrumb: [
-          { name: 'Home', path: '/' },
-          { name: 'Blog', path: '/blog' },
-          { name: post.title, path: pathname },
-        ],
-        article: post,
-      });
-      return;
-    }
-
-    // Unknown path: matches the catch-all <Route path="*"> NotFound page.
-    applyPageMeta({
-      path: pathname,
-      title: notFoundSeo.title,
-      description: notFoundSeo.description,
-      robots: notFoundSeo.robots,
-    });
+    if (slugFromPostPath(pathname) !== null) return;
+    // Unknown paths match the catch-all <Route path="*"> NotFound page.
+    applyPageMeta(staticRouteMeta(pathname) ?? notFoundMeta(pathname));
   }, [pathname]);
 
   return null;

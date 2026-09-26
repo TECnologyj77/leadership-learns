@@ -1,74 +1,23 @@
-// Head-tag and JSON-LD helpers for RouteSeo.tsx. Pure DOM/data functions with
-// no React dependency, kept separate so RouteSeo stays focused on wiring
-// route data to these.
-import { absoluteUrl, SITE_NAME, SITE_URL, routeSeo, type RouteSeoEntry } from './site-config';
+// Page metadata for every route, as plain data (headTags) so the same tags
+// are written by the browser (applyPageMeta, via RouteSeo and the article
+// page) and by the server when it renders /blog and /post/<slug> HTML.
+// (Explicit .ts extension: this module also runs under Node in server tests.)
+import { absoluteUrl, notFoundSeo, SITE_NAME, SITE_URL, routeSeo, type RouteSeoEntry } from './site-config.ts';
 import type { BlogPost } from '../types/blog';
 
 const DEFAULT_OG_IMAGE = absoluteUrl('/og-logo.jpg');
+export const TAMMY_OG_IMAGE = absoluteUrl('/og-tammy.jpg');
 
 /** Finds the static route entry for a pathname, or null if it needs special handling. */
 export const findRouteSeo = (pathname: string): RouteSeoEntry | null =>
   routeSeo.find((r) => r.path === pathname) ?? null;
 
-// --- <head> tag upsert helpers -------------------------------------------
-// Each creates the element on first use and updates it thereafter, so
-// navigating between routes never leaves stale or duplicate tags behind.
-
-function upsertMetaByName(name: string, content: string) {
-  let el = document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute('name', name);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
-
-function upsertMetaByProperty(property: string, content: string) {
-  let el = document.head.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute('property', property);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
-
-function upsertLinkRel(rel: string, href: string | null) {
-  let el = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
-  if (href === null) {
-    el?.remove();
-    return;
-  }
-  if (!el) {
-    el = document.createElement('link');
-    el.setAttribute('rel', rel);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('href', href);
-}
-
-function upsertJsonLd(id: string, data: object | null) {
-  let el = document.getElementById(id) as HTMLScriptElement | null;
-  if (data === null) {
-    el?.remove();
-    return;
-  }
-  if (!el) {
-    el = document.createElement('script');
-    el.id = id;
-    el.type = 'application/ld+json';
-    document.head.appendChild(el);
-  }
-  el.textContent = JSON.stringify(data);
-}
-
-interface PageMeta {
+export interface PageMeta {
   path: string;
   title: string;
   description: string;
   robots?: string;
-  /** Omit to skip the canonical tag entirely (used for the 404 route). */
+  /** Omit to skip the canonical tag entirely (404 and error pages). */
   canonicalPath?: string;
   ogType?: 'website' | 'article';
   ogImage?: string;
@@ -76,58 +25,210 @@ interface PageMeta {
   article?: BlogPost;
 }
 
-/** Applies one page's metadata to the current document. Idempotent. */
-export function applyPageMeta(meta: PageMeta) {
-  document.title = meta.title;
-  upsertMetaByName('description', meta.description);
-  upsertMetaByName('robots', meta.robots ?? 'index, follow');
-  upsertLinkRel('canonical', meta.canonicalPath !== undefined ? absoluteUrl(meta.canonicalPath) : null);
+export type HeadTag =
+  | { kind: 'title'; text: string }
+  | { kind: 'meta'; attribute: 'name' | 'property'; key: string; content: string }
+  | { kind: 'link'; rel: string; href: string }
+  | { kind: 'jsonld'; id: string; data: object };
 
-  const ogImage = meta.ogImage ?? DEFAULT_OG_IMAGE;
-  upsertMetaByProperty('og:site_name', SITE_NAME);
-  upsertMetaByProperty('og:type', meta.ogType ?? 'website');
-  upsertMetaByProperty('og:title', meta.title);
-  upsertMetaByProperty('og:description', meta.description);
-  upsertMetaByProperty('og:url', absoluteUrl(meta.path));
-  upsertMetaByProperty('og:image', ogImage);
+// Tags that only some pages have; applyPageMeta removes them when absent.
+const OPTIONAL_TAGS = {
+  links: ['canonical'],
+  meta: ['article:published_time', 'article:modified_time'],
+  jsonld: ['ld-breadcrumb', 'ld-article'],
+};
 
-  upsertMetaByName('twitter:card', 'summary_large_image');
-  upsertMetaByName('twitter:title', meta.title);
-  upsertMetaByName('twitter:description', meta.description);
-  upsertMetaByName('twitter:image', ogImage);
-
-  upsertJsonLd(
-    'ld-breadcrumb',
-    meta.breadcrumb
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: meta.breadcrumb.map((item, i) => ({
-            '@type': 'ListItem',
-            position: i + 1,
-            name: item.name,
-            item: absoluteUrl(item.path),
-          })),
-        }
-      : null,
-  );
-
-  upsertJsonLd(
-    'ld-article',
-    meta.article
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'Article',
-          headline: meta.article.title,
-          description: meta.article.excerpt,
-          datePublished: meta.article.publishedAt,
-          author: { '@type': 'Organization', name: meta.article.author },
-          publisher: { '@id': `${SITE_URL}/#organization` },
-          mainEntityOfPage: absoluteUrl(meta.path),
-          url: absoluteUrl(meta.path),
-        }
-      : null,
-  );
+function clampDescription(text: string, max = 300): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(' ') > 0 ? cut.lastIndexOf(' ') : cut.length)}…`;
 }
 
-export const TAMMY_OG_IMAGE = absoluteUrl('/og-tammy.jpg');
+/** The complete, ordered list of route-specific head tags for one page. */
+export function headTags(meta: PageMeta): HeadTag[] {
+  const ogImage = meta.ogImage ?? DEFAULT_OG_IMAGE;
+  const tags: HeadTag[] = [
+    { kind: 'title', text: meta.title },
+    { kind: 'meta', attribute: 'name', key: 'description', content: meta.description },
+    { kind: 'meta', attribute: 'name', key: 'robots', content: meta.robots ?? 'index, follow' },
+  ];
+  if (meta.canonicalPath !== undefined) tags.push({ kind: 'link', rel: 'canonical', href: absoluteUrl(meta.canonicalPath) });
+
+  tags.push(
+    { kind: 'meta', attribute: 'property', key: 'og:site_name', content: SITE_NAME },
+    { kind: 'meta', attribute: 'property', key: 'og:type', content: meta.ogType ?? 'website' },
+    { kind: 'meta', attribute: 'property', key: 'og:title', content: meta.title },
+    { kind: 'meta', attribute: 'property', key: 'og:description', content: meta.description },
+    { kind: 'meta', attribute: 'property', key: 'og:url', content: absoluteUrl(meta.path) },
+    { kind: 'meta', attribute: 'property', key: 'og:image', content: ogImage },
+    { kind: 'meta', attribute: 'name', key: 'twitter:card', content: 'summary_large_image' },
+    { kind: 'meta', attribute: 'name', key: 'twitter:title', content: meta.title },
+    { kind: 'meta', attribute: 'name', key: 'twitter:description', content: meta.description },
+    { kind: 'meta', attribute: 'name', key: 'twitter:image', content: ogImage },
+  );
+
+  const post = meta.article;
+  if (post) {
+    tags.push({ kind: 'meta', attribute: 'property', key: 'article:published_time', content: post.publishedAt });
+    if (post.updatedAt) tags.push({ kind: 'meta', attribute: 'property', key: 'article:modified_time', content: post.updatedAt });
+  }
+
+  if (meta.breadcrumb) {
+    tags.push({
+      kind: 'jsonld',
+      id: 'ld-breadcrumb',
+      data: {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: meta.breadcrumb.map((item, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: item.name,
+          item: absoluteUrl(item.path),
+        })),
+      },
+    });
+  }
+
+  if (post) {
+    const image = post.coverImage ?? post.heroImage;
+    tags.push({
+      kind: 'jsonld',
+      id: 'ld-article',
+      data: {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        description: meta.description,
+        datePublished: post.publishedAt,
+        ...(post.updatedAt ? { dateModified: post.updatedAt } : {}),
+        ...(image ? { image: { '@type': 'ImageObject', url: image.src, width: image.width, height: image.height } } : {}),
+        ...(post.categories.length ? { articleSection: post.categories.map((c) => c.label) } : {}),
+        ...(post.tags.length ? { keywords: post.tags.map((t) => t.label).join(', ') } : {}),
+        publisher: { '@id': `${SITE_URL}/#organization` },
+        mainEntityOfPage: absoluteUrl(meta.path),
+        url: absoluteUrl(meta.path),
+      },
+    });
+  }
+  return tags;
+}
+
+/** Metadata for the static routes listed in site-config, or null for other paths. */
+export function staticRouteMeta(pathname: string): PageMeta | null {
+  const entry = findRouteSeo(pathname);
+  if (!entry) return null;
+  return {
+    path: pathname,
+    title: entry.title,
+    description: entry.description,
+    robots: entry.robots,
+    canonicalPath: pathname,
+    ogImage: pathname === '/about' ? TAMMY_OG_IMAGE : undefined,
+    breadcrumb:
+      pathname === '/'
+        ? undefined
+        : [
+            { name: 'Home', path: '/' },
+            { name: entry.breadcrumb, path: pathname },
+          ],
+  };
+}
+
+export function postPageMeta(post: BlogPost): PageMeta {
+  return {
+    path: post.path,
+    title: `${post.title} | ${SITE_NAME}`,
+    description: clampDescription(post.seoDescription ?? post.excerpt ?? post.title),
+    canonicalPath: post.path,
+    ogType: 'article',
+    ogImage: (post.coverImage ?? post.heroImage)?.src,
+    breadcrumb: [
+      { name: 'Home', path: '/' },
+      { name: 'Blog', path: '/blog' },
+      { name: post.title, path: post.path },
+    ],
+    article: post,
+  };
+}
+
+export const notFoundMeta = (path: string): PageMeta => ({
+  path,
+  title: notFoundSeo.title,
+  description: notFoundSeo.description,
+  robots: notFoundSeo.robots,
+});
+
+/** Blog content temporarily couldn't be loaded: keep the page out of search results. */
+export const unavailableMeta = (path: string): PageMeta => ({
+  path,
+  title: `Blog temporarily unavailable | ${SITE_NAME}`,
+  description: 'The Leadership Learners blog is temporarily unavailable. Please try again shortly.',
+  robots: 'noindex, follow',
+});
+
+// --- Browser: apply tags to the live document --------------------------------
+
+function upsert<T extends HTMLElement>(selector: string, create: () => T): T {
+  let el = document.head.querySelector<T>(selector);
+  if (!el) {
+    el = create();
+    document.head.appendChild(el);
+  }
+  return el;
+}
+
+/** Applies one page's metadata to the current document. Idempotent. */
+export function applyPageMeta(meta: PageMeta) {
+  const tags = headTags(meta);
+  const present = new Set<string>();
+
+  for (const tag of tags) {
+    switch (tag.kind) {
+      case 'title':
+        document.title = tag.text;
+        break;
+      case 'meta': {
+        present.add(`meta:${tag.key}`);
+        const el = upsert<HTMLMetaElement>(`meta[${tag.attribute}="${tag.key}"]`, () => {
+          const created = document.createElement('meta');
+          created.setAttribute(tag.attribute, tag.key);
+          return created;
+        });
+        el.setAttribute('content', tag.content);
+        break;
+      }
+      case 'link': {
+        present.add(`link:${tag.rel}`);
+        const el = upsert<HTMLLinkElement>(`link[rel="${tag.rel}"]`, () => {
+          const created = document.createElement('link');
+          created.setAttribute('rel', tag.rel);
+          return created;
+        });
+        el.setAttribute('href', tag.href);
+        break;
+      }
+      case 'jsonld': {
+        present.add(`jsonld:${tag.id}`);
+        const el = upsert<HTMLScriptElement>(`script#${tag.id}`, () => {
+          const created = document.createElement('script');
+          created.id = tag.id;
+          created.type = 'application/ld+json';
+          return created;
+        });
+        el.textContent = JSON.stringify(tag.data);
+        break;
+      }
+    }
+  }
+
+  for (const rel of OPTIONAL_TAGS.links) {
+    if (!present.has(`link:${rel}`)) document.head.querySelector(`link[rel="${rel}"]`)?.remove();
+  }
+  for (const key of OPTIONAL_TAGS.meta) {
+    if (!present.has(`meta:${key}`)) document.head.querySelector(`meta[property="${key}"]`)?.remove();
+  }
+  for (const id of OPTIONAL_TAGS.jsonld) {
+    if (!present.has(`jsonld:${id}`)) document.getElementById(id)?.remove();
+  }
+}

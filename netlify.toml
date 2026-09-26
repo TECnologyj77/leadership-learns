@@ -2,9 +2,18 @@
   command = "npm run build && node scripts/write-staging-headers.mjs"
   publish = "dist"
 
+# Blog functions (netlify/functions): /blog and /post/:slug are server-rendered,
+# /api/blog/posts[/:slug] feed client-side navigation, /sitemap.xml tracks the
+# Wix archive. Functions with a `config.path` run before the rewrite below.
+# esbuild bundles each function with tree-shaking, including the plain-JS
+# blog-pages.mjs, so cold starts don't load whole UI libraries from disk.
+# WIX_HEADLESS_CLIENT_ID must be set in the Netlify UI (Functions scope):
+# variables declared in this file are not available to functions.
+[functions]
+  node_bundler = "esbuild"
+
 # Serve React Router paths from the SPA while leaving existing static assets intact.
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-

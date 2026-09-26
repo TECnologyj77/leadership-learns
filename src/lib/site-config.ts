@@ -1,20 +1,25 @@
 // Single source of truth for site-wide SEO facts: the production URL, brand
 // identity, confirmed contact details, and per-route title/description copy.
 //
-// SITE_URL is the confirmed production domain, but the site is not public yet
-// (confirmed with the project owner) — nothing here causes indexing on its
-// own; public/robots.txt disallows all crawling until launch. Canonical/OG/
-// sitemap URLs are pre-wired against the real domain so going live only means
-// flipping robots.txt. If the domain ever changes again, update it in three
-// places:
-//   1. SITE_URL below.
+// SITE_URL is the confirmed production origin. It uses www because that is
+// the host the current public site (and every published /post/<slug> URL)
+// lives on: https://leadershiplearners.com permanently redirects to it. The
+// site is not public yet (confirmed with the project owner) — nothing here
+// causes indexing on its own; public/robots.txt disallows all crawling until
+// launch. Canonical/OG/sitemap URLs are pre-wired against the real origin so
+// going live only means flipping robots.txt. If the origin ever changes, update
+// it in two places:
+//   1. SITE_URL below (also used by the server-rendered blog pages and sitemap).
 //   2. The matching literals in index.html (search for SITE_URL).
-//   3. The literal in scripts/generate-sitemap.mjs.
 // To actually go live once ready: replace public/robots.txt with the "Allow"
 // version described in its own comments.
-export const SITE_URL = 'https://leadershiplearners.com';
+export const SITE_URL = 'https://www.leadershiplearners.com';
 
 export const SITE_NAME = 'Leadership Learners';
+
+// The Wix site's configured time zone (it's in the public blog pages' data).
+// Blog dates are shown as calendar dates in this zone, like on Wix.
+export const SITE_TIME_ZONE = 'America/Los_Angeles';
 
 // Confirmed contact details already published in Footer.tsx / Contact.tsx.
 export const ORG_EMAIL = 't.summers@leadershiplearners.org';

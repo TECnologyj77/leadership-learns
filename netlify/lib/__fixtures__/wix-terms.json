@@ -1,0 +1,54 @@
+{
+  "categories": [
+    {
+      "_id": "d18ad88b-a8ae-4a49-a00b-63fb2c33a080",
+      "label": "Autism awareness"
+    }
+  ],
+  "tags": [
+    {
+      "_id": "1dc58dce-215f-45e0-8cff-418bba703cc4",
+      "label": "Learning tool"
+    },
+    {
+      "_id": "28fd71fd-c857-495a-9ec8-2b0d8659f54d",
+      "label": "Autism"
+    },
+    {
+      "_id": "371128a1-4e5c-4261-a24e-47e893e6883e",
+      "label": "Stage time"
+    },
+    {
+      "_id": "5b5e8707-86a3-42fc-8f38-cbd5ca29699d",
+      "label": "Inspiration"
+    },
+    {
+      "_id": "6252f061-41a1-45e7-ac41-516a5aba7122",
+      "label": "Autism awareness"
+    },
+    {
+      "_id": "82e64ecf-7c0d-43b3-ab77-73c66f4ee940",
+      "label": "Public speaking"
+    },
+    {
+      "_id": "938fb0da-408f-4b3d-b859-f8d4d6852565",
+      "label": "Brawley, CA"
+    },
+    {
+      "_id": "9ba664ec-154f-46f9-8aa8-32ca544afe07",
+      "label": "M&M candy"
+    },
+    {
+      "_id": "b963ff25-30cf-4c63-93f9-a5c1967a1088",
+      "label": "Service dog"
+    },
+    {
+      "_id": "b9b80d33-7f18-443f-8453-b33652399407",
+      "label": "TedX Talk"
+    },
+    {
+      "_id": "e1389ea2-69b7-4bdb-8e7d-bdae64fbdbea",
+      "label": "Teen public speaker"
+    }
+  ]
+}

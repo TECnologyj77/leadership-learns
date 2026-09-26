@@ -5,17 +5,24 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/generate-sitemap.mjs",
+    "build": "tsc -b && vite build && vite build --ssr",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test \"netlify/**/*.test.ts\"",
+    "blog:audit": "node --env-file-if-exists=.env.local scripts/audit-wix-blog.ts"
   },
   "dependencies": {
+    "@emotion/cache": "11.14.0",
     "@emotion/react": "^11.14.0",
+    "@emotion/server": "11.11.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
     "@mui/icons-material": "^9.0.0",
     "@mui/material": "^9.0.0",
+    "@netlify/blobs": "11.1.1",
+    "@wix/blog": "1.0.662",
+    "@wix/sdk": "1.21.16",
     "posthog-js": "^1.430.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
@@ -23,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@netlify/functions": "6.0.0",
     "@playwright/test": "^1.63.0",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",

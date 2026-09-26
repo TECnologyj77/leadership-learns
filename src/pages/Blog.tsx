@@ -1,14 +1,24 @@
 import React from 'react';
-import { Grid, Box, Chip } from '@mui/material';
+import { Grid, Box, Paper, Skeleton } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
-import AppCard from '../components/ui/AppCard';
 import AppButton from '../components/ui/AppButton';
-import { blogPosts } from '../lib/blog-data';
+import BlogPostCard from '../components/blog/BlogPostCard';
+import BlogUnavailable from '../components/blog/BlogUnavailable';
+import { fetchPostList, type PostListState } from '../lib/blog-api';
+import { useBlogInitialData } from '../lib/blog-initial-data';
+import { useBlogData } from '../lib/use-blog-data';
+
+const gridItemSize = { xs: 12, sm: 6, md: 4 };
 
 const Blog: React.FC = () => {
+  const initial = useBlogInitialData();
+  const initialState: PostListState | null =
+    initial?.page === 'list' ? (initial.status === 'ok' ? { status: 'ok', posts: initial.posts } : { status: 'unavailable' }) : null;
+  const { data, retry } = useBlogData('list', initialState, fetchPostList);
+
   return (
     <>
       <AppSection variant="light">
@@ -22,41 +32,48 @@ const Blog: React.FC = () => {
             </AppText>
           </Box>
 
-          <Grid container spacing={4}>
-            {blogPosts.map((post) => (
-              <Grid size={{ xs: 12, md: 4 }} key={post.id}>
-                <AppCard sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <Box sx={{ mb: 2 }}>
-                    <Chip 
-                      label={post.category} 
-                      size="small" 
-                      color={post.category === 'Corporate' ? 'primary' : 'secondary'}
-                    />
-                  </Box>
-                  <AppText variant="h5" component="h2" gutterBottom sx={{ fontWeight: 700, flexGrow: 1 }}>
-                    {post.title}
-                  </AppText>
-                  <AppText variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                    {post.excerpt}
-                  </AppText>
-                  <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <AppText variant="caption" color="text.secondary">
-                      {post.publishedAt}
-                    </AppText>
-                    <AppButton 
-                      component={RouterLink} 
-                      to={`/blog/${post.slug}`}
-                      variant="text"
-                      color="primary"
-                      aria-label={`Read more: ${post.title}`}
-                    >
-                      Read More
-                    </AppButton>
-                  </Box>
-                </AppCard>
+          {data === null && (
+            <Box aria-busy="true">
+              <AppText role="status" variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 4 }}>
+                Loading posts…
+              </AppText>
+              <Grid container spacing={4} aria-hidden="true">
+                {[0, 1, 2].map((index) => (
+                  <Grid size={gridItemSize} key={index}>
+                    <Paper sx={{ borderRadius: 3, overflow: 'hidden' }}>
+                      <Skeleton variant="rectangular" sx={{ aspectRatio: '16 / 9', height: 'auto' }} />
+                      <Box sx={{ p: 3 }}>
+                        <Skeleton variant="text" sx={{ fontSize: '1.5rem' }} />
+                        <Skeleton variant="text" width="40%" sx={{ mb: 2 }} />
+                        <Skeleton variant="text" />
+                        <Skeleton variant="text" width="70%" />
+                      </Box>
+                    </Paper>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
+            </Box>
+          )}
+
+          {data?.status === 'unavailable' && (
+            <BlogUnavailable message="Blog posts couldn’t be loaded right now. Please try again in a moment." onRetry={retry} />
+          )}
+
+          {data?.status === 'ok' && data.posts.length === 0 && (
+            <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center' }}>
+              No posts have been published yet. Check back soon.
+            </AppText>
+          )}
+
+          {data?.status === 'ok' && data.posts.length > 0 && (
+            <Grid container spacing={4}>
+              {data.posts.map((post, index) => (
+                <Grid size={gridItemSize} key={post.id}>
+                  <BlogPostCard post={post} priority={index < 3} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </AppContainer>
       </AppSection>
 
