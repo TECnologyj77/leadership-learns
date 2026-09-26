@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Box, Link, Divider, Stack } from '@mui/material';
-import { PhoneOutlined as PhoneOutlinedIcon, MailOutlined as MailOutlinedIcon } from '@mui/icons-material';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
+import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';

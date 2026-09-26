@@ -10,18 +10,21 @@
       overwrites all of this per route once React mounts (see its own comment for why
       Organization/WebSite/Person stay static here instead of moving there).
 
-      SITE_URL below is the confirmed production domain (leadershiplearners.com), but the
+      SITE_URL below is the confirmed production origin (www.leadershiplearners.com), but the
       site is not public yet — see src/lib/site-config.ts, the source of truth for the
-      React app. If the domain ever changes again, keep this file's SITE_URL literal and
-      scripts/generate-sitemap.mjs's copy in sync with site-config.ts.
+      React app. If the origin ever changes, keep this file's SITE_URL literals in sync.
+
+      The route-meta markers let the blog page function (netlify/lib/html-document.ts)
+      replace these defaults with server-rendered, page-specific tags. Keep them.
     -->
+    <!-- route-meta:start -->
     <title>Leadership Learners | Leadership Training & Coaching</title>
     <meta
       name="description"
       content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
     />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://leadershiplearners.com/" />
+    <link rel="canonical" href="https://www.leadershiplearners.com/" />
 
     <meta property="og:site_name" content="Leadership Learners" />
     <meta property="og:type" content="website" />
@@ -30,8 +33,8 @@
       property="og:description"
       content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
     />
-    <meta property="og:url" content="https://leadershiplearners.com/" />
-    <meta property="og:image" content="https://leadershiplearners.com/og-logo.jpg" />
+    <meta property="og:url" content="https://www.leadershiplearners.com/" />
+    <meta property="og:image" content="https://www.leadershiplearners.com/og-logo.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Leadership Learners | Leadership Training & Coaching" />
@@ -39,7 +42,8 @@
       name="twitter:description"
       content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
     />
-    <meta name="twitter:image" content="https://leadershiplearners.com/og-logo.jpg" />
+    <meta name="twitter:image" content="https://www.leadershiplearners.com/og-logo.jpg" />
+    <!-- route-meta:end -->
 
     <!-- Organization, WebSite and Person facts, confirmed elsewhere on the site
          (Footer/Contact for contact details, About for Tammy's role). Email keeps its
@@ -52,31 +56,31 @@
         "@graph": [
           {
             "@type": "Organization",
-            "@id": "https://leadershiplearners.com/#organization",
+            "@id": "https://www.leadershiplearners.com/#organization",
             "name": "Leadership Learners",
-            "url": "https://leadershiplearners.com/",
-            "logo": "https://leadershiplearners.com/og-logo.jpg",
+            "url": "https://www.leadershiplearners.com/",
+            "logo": "https://www.leadershiplearners.com/og-logo.jpg",
             "email": "t.summers@leadershiplearners.org",
             "telephone": "+18586036709"
           },
           {
             "@type": "WebSite",
-            "@id": "https://leadershiplearners.com/#website",
-            "url": "https://leadershiplearners.com/",
+            "@id": "https://www.leadershiplearners.com/#website",
+            "url": "https://www.leadershiplearners.com/",
             "name": "Leadership Learners",
-            "publisher": { "@id": "https://leadershiplearners.com/#organization" }
+            "publisher": { "@id": "https://www.leadershiplearners.com/#organization" }
           },
           {
             "@type": "Person",
-            "@id": "https://leadershiplearners.com/#tammy-summers",
+            "@id": "https://www.leadershiplearners.com/#tammy-summers",
             "name": "Tammy Summers",
             "jobTitle": "Leadership Trainer, Coach & Business Professor",
             "worksFor": [
               { "@type": "Organization", "name": "Leadership Learners" },
               { "@type": "CollegeOrUniversity", "name": "Imperial Valley College" }
             ],
-            "image": "https://leadershiplearners.com/og-tammy.jpg",
-            "url": "https://leadershiplearners.com/about"
+            "image": "https://www.leadershiplearners.com/og-tammy.jpg",
+            "url": "https://www.leadershiplearners.com/about"
           }
         ]
       }
