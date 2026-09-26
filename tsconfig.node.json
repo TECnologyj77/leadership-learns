@@ -2,7 +2,8 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "es2023",
-    "lib": ["ES2023"],
+    // DOM: server code shares src/lib modules (SEO, blog paths) with the browser.
+    "lib": ["ES2023", "DOM"],
     "module": "esnext",
     "types": ["node"],
     "skipLibCheck": true,
@@ -15,10 +16,12 @@
     "noEmit": true,
 
     /* Linting */
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "netlify/**/*.ts", "netlify/**/*.mts", "scripts/**/*.ts"],
+  "exclude": ["netlify/ssr", "netlify/functions/blog-pages.mts"]
 }

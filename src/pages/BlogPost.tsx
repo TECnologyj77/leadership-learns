@@ -1,68 +1,65 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Navigate, Link as RouterLink } from 'react-router-dom';
-import { Box, Chip, Divider } from '@mui/material';
-import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import { Box, Skeleton } from '@mui/material';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
-import { blogPosts } from '../lib/blog-data';
+import BlogArticle from '../components/blog/BlogArticle';
+import BlogUnavailable from '../components/blog/BlogUnavailable';
+import NotFound from './NotFound';
+import { fetchPost, type PostState } from '../lib/blog-api';
+import { useBlogInitialData } from '../lib/blog-initial-data';
+import { useBlogData } from '../lib/use-blog-data';
+import { applyPageMeta, notFoundMeta, postPageMeta, unavailableMeta } from '../lib/seo';
+import { postPath } from '../lib/blog-paths';
 
 const BlogPost: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const post = blogPosts.find((p) => p.slug === slug);
+  const { slug = '' } = useParams<{ slug: string }>();
+  const initial = useBlogInitialData();
+  const initialState: PostState | null =
+    initial?.page === 'post' && initial.slug === slug
+      ? initial.status === 'ok'
+        ? { status: 'ok', post: initial.post }
+        : { status: initial.status }
+      : null;
+  const { data, retry } = useBlogData(`post:${slug}`, initialState, (signal) => fetchPost(slug, signal));
 
-  if (!post) {
-    return <Navigate to="/blog" replace />;
-  }
+  // Direct requests already got these tags from the server; this covers
+  // navigation inside the app.
+  useEffect(() => {
+    if (data?.status === 'ok') applyPageMeta(postPageMeta(data.post));
+    else if (data?.status === 'not_found') applyPageMeta(notFoundMeta(postPath(slug)));
+    else if (data?.status === 'unavailable') applyPageMeta(unavailableMeta(postPath(slug)));
+  }, [data, slug]);
+
+  if (data?.status === 'not_found') return <NotFound />;
+  // Wix now serves this post under a new slug.
+  if (data?.status === 'ok' && data.post.slug !== slug) return <Navigate to={data.post.path} replace />;
 
   return (
     <>
       <AppSection variant="white">
         <AppContainer maxWidth="md">
-          <AppButton
-            variant="text"
-            color="primary"
-            component={RouterLink}
-            to="/blog"
-            startIcon={<ArrowBackIcon />}
-            sx={{ mb: 3, ml: -1.5 }}
-          >
-            All posts
-          </AppButton>
-          <Box sx={{ mb: 4 }}>
-            <Chip 
-              label={post.category} 
-              color={post.category === 'Corporate' ? 'primary' : 'secondary'} 
-              sx={{ mb: 2 }} 
-            />
-            <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
-              {post.title}
-            </AppText>
-            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <AppText variant="subtitle2" component="p" color="text.secondary">
-                By {post.author}
+          {data === null && (
+            <Box aria-busy="true">
+              <AppText role="status" variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+                Loading the post…
               </AppText>
-              <AppText variant="subtitle2" component="span" color="text.secondary" aria-hidden="true">
-                •
-              </AppText>
-              <AppText variant="subtitle2" component="p" color="text.secondary">
-                {post.publishedAt}
-              </AppText>
+              <Box aria-hidden="true">
+                <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
+                <Skeleton variant="text" width="40%" sx={{ mb: 4 }} />
+                <Skeleton variant="rectangular" sx={{ aspectRatio: '16 / 9', height: 'auto', borderRadius: 3, mb: 4 }} />
+                {[0, 1, 2, 3].map((line) => (
+                  <Skeleton key={line} variant="text" />
+                ))}
+              </Box>
             </Box>
-          </Box>
-          
-          <Divider sx={{ mb: 4 }} />
-          
-          <Box sx={{ minHeight: 400 }}>
-            <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-              {post.content}
-            </AppText>
-            {/* Additional content blocks would go here */}
-            <AppText variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            </AppText>
-          </Box>
+          )}
+          {data?.status === 'unavailable' && (
+            <BlogUnavailable message="This post couldn’t be loaded right now. Please try again in a moment." onRetry={retry} />
+          )}
+          {data?.status === 'ok' && <BlogArticle post={data.post} />}
         </AppContainer>
       </AppSection>
 

@@ -33,6 +33,11 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # Blog adapter and page-handler tests run against saved Wix fixtures;
+      # they never call Wix.
+      - name: Test
+        run: npm test
+
       - name: Build
         run: npm run build
 

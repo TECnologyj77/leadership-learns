@@ -51,3 +51,6 @@ vite.config.ts.timestamp-*
 
 # Local Netlify state
 .netlify/
+
+# Generated SSR bundle for the blog page function (npm run build)
+netlify/ssr/

@@ -1,10 +1,128 @@
-# Wix Blog integration feasibility decision
+# Wix Blog integration
 
-- **Decision:** Conditional GO
-- **Status:** Full-article direction confirmed by Thomas; implementation remains conditional on API access, content validation, and release gates below
+- **Decision:** GO (access confirmed by Thomas on 2026-09-26)
+- **Status:** Implemented on `feat/wix-blog-api` (PR #9); verified locally and on the Deploy Preview against the live Wix site. The launch items under [Launch blockers](#launch-blockers-and-open-decisions) remain.
 - **Audience:** Shepard and Team Normandy
-- **Updated:** 2026-09-14
+- **Updated:** 2026-09-26
 - **Scope:** Use Tammy's existing Wix Blog as the publishing backend; serve the blog listing and complete articles on the new Netlify website, preserving existing article URLs
+
+## As built (2026-09-26)
+
+Confirmed inputs from Thomas: Wix site ID `7564e755-6734-4fb3-8ef0-5a51c539f6a1`; a headless Client ID that gets anonymous visitor tokens and reads all published posts with the `RICH_CONTENT`, `SEO`, `URL` and `CONTENT_TEXT` fieldsets. No Client Secret exists or is used.
+
+```text
+Tammy publishes in Wix Blog
+        |  anonymous visitor OAuth (Client ID only, Read Blog)
+        v
+netlify/lib/wix-blog-source.ts   @wix/sdk + @wix/blog: Query Posts (cursor paging to the end),
+        |                         Get Post By Slug, Query Categories, Query Tags
+        v
+netlify/lib/normalize-post.ts    validate + map to src/types/blog.ts (site-owned DTOs)
+netlify/lib/ricos-to-blocks.ts   rich content -> BlogBlock[] (+ reported content issues)
+        |
+        v
+netlify/lib/blog-service.ts      fresh data, else last-known-good copy (Netlify Blobs), else unavailable
+        |
+        +--> /blog, /post/:slug      netlify/functions/blog-pages.mts  full server-rendered HTML, hydrated by React
+        +--> /api/blog/posts[/:slug] netlify/functions/blog-post(s).mts JSON for in-app navigation
+        +--> /sitemap.xml            netlify/functions/sitemap.mts     static routes + live archive
+```
+
+### Content and rendering
+
+- **Paths:** `/blog` lists every published post; cards link to local `/post/<slug>`. The five published slugs are unchanged from `www.leadershiplearners.com`. The placeholder posts (`src/lib/blog-data.ts`) and `/blog/:slug` route are deleted, so they can never be fallback content.
+- **Supported blocks:** paragraphs, headings, bold/italic/underline/link text, in-text line breaks, images (with caption and link), galleries, link buttons, bulleted/ordered lists, quotes, dividers. The five current posts use paragraphs, headings, images, one gallery and one button.
+- **Unsupported blocks** (video, embeds, tables, files, polls, galleries containing video, invalid media or links) render as a visible "Part of this post can't be shown on this page yet" notice. They are logged by the function and fail `npm run blog:audit`, so they're never dropped silently. Purely visual text styling (colour, font size, highlight) is intentionally not carried over.
+- **Images:** only Wix Media IDs (`<hex6>_<hex32>~mv2.<ext>`) are accepted, served from `static.wixstatic.com` with a responsive `srcset` (`/v1/fit/w_…,h_…,q_85,enc_auto/`, never upscaled; browsers get AVIF/WebP). We build these URLs ourselves because `@wix/sdk` 1.21.16's `media.getScaledToFitImageUrl()` passes height and width to `@wix/image-kit` in the wrong order. Width/height come from Wix, so no layout shift.
+- **Alt text:** Wix image descriptions are preserved. When none exists (currently all six images in the five posts), the image renders with `alt=""`. It's reported as an editor warning and no description is invented.
+- **Hero vs cover:** the article shows `heroImage` at the top when Wix has one ("From Silence to Stage"), as Wix does. Cards, `og:image` and structured data use the cover image (`media.wixMedia.image`), as Wix does. "Austin's eyes" has no hero; its three photos render in the gallery.
+- **Links:** only `http(s)`, `mailto:` and `tel:`. Wix's new-tab and `nofollow` choices are kept (`rel="noopener noreferrer nofollow"`), with an "(opens in a new tab)" screen-reader note.
+- **Dates:** first publication date, shown in the Wix site's time zone (`America/Los_Angeles`).
+- **Categories and tags:** labels are resolved through the Blog category/tag APIs and shown in Wix's order. Tags are plain labels (no tag pages on the new site).
+- **Byline:** not shown. Wix posts expose an owner member ID, not a name; resolving it needs Members permission (see blockers).
+
+### HTML delivery, metadata and status codes
+
+- `/blog` and `/post/<slug>` are server-rendered by one function using the app's own components. `vite build --ssr` bundles `src/server/render-app.tsx` and the built `index.html` into `netlify/ssr/` (git-ignored); MUI/Emotion styles are extracted into `<head>`; the data used is embedded as JSON and `src/main.tsx` hydrates it. All other routes stay client-rendered.
+- The response carries article-specific `<title>`, description (Wix SEO description, else excerpt), canonical, Open Graph/Twitter tags, `article:published_time`/`modified_time`, and BreadcrumbList + BlogPosting JSON-LD. It also has the full article body, so no JavaScript is needed to read it or index it.
+- The `index.html` defaults between `<!-- route-meta:start -->` and `<!-- route-meta:end -->` are replaced, not duplicated. Site-wide Organization/WebSite/Person JSON-LD stays.
+- **Statuses:** `200`; `301` when Wix now serves the post under a new slug; `404` + `noindex` + the site's Not Found page for unknown, unpublished, pricing-plan-gated or malformed slugs (checked before calling Wix); `503` + `noindex` + `Retry-After` when Wix is unavailable and no saved copy exists.
+- **Canonical host:** `https://www.leadershiplearners.com`. The bare domain 301-redirects to `www` today, and every published post URL uses `www`. `SITE_URL`, `index.html` and `robots.txt` were updated to match.
+- **Non-production:** function responses in Deploy Previews and branch deploys add `X-Robots-Tag: noindex, nofollow` themselves, because the `_headers` file doesn't apply to functions.
+
+### Refresh and caching
+
+| Response | Browser | Netlify CDN (`Netlify-CDN-Cache-Control`) |
+| --- | --- | --- |
+| Fresh from Wix (pages, API, sitemap) | `max-age=0, must-revalidate` | `public, durable, s-maxage=300, stale-while-revalidate=3600`, tag `blog` |
+| Last-known-good copy (Wix down) | same | `public, s-maxage=60` |
+| 404 | same | `public, durable, s-maxage=60` |
+| 503 | `no-store` | not cached |
+
+- **Publish, edit, unpublish:** these reach the site with no deploy or commit. A cached response stays fresh for 5 minutes. After that, the first request gets the cached copy while one background request refreshes it from Wix, so changes appear within about 5 minutes of traffic. An unpublished post becomes `404`, disappears from `/blog` and the sitemap, and its saved copy is deleted.
+- **New deploys** clear the CDN cache automatically.
+- **Immediate refresh:** purge the `blog` cache tag with a Netlify personal access token:
+
+  ```bash
+  curl -X POST -H "Authorization: Bearer $NETLIFY_TOKEN" -H "Content-Type: application/json" \
+    --data '{"site_id":"7615b5c8-7f53-475b-9fdb-975a019dae3d","cache_tags":["blog"]}' \
+    https://api.netlify.com/api/v1/purge
+  ```
+
+  Automating this from a Wix publish event would need a signed webhook endpoint and a stored Netlify token. That's not built yet (see open decisions).
+- **During Wix errors** (timeouts after 8 s, `401`/`403` after one fresh-token retry, `429`, `5xx`, malformed data), the service serves the last-known-good normalized copy from Netlify Blobs if it is at most 7 days old:
+  - Responses are marked `meta.stale: true` and cached for 60 seconds, so recovery is quick.
+  - A saved article is only served if the saved list still includes it, so unpublished posts don't come back.
+  - With no usable copy, the service returns `503`. A list where every post fails validation doesn't overwrite good data.
+  - Production uses the site-wide `wix-blog` store (keys versioned `v1/…`). Every other context uses a deploy-scoped store, so previews can't write production's copy.
+  - Placeholder or fixture posts are never used.
+
+### Configuration and operations
+
+- **`WIX_HEADLESS_CLIENT_ID`:** the only setting. In Netlify, set it under *Site configuration → Environment variables* with the **Functions** scope, for the Production and Deploy Preview contexts (plus Branch deploys if `staging` should show the blog). `netlify.toml` variables are not visible to functions. Locally, put it in the ignored `.env.local` (see `.env.example`). It is read only by server code, via `Netlify.env` or `process.env`, never as `VITE_*`.
+- **`npm run dev`:** serves the blog routes through the same handlers (`netlify/dev/vite-blog-functions.ts`). The first server render after starting takes roughly 10–15 s on Windows while MUI loads. Blobs is disabled locally.
+- **`npm test`:** runs adapter, service and page-handler tests against saved fixtures of the five real posts (`netlify/lib/__fixtures__`, owner/contact IDs removed). Tests never call Wix. CI runs it.
+- **`npm run blog:audit`:** fetches every published post and reports what the site can't render (exit code 1) and images missing descriptions (warnings). Run it after Tammy publishes new kinds of content.
+- **Logs:** function logs contain only sanitized messages (operation, HTTP status, Wix error code) and per-post content-issue counts. Never tokens or payloads.
+
+### Verification (2026-09-26)
+
+- **Wix API:** confirmed with the Client ID: token exchange (`expires_in` 14400), Query Posts paging (with limit 2, `hasNext` is true, `total` is 5 and the next cursor returns the following page; the adapter's full loop returns all 5), Get Post By Slug (`404` `POST_NOT_FOUND` for unknown slugs), categories (1) and tags (11). Calls without a token get `403`.
+- **Against Wix's public pages:** all five posts compared on `www.leadershiplearners.com` using the same text extractor on both sides. Title, full article text (identical hashes), headings, article image IDs in order, and links match for all five.
+  - "Austin's eyes": the three gallery photos and the "Click Me" Facebook button (same URL, new tab, `nofollow`) match.
+  - "From Silence to Stage": hero image, six headings, the Autism awareness category and all 11 tags (same order) match.
+- **Production bundle:** each function was bundled with esbuild the way Netlify does and run against live Wix.
+  - All five articles: `200`, correct canonical/title/OG/JSON-LD, full body HTML with JavaScript disabled.
+  - `/post/not-a-real-post`, `/post/UPPER` and `/post/a%2Fb`: `404` + `noindex`.
+  - `/blog`: 5 cards. Sitemap: 11 URLs.
+  - No client ID: `503` + `no-store`.
+  - The built client hydrates the server HTML with an empty console, and in-app navigation works afterwards.
+- **Accessibility:** axe (WCAG 2.2 AA) finds no violations on `/blog` or the article pages. The only finding on the Not Found page is a pre-existing contrast issue on its outlined "Contact Tammy" button, unrelated to this work. No horizontal scrolling at 375 px.
+- **Checks:** `npm run lint`, `npm test` (27 tests) and `npm run build` pass.
+- **Deploy Preview (PR #9, `WIX_HEADLESS_CLIENT_ID` set):**
+  - All five `/post/<slug>` pages return `200` with Wix data (`meta.source: "wix"`), `www` canonicals and their images.
+  - `/post/not-a-real-post` returns `404`. `/sitemap.xml` lists 11 URLs. Preview responses carry `X-Robots-Tag: noindex`.
+  - Repeat requests are durable-cache hits (`Cache-Status: "Netlify Durable"; hit`).
+  - The page hydrates with an empty console, and in-app navigation back to `/blog` uses one API call.
+  - Production Blobs writes aren't observed yet; they only happen on production deploys.
+- **Netlify packaging lesson:** Netlify traces npm packages for functions instead of inlining them. React Router's `module-sync` export condition broke that trace: the runtime asked for a file that wasn't packed, and `/blog` and `/post/*` returned `502`. The SSR build now bundles `react-router` and `react-router-dom` (`ssr.noExternal` in `vite.config.ts`). Add any future SSR dependency that uses `module-sync` to that list.
+
+### Launch blockers and open decisions
+
+1. **`WIX_HEADLESS_CLIENT_ID` in Netlify:** set and working for Deploy Previews (verified above). Before merging to `master`, confirm it is also set for the Production context (Functions scope). After the first production request, confirm the last-known-good copy was written.
+2. **Image descriptions:** six published images have no alt text in Wix (three gallery photos, "From Silence to Stage"'s hero, and one image in each of the three older posts). Tammy should add descriptions in Wix; the site picks them up automatically.
+3. **Byline:** Wix shows "Tamara Summers"; the new site shows no author. Options: approve a least-privilege Members read to resolve the owner's name, or approve a site-configured byline.
+4. **"From Silence to Stage" date:** we show January 2, 2026, its first publication time in Pacific time (11:38 PM). Wix's page shows "Jan 3", which matches its last-published time. Confirm which date readers should see.
+5. **Gallery presentation:** Wix crops the gallery to squares; the new site shows each photo uncropped in a responsive grid. Confirm this is acceptable.
+6. **Other Wix blog URLs** (`/blog/categories/…`, `/blog/tags/…`, `/blog/page/N`, `/blog-feed.xml`) aren't implemented. Unknown paths outside `/post/` still fall through to the SPA (pre-existing soft 404). Inventory them before the domain cutover.
+7. **Optional:** automatic cache purge on publish (signed Wix webhook + Netlify token) if 5 minutes is too slow.
+8. The domain cutover, DNS and `robots.txt` launch switch remain separate, explicitly approved steps.
+
+The RSS-feed listing built earlier on `feat/wix-rss-blog-feed` (local branch, not merged) is superseded by this implementation.
+
+---
+
+*The original feasibility plan follows for reference. Where it differs from "As built", the section above is current: the RSS/link-to-Wix option stays rejected, and the "not authorized" notes below applied to the earlier documentation-only spike.*
 
 ## Decision
 

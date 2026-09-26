@@ -1,10 +1,8 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import theme from './theme';
-import App from './App.tsx';
+import Root from './Root';
 import { initializeAnalytics } from './lib/analytics';
+import { readEmbeddedBlogData } from './lib/blog-initial-data';
 
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/600.css';
@@ -15,13 +13,15 @@ import './index.css';
 
 initializeAnalytics();
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
-  </StrictMode>,
+const container = document.getElementById('root')!;
+// /blog and /post/<slug> arrive server-rendered with their data embedded;
+// every other route is a client-rendered SPA page.
+const blogData = readEmbeddedBlogData();
+const app = (
+  <BrowserRouter>
+    <Root blogData={blogData} />
+  </BrowserRouter>
 );
+
+if (blogData && container.hasChildNodes()) hydrateRoot(container, app);
+else createRoot(container).render(app);

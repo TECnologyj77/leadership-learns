@@ -1,6 +1,9 @@
 import React from 'react';
 import { Grid, Box, Paper } from '@mui/material';
-import { CheckCircleOutlined as CheckCircleOutlineIcon, Psychology as PsychologyIcon, RecordVoiceOver as RecordVoiceOverIcon, EmojiPeople as EmojiPeopleIcon } from '@mui/icons-material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
