@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Box, Paper } from '@mui/material';
-import { CheckCircleOutlined as CheckCircleOutlineIcon } from '@mui/icons-material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
