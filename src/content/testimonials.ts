@@ -1,7 +1,10 @@
+import austinAvatar from '../assets/austin_avatar.jpg';
+
 export type Testimonial = {
   quote: string;
   author: string;
   role: string;
+  avatar?: string;
 };
 
 
@@ -17,10 +20,11 @@ const giselaSanchezTestimonial: Testimonial = {
   role: "Business Owner"
 };
 
-const austinMoralesTestimonial: Testimonial = {
+export const austinMoralesTestimonial: Testimonial = {
   quote: "I enjoy working with my public speaking coach. I'm autistic and she understands how to help me become a better public speaker. It's my new job.",
   author: "Austin Morales",
-  role: "Public Speaking Client"
+  role: "Public Speaking Client",
+  avatar: austinAvatar
 };
 
 const angelaJonesTestimonial: Testimonial = {

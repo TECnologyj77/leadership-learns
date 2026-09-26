@@ -10,7 +10,8 @@ import ServiceCard from '../components/marketing/ServiceCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
 import ProcessSteps from '../components/marketing/ProcessSteps';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
-import organizationDiscImg from '../assets/services/Group DISC Assessments For Organizations.jpg';
+import organizationDiscImg from '../assets/team_disc_session_wide.jpg';
+import teamDiscSessionImg from '../assets/team_disc_session.jpg';
 import { corporateTestimonials } from '../content/testimonials';
 
 const Corporate: React.FC = () => {
@@ -36,6 +37,23 @@ const Corporate: React.FC = () => {
               <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
                 Call or email to discuss leadership training or DISC assessments for your team.
               </AppText>
+            </Grid>
+            <Grid size={{ xs: 12, md: 5 }}>
+              <Box
+                component="img"
+                src={teamDiscSessionImg}
+                alt="Tammy Summers with a team after her Cultural Sensitivity in the Workspace session."
+                sx={{
+                  display: 'block',
+                  width: '100%',
+                  maxWidth: { xs: 480, md: 520 },
+                  mx: 'auto',
+                  aspectRatio: '6 / 5',
+                  objectFit: 'cover',
+                  borderRadius: 4,
+                  boxShadow: 6
+                }}
+              />
             </Grid>
           </Grid>
         </AppContainer>
