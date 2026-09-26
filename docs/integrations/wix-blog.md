@@ -1,7 +1,7 @@
 # Wix Blog integration
 
 - **Decision:** GO (access confirmed by Thomas on 2026-09-26)
-- **Status:** Implemented on `feat/wix-blog-api`; verified locally against the live Wix site. Deploy Preview verification and the launch items under [Launch blockers](#launch-blockers-and-open-decisions) remain.
+- **Status:** Implemented on `feat/wix-blog-api` (PR #9); verified locally and on the Deploy Preview against the live Wix site. The launch items under [Launch blockers](#launch-blockers-and-open-decisions) remain.
 - **Audience:** Shepard and Team Normandy
 - **Updated:** 2026-09-26
 - **Scope:** Use Tammy's existing Wix Blog as the publishing backend; serve the blog listing and complete articles on the new Netlify website, preserving existing article URLs
@@ -99,10 +99,17 @@ netlify/lib/blog-service.ts      fresh data, else last-known-good copy (Netlify 
   - The built client hydrates the server HTML with an empty console, and in-app navigation works afterwards.
 - **Accessibility:** axe (WCAG 2.2 AA) finds no violations on `/blog` or the article pages. The only finding on the Not Found page is a pre-existing contrast issue on its outlined "Contact Tammy" button, unrelated to this work. No horizontal scrolling at 375 px.
 - **Checks:** `npm run lint`, `npm test` (27 tests) and `npm run build` pass.
+- **Deploy Preview (PR #9, `WIX_HEADLESS_CLIENT_ID` set):**
+  - All five `/post/<slug>` pages return `200` with Wix data (`meta.source: "wix"`), `www` canonicals and their images.
+  - `/post/not-a-real-post` returns `404`. `/sitemap.xml` lists 11 URLs. Preview responses carry `X-Robots-Tag: noindex`.
+  - Repeat requests are durable-cache hits (`Cache-Status: "Netlify Durable"; hit`).
+  - The page hydrates with an empty console, and in-app navigation back to `/blog` uses one API call.
+  - Production Blobs writes aren't observed yet; they only happen on production deploys.
+- **Netlify packaging lesson:** Netlify traces npm packages for functions instead of inlining them. React Router's `module-sync` export condition broke that trace: the runtime asked for a file that wasn't packed, and `/blog` and `/post/*` returned `502`. The SSR build now bundles `react-router` and `react-router-dom` (`ssr.noExternal` in `vite.config.ts`). Add any future SSR dependency that uses `module-sync` to that list.
 
 ### Launch blockers and open decisions
 
-1. **Set `WIX_HEADLESS_CLIENT_ID` in Netlify** (Functions scope, Production + Deploy Previews). Until then the blog pages on Netlify return the `503` unavailable state. Then verify on the Deploy Preview: statuses, `Cache-Status`, hydration, Blobs writes.
+1. **`WIX_HEADLESS_CLIENT_ID` in Netlify:** set and working for Deploy Previews (verified above). Before merging to `master`, confirm it is also set for the Production context (Functions scope). After the first production request, confirm the last-known-good copy was written.
 2. **Image descriptions:** six published images have no alt text in Wix (three gallery photos, "From Silence to Stage"'s hero, and one image in each of the three older posts). Tammy should add descriptions in Wix; the site picks them up automatically.
 3. **Byline:** Wix shows "Tamara Summers"; the new site shows no author. Options: approve a least-privilege Members read to resolve the owner's name, or approve a site-configured byline.
 4. **"From Silence to Stage" date:** we show January 2, 2026, its first publication time in Pacific time (11:38 PM). Wix's page shows "Jan 3", which matches its last-published time. Confirm which date readers should see.
