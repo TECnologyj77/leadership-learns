@@ -22,6 +22,12 @@ const focusRing = {
   outlineOffset: 3,
   boxShadow: '0 0 0 3px #FFFFFF',
 };
+// Outlined and text secondary buttons sit on light surfaces, so they use text gold.
+const goldTextButton = {
+  color: gold.text,
+  '&:hover': { backgroundColor: 'rgba(116, 88, 22, 0.06)' },
+  '&:active': { backgroundColor: 'rgba(116, 88, 22, 0.12)' },
+};
 
 const theme = createTheme({
   palette: {
@@ -106,22 +112,32 @@ const theme = createTheme({
           borderRadius: 8,
           fontSize: '1rem',
           minHeight: 44, // comfortable touch target on mobile
-          '&.MuiButton-containedSecondary': {
-            color: '#1C1C1C',
-            backgroundColor: gold.accent,
-            '&:hover': { backgroundColor: gold.hover },
-            '&:active': { backgroundColor: gold.pressed },
-          },
-          '&.MuiButton-outlinedSecondary, &.MuiButton-textSecondary': {
-            color: gold.text,
-            '&:hover': { backgroundColor: 'rgba(116, 88, 22, 0.06)' },
-            '&:active': { backgroundColor: 'rgba(116, 88, 22, 0.12)' },
-          },
-          '&.MuiButton-outlinedSecondary': { borderColor: gold.text },
           '&.Mui-disabled': {
             color: 'rgba(0, 0, 0, 0.26)',
             '&.MuiButton-contained': { backgroundColor: 'rgba(0, 0, 0, 0.12)' },
           },
+          // MUI v9 no longer emits combined classes such as MuiButton-outlinedSecondary,
+          // so match variant and color by props. These stay below the disabled rule's
+          // specificity, so disabled buttons still render grey.
+          variants: [
+            {
+              props: { variant: 'contained', color: 'secondary' },
+              style: {
+                color: '#1C1C1C',
+                backgroundColor: gold.accent,
+                '&:hover': { backgroundColor: gold.hover },
+                '&:active': { backgroundColor: gold.pressed },
+              },
+            },
+            {
+              props: { variant: 'outlined', color: 'secondary' },
+              style: { ...goldTextButton, borderColor: gold.text },
+            },
+            {
+              props: { variant: 'text', color: 'secondary' },
+              style: goldTextButton,
+            },
+          ],
         },
       },
     },
