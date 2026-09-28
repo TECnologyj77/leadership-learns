@@ -21,6 +21,7 @@ site keeps the home, blog, and article paths. `netlify.toml` now permanently
 redirects the old About, booking, category, and service paths to their closest
 new pages. The past event pages have no matching event on the new site and
 should return a real 404 rather than send visitors to an unrelated page.
+All 12 redirects returned HTTP 301 on the [updated deploy](https://6abab329cda2d20008f52287--leadership-learners.netlify.app/); an unmatched event returned HTTP 404.
 
 Before cutover, compare the Wix sitemap inventory with Search Console's
 indexed pages, linked pages, and search traffic if access is available. Add
@@ -41,6 +42,8 @@ burned into the picture. Video playback, range requests, and keyboard play were
 verified on the preview. If failures become repeatable after launch, inspect the
 failing request and region first; then consider a dedicated video host or an
 adaptive streaming service with a separate captions file.
+
+A representative [blog article mobile report](https://pagespeed.web.dev/analysis/https-6abab329cda2d20008f52287--leadership-learners-netlify-app-post-mastering-disc-method-for-effective-leadership-development/lw3lie29fd?form_factor=mobile) on the updated deploy scored 98 Performance, 100 Accessibility, 100 Best Practices, 69 SEO, and 3/3 Agentic Browsing. Its only scored SEO failure was the same prelaunch crawler block. The article served its full content with one main heading, its own title and canonical URL, and BlogPosting structured data.
 
 ## Cutover sequence (requires the owner's go-ahead)
 
