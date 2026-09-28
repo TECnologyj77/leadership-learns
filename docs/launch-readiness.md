@@ -30,6 +30,14 @@ relevant replacement. After cutover, verify representative redirects and
 inspect the new canonical pages in Search Console. Keep the permanent
 redirects in place for at least a year; indefinitely is useful for old links.
 
+Editorial follow-up: the five published Wix-backed articles currently contain
+seven displayed image instances with empty alt text (six in article bodies and
+one hero). Review each image in Wix and add an accurate description when it
+conveys content; keep empty alt text for decorative images. The articles also
+have no verified visible bylines, so their BlogPosting data omits `author`.
+If Tammy confirms authorship, add the visible byline and matching structured
+data together. Neither item requires a DNS change.
+
 ## PageSpeed and quality baseline
 
 Run PageSpeed against an immutable [deploy permalink](https://6aba8a0d633a7000086c0d95--leadership-learners.netlify.app/) rather than a `deploy-preview-*` URL: Netlify injects its collaboration drawer into Deploy Previews, adding scripts and a third-party cookie issue that the production deploy will not have. The [mobile PageSpeed report](https://pagespeed.web.dev/analysis/https-6aba8a0d633a7000086c0d95--leadership-learners-netlify-app/dbbkdrktyu?form_factor=mobile) for this permalink scored Performance 93, Accessibility 100, Best Practices 100, SEO 69, and Agentic Browsing 3/3. LCP was 2.7 s and layout shift was 0. The [desktop report](https://pagespeed.web.dev/analysis/https-6aba8a0d633a7000086c0d95--leadership-learners-netlify-app/g4nv0y18zo?form_factor=desktop) scored 100, 100, 100, 69, and 3/3 respectively. These are simulated runs, with no real-user field data for the permalink.
