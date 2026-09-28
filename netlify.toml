@@ -2,6 +2,11 @@
   command = "npm run build && node scripts/write-staging-headers.mjs"
   publish = "dist"
 
+# Keep the published URLs without trailing slashes; the matching HTML files
+# are still served by the explicit rewrites below.
+[build.processing.html]
+  pretty_urls = false
+
 # Blog functions (netlify/functions): /blog and /post/:slug are server-rendered,
 # /api/blog/posts[/:slug] feed client-side navigation, /sitemap.xml tracks the
 # Wix archive. Functions with a `config.path` run before the rewrite below.
