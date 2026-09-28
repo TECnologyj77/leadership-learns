@@ -61,6 +61,9 @@ const ClientLogo: React.FC<ClientLogoProps> = ({ client }) => {
           component="img"
           src={logo}
           alt={name}
+          width={320}
+          height={254}
+          loading="lazy"
           sx={{
             display: 'block',
             maxHeight: { xs: 64, md: 80 },

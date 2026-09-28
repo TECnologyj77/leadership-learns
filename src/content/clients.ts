@@ -1,4 +1,4 @@
-import ivcLogo from '../assets/IVC_Logo.png';
+import ivcLogo from '../assets/ivc-logo.webp';
 
 export type ClientMark = 'college' | 'biotech' | 'realEstate';
 
