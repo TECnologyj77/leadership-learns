@@ -12,6 +12,23 @@ Netlify deploy or reviewing a Deploy Preview does not move those visitors.
 - Netlify has a DNS zone for this domain, but it contains only two website records. The authoritative name servers are still Wix. **Keep Wix name servers** for this launch and change the website records there. Switching name servers to Netlify as-is would drop the existing Google mail MX and SPF records, and may drop other records not shown in this handoff.
 - Wix remains the source for the blog through the Wix Headless API. Keep that connection and its Netlify environment variable working after the website moves.
 
+## Search migration review
+
+The Wix sitemap inventory checked September 28, 2026 lists the home page,
+`/blog`, `/about-5`, `/book-online`, five `/post/<slug>` articles, one blog
+category, nine `/service-page/` URLs, and three event detail URLs. The new
+site keeps the home, blog, and article paths. `netlify.toml` now permanently
+redirects the old About, booking, category, and service paths to their closest
+new pages. The past event pages have no matching event on the new site and
+should return a real 404 rather than send visitors to an unrelated page.
+
+Before cutover, compare the Wix sitemap inventory with Search Console's
+indexed pages, linked pages, and search traffic if access is available. Add
+any important URL missing from the sitemap to the redirect map when it has a
+relevant replacement. After cutover, verify representative redirects and
+inspect the new canonical pages in Search Console. Keep the permanent
+redirects in place for at least a year; indefinitely is useful for old links.
+
 ## PageSpeed and quality baseline
 
 Run PageSpeed against an immutable [deploy permalink](https://6aba8a0d633a7000086c0d95--leadership-learners.netlify.app/) rather than a `deploy-preview-*` URL: Netlify injects its collaboration drawer into Deploy Previews, adding scripts and a third-party cookie issue that the production deploy will not have. The [mobile PageSpeed report](https://pagespeed.web.dev/analysis/https-6aba8a0d633a7000086c0d95--leadership-learners-netlify-app/dbbkdrktyu?form_factor=mobile) for this permalink scored Performance 93, Accessibility 100, Best Practices 100, SEO 69, and Agentic Browsing 3/3. LCP was 2.7 s and layout shift was 0. The [desktop report](https://pagespeed.web.dev/analysis/https-6aba8a0d633a7000086c0d95--leadership-learners-netlify-app/g4nv0y18zo?form_factor=desktop) scored 100, 100, 100, 69, and 3/3 respectively. These are simulated runs, with no real-user field data for the permalink.
@@ -27,7 +44,7 @@ adaptive streaming service with a separate captions file.
 
 ## Cutover sequence (requires the owner's go-ahead)
 
-1. Finish review of PR #15 and merge it. Check the Netlify production URL for the home, corporate, individual, about, contact, blog, post, sitemap, `llms.txt`, and real 404 pages. Check contact links and video playback. This can be done before public DNS changes.
+1. Finish review of PR #15 and merge it. Check the Netlify production URL for the home, corporate, individual, about, contact, blog, post, sitemap, `llms.txt`, legacy URL redirects, and real 404 pages. Check contact links and video playback. This can be done before public DNS changes.
 2. In Netlify Domain management, set `www.leadershiplearners.com` as the primary domain. Confirm the apex is configured to redirect to `www`. Do this before pointing traffic to Netlify.
 3. Record the current website DNS values in Wix. As checked September 28, the apex has A records `185.230.63.186`, `185.230.63.171`, and `185.230.63.107`; `www` is a CNAME to `cdn3.wixdns.net`. Preserve the MX, TXT, and all other non-website records. If Wix permits lowering the website-record TTL ahead of time, do so before the scheduled switch.
 4. At the agreed time, replace only the Wix website records: make `www` a CNAME to `leadership-learners.netlify.app`; replace the apex Wix A records with Netlify's A record `75.2.60.5` (unless Netlify's domain panel gives a different site-specific target). Do **not** change name servers. Netlify's [external DNS instructions](https://docs.netlify.com/manage/domains/configure-domains/configure-external-dns/) describe these record types and targets.

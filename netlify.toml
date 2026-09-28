@@ -7,6 +7,68 @@
 [build.processing.html]
   pretty_urls = false
 
+# Keep established Wix URLs working when the website moves to Netlify.
+# Published /post/<slug> URLs and /blog already keep their existing paths.
+[[redirects]]
+  from = "/about-5"
+  to = "/about"
+  status = 301
+
+[[redirects]]
+  from = "/book-online"
+  to = "/contact"
+  status = 301
+
+[[redirects]]
+  from = "/blog/categories/autism-awareness"
+  to = "/blog"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/entrepreneur-disc-assessment-debrief"
+  to = "/individual"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/sales-disc-assessment-and-debrief"
+  to = "/individual"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/group-leadership-training-workshop"
+  to = "/corporate"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/disc-behavorial-assessment-and-debrief-1"
+  to = "/individual"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/group-disc-assessments-for-organizations"
+  to = "/corporate"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/disc-workshop-4-hour-session"
+  to = "/corporate"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/student-career-disc-assessment-debrief"
+  to = "/individual"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/speech-coaching"
+  to = "/individual"
+  status = 301
+
+[[redirects]]
+  from = "/service-page/in-person-leadership-game"
+  to = "/corporate"
+  status = 301
+
 # Blog functions (netlify/functions): /blog and /post/:slug are server-rendered,
 # /api/blog/posts[/:slug] feed client-side navigation, /sitemap.xml tracks the
 # Wix archive. Functions with a `config.path` run before the rewrite below.

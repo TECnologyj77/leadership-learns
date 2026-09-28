@@ -69,8 +69,9 @@ export const routeSeo: RouteSeoEntry[] = [
   },
   {
     path: '/blog',
-    title: 'Blog | Leadership Learners',
-    description: 'Insights on leadership, systems, and neurodiversity from Leadership Learners.',
+    title: 'Leadership, Systems & Neurodiversity Blog | Leadership Learners',
+    description:
+      'Read The Clear Mind Blog from Leadership Learners for articles on leadership, systems, and neurodiversity.',
     breadcrumb: 'Blog',
   },
   {
