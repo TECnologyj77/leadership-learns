@@ -12,8 +12,44 @@
 [functions]
   node_bundler = "esbuild"
 
-# Serve React Router paths from the SPA while leaving existing static assets intact.
+# Static marketing pages are prerendered by scripts/prerender-static.mjs.
+# Blog and post routes are handled by functions before these redirects.
+[[redirects]]
+  from = "/corporate"
+  to = "/corporate/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/individual"
+  to = "/individual/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/about/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact/index.html"
+  status = 200
+
+# Unknown URLs must return a real 404, including optional agent manifests
+# that this site does not provide, rather than a 200 response with SPA HTML.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

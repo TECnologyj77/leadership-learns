@@ -1,0 +1,12 @@
+# Leadership Learners
+
+Leadership Learners provides leadership training for managers and teams, communication coaching for individuals, and DISC assessments. Tammy Summers leads the training and coaching.
+
+## Main pages
+
+- [Home](https://www.leadershiplearners.com/): Overview of services and ways to contact Tammy.
+- [Corporate leadership training](https://www.leadershiplearners.com/corporate): Group training and organizational DISC assessments.
+- [Individual communication coaching](https://www.leadershiplearners.com/individual): One-to-one coaching and individual DISC assessments.
+- [About Tammy Summers](https://www.leadershiplearners.com/about): Background and approach.
+- [Blog](https://www.leadershiplearners.com/blog): Articles on leadership, communication, and related topics.
+- [Contact](https://www.leadershiplearners.com/contact): Phone and email contact options.

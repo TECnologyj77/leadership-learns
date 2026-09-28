@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && vite build --ssr",
+    "build": "tsc -b && vite build && vite build --ssr && node scripts/prerender-static.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "node --test \"netlify/**/*.test.ts\"",

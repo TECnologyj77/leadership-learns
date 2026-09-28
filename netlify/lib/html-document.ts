@@ -42,13 +42,15 @@ export function renderHtmlDocument(input: {
   headTags: HeadTag[];
   styles: string;
   appHtml: string;
-  blogData: BlogInitialData;
+  blogData?: BlogInitialData;
 }): string {
   const { template, headTags, styles, appHtml, blogData } = input;
   if (!ROUTE_META.test(template) || !template.includes(ROOT)) {
     throw new Error('index.html is missing the route-meta markers or the empty #root element');
   }
-  const dataScript = `<script id="${BLOG_DATA_ELEMENT_ID}" type="application/json">${scriptSafeJson(blogData)}</script>`;
+  const dataScript = blogData
+    ? `<script id="${BLOG_DATA_ELEMENT_ID}" type="application/json">${scriptSafeJson(blogData)}</script>`
+    : '';
   return template
     .replace(ROUTE_META, () => renderHeadTags(headTags))
     .replace('</head>', () => `${styles}\n  </head>`)

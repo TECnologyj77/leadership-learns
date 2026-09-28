@@ -13,8 +13,8 @@ import './index.css';
 initializeAnalytics();
 
 const container = document.getElementById('root')!;
-// /blog and /post/<slug> arrive server-rendered with their data embedded;
-// every other route is a client-rendered SPA page.
+// Static routes and blog pages arrive with server-rendered markup; blog pages
+// also embed their data. The empty shell remains available during development.
 const blogData = readEmbeddedBlogData();
 const app = (
   <BrowserRouter>
@@ -22,5 +22,5 @@ const app = (
   </BrowserRouter>
 );
 
-if (blogData && container.hasChildNodes()) hydrateRoot(container, app);
+if (container.hasChildNodes()) hydrateRoot(container, app);
 else createRoot(container).render(app);
