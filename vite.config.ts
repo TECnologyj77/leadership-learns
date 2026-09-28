@@ -23,6 +23,7 @@ export default defineConfig(({ mode, isSsrBuild }) => {
             input: {
               'render-app': 'src/server/render-app.tsx',
               'index-template': 'src/server/index-template.ts',
+              'prerender-pages': 'src/server/prerender-pages.ts',
             },
             output: { entryFileNames: '[name].js' },
           },

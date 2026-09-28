@@ -24,7 +24,7 @@ function handlerWith(result: { list?: ListResult; post?: PostResult }) {
   };
   return createBlogPageHandler({
     template,
-    renderApp: (url, data) => ({ html: `<main data-url="${url}" data-status="${data.status}"></main>`, styles: '<style data-emotion="css x"></style>' }),
+    renderApp: (url, data) => ({ html: `<main data-url="${url}" data-status="${data?.status ?? 'none'}"></main>`, styles: '<style data-emotion="css x"></style>' }),
     serviceFor: () => service,
   });
 }

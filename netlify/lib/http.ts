@@ -12,6 +12,14 @@ type Headers = Record<string, string>;
 
 const BROWSER_REVALIDATE = 'public, max-age=0, must-revalidate';
 
+// Netlify's static header rules do not apply to function responses.
+export const SECURITY_HEADERS: Headers = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+};
+
 export const CACHE: Record<'fresh' | 'stale' | 'notFound' | 'unavailable', Headers> = {
   fresh: {
     'Cache-Control': BROWSER_REVALIDATE,
@@ -44,6 +52,6 @@ export const robotsHeaders = (ctx: HandlerContext): Headers =>
 export function json(body: unknown, status: number, headers: Headers): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json; charset=utf-8', ...headers },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', ...SECURITY_HEADERS, ...headers },
   });
 }

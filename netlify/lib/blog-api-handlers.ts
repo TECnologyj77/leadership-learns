@@ -4,7 +4,7 @@
 import type { BlogPost, BlogResponse, BlogSummary } from '../../src/types/blog.ts';
 import { slugFromPostApiPath } from '../../src/lib/blog-paths.ts';
 import { blogServiceFor, type HandlerContext } from './handler-context.ts';
-import { CACHE, json, robotsHeaders } from './http.ts';
+import { CACHE, json, robotsHeaders, SECURITY_HEADERS } from './http.ts';
 
 const unavailable = (ctx: HandlerContext) =>
   json({ error: 'blog_unavailable' }, 503, { ...CACHE.unavailable, ...robotsHeaders(ctx) });
@@ -27,7 +27,7 @@ export async function handlePost(request: Request, ctx: HandlerContext): Promise
     case 'moved':
       return new Response(null, {
         status: 301,
-        headers: { Location: new URL(`/api/blog/posts/${result.path.slice('/post/'.length)}`, request.url).href, ...CACHE.fresh },
+        headers: { Location: new URL(`/api/blog/posts/${result.path.slice('/post/'.length)}`, request.url).href, ...CACHE.fresh, ...SECURITY_HEADERS },
       });
     case 'not_found':
       return json({ error: 'post_not_found' }, 404, { ...CACHE.notFound, ...robotsHeaders(ctx) });

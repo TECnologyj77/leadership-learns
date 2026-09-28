@@ -1,4 +1,4 @@
-import austinAvatar from '../assets/austin_avatar.jpg';
+import austinAvatar from '../assets/austin-avatar.webp';
 
 export type Testimonial = {
   quote: string;

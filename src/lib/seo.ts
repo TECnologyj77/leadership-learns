@@ -10,7 +10,7 @@ export const TAMMY_OG_IMAGE = absoluteUrl('/og-tammy.jpg');
 
 /** Finds the static route entry for a pathname, or null if it needs special handling. */
 export const findRouteSeo = (pathname: string): RouteSeoEntry | null =>
-  routeSeo.find((r) => r.path === pathname) ?? null;
+  routeSeo.find((r) => r.path === (pathname === '/' ? '/' : pathname.replace(/\/+$/, ''))) ?? null;
 
 export interface PageMeta {
   path: string;
@@ -119,18 +119,18 @@ export function staticRouteMeta(pathname: string): PageMeta | null {
   const entry = findRouteSeo(pathname);
   if (!entry) return null;
   return {
-    path: pathname,
+    path: entry.path,
     title: entry.title,
     description: entry.description,
     robots: entry.robots,
-    canonicalPath: pathname,
-    ogImage: pathname === '/about' ? TAMMY_OG_IMAGE : undefined,
+    canonicalPath: entry.path,
+    ogImage: entry.path === '/about' ? TAMMY_OG_IMAGE : undefined,
     breadcrumb:
-      pathname === '/'
+      entry.path === '/'
         ? undefined
         : [
             { name: 'Home', path: '/' },
-            { name: entry.breadcrumb, path: pathname },
+            { name: entry.breadcrumb, path: entry.path },
           ],
   };
 }

@@ -1,7 +1,8 @@
 # The production origin (www.leadershiplearners.com) is confirmed, but
 # Leadership Learners has not launched yet (confirmed with the project
-# owner). Every environment, including whatever is currently deployed as
-# "production," is blocked from crawling and indexing until that changes.
+# owner). Compliant crawlers are asked not to fetch the Netlify site until
+# launch. A robots.txt disallow alone does not guarantee that its URL cannot
+# appear in search results; deploy previews also send a noindex header.
 #
 # Deploy previews and the staging branch get an additional layer of
 # protection at request time (see scripts/write-staging-headers.mjs, and

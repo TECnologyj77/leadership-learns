@@ -2,7 +2,7 @@
 // so it changes when Tammy publishes or unpublishes in Wix.
 import { routeSeo, SITE_URL } from '../../src/lib/site-config.ts';
 import { blogServiceFor, type HandlerContext } from './handler-context.ts';
-import { CACHE, robotsHeaders } from './http.ts';
+import { CACHE, robotsHeaders, SECURITY_HEADERS } from './http.ts';
 
 const escapeXml = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -14,7 +14,7 @@ export async function handleSitemap(ctx: HandlerContext): Promise<Response> {
   const result = await blogServiceFor(ctx).loadPostList();
   // Without the archive a sitemap would silently drop every article.
   if (result.status !== 'ok') {
-    return new Response('Sitemap temporarily unavailable', { status: 503, headers: { ...CACHE.unavailable, ...robotsHeaders(ctx) } });
+    return new Response('Sitemap temporarily unavailable', { status: 503, headers: { ...CACHE.unavailable, ...SECURITY_HEADERS, ...robotsHeaders(ctx) } });
   }
 
   const urls = [
@@ -27,6 +27,7 @@ export async function handleSitemap(ctx: HandlerContext): Promise<Response> {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       ...(result.meta.stale ? CACHE.stale : CACHE.fresh),
+      ...SECURITY_HEADERS,
       ...robotsHeaders(ctx),
     },
   });

@@ -43,7 +43,7 @@ netlify/lib/blog-service.ts      fresh data, else last-known-good copy (Netlify 
 
 ### HTML delivery, metadata and status codes
 
-- `/blog` and `/post/<slug>` are server-rendered by one function using the app's own components. `vite build --ssr` bundles `src/server/render-app.tsx` and the built `index.html` into `netlify/ssr/` (git-ignored); MUI/Emotion styles are extracted into `<head>`; the data used is embedded as JSON and `src/main.tsx` hydrates it. All other routes stay client-rendered.
+- `/blog` and `/post/<slug>` are server-rendered by one function using the app's own components. `vite build --ssr` bundles `src/server/render-app.tsx` and the built `index.html` into `netlify/ssr/` (git-ignored); MUI/Emotion styles are extracted into `<head>`; the data used is embedded as JSON and `src/main.tsx` hydrates it. Home, Corporate, Individual, About, and Contact are prerendered during the build.
 - The response carries article-specific `<title>`, description (Wix SEO description, else excerpt), canonical, Open Graph/Twitter tags, `article:published_time`/`modified_time`, and BreadcrumbList + BlogPosting JSON-LD. It also has the full article body, so no JavaScript is needed to read it or index it.
 - The `index.html` defaults between `<!-- route-meta:start -->` and `<!-- route-meta:end -->` are replaced, not duplicated. Site-wide Organization/WebSite/Person JSON-LD stays.
 - **Statuses:** `200`; `301` when Wix now serves the post under a new slug; `404` + `noindex` + the site's Not Found page for unknown, unpublished, pricing-plan-gated or malformed slugs (checked before calling Wix); `503` + `noindex` + `Retry-After` when Wix is unavailable and no saved copy exists.
