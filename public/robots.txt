@@ -1,18 +1,11 @@
-# The production origin (www.leadershiplearners.com) is confirmed, but
-# Leadership Learners has not launched yet (confirmed with the project
-# owner). Compliant crawlers are asked not to fetch the Netlify site until
-# launch. A robots.txt disallow alone does not guarantee that its URL cannot
-# appear in search results; deploy previews also send a noindex header.
+# Leadership Learners is live at www.leadershiplearners.com, and crawlers
+# may fetch every page. The sitemap is generated live from the Wix blog
+# archive by netlify/functions/sitemap.mts.
 #
-# Deploy previews and the staging branch get an additional layer of
-# protection at request time (see scripts/write-staging-headers.mjs, and
-# netlify/lib/http.ts for the blog function responses), but this file is
-# the one switch that governs the real production deploy.
-#
-# To go live, replace everything below with (the sitemap is generated live
-# from the Wix blog archive by netlify/functions/sitemap.mts):
-#   User-agent: *
-#   Allow: /
-#   Sitemap: https://www.leadershiplearners.com/sitemap.xml
+# Deploy previews and the staging branch deploy stay out of search results
+# through an X-Robots-Tag: noindex, nofollow header (see
+# scripts/write-staging-headers.mjs, and netlify/lib/http.ts for the blog
+# function responses), not through this file.
 User-agent: *
-Disallow: /
+Allow: /
+Sitemap: https://www.leadershiplearners.com/sitemap.xml
