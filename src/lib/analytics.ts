@@ -7,24 +7,24 @@ export interface CtaTracking {
   contactMethod?: 'phone' | 'email';
 }
 
-const productionHosts = ['leadershiplearners.com', 'www.leadershiplearners.com'];
+const productionHosts = ['leadershiplearners.com', 'www.leadershiplearners.com', 'leadership-learners.netlify.app','localhost'];
 let initialized = false;
 
 export function initializeAnalytics() {
   const key = import.meta.env.VITE_POSTHOG_KEY;
   const enabled = import.meta.env.VITE_POSTHOG_ENABLED;
-  const isProductionSite = import.meta.env.PROD && productionHosts.includes(window.location.hostname);
+  const isProductionSite = import.meta.env.DEV && productionHosts.includes(window.location.hostname);
+  console.log(isProductionSite, initialized, key );
   if (initialized || !key || enabled === 'false' || (enabled !== 'true' && !isProductionSite)) return;
-
   posthog.init(key, {
-    api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
-    ui_host: 'https://us.posthog.com',
-    autocapture: false,
-    capture_pageview: false,
+    api_host: import.meta.env.VITE_POSTHOG_HOST ,
+    ui_host: import.meta.env.VITE_POSTHOG_HOST,
+    autocapture: true,
+    capture_pageview: true,
     capture_pageleave: true,
     person_profiles: 'identified_only',
     disable_session_recording: false,
-    session_recording: {
+     session_recording: {
       maskAllInputs: true,
       maskTextSelector: '.ph-mask',
       blockSelector: '.ph-no-capture',
