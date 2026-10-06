@@ -5,7 +5,8 @@
 import { absoluteUrl, notFoundSeo, SITE_NAME, SITE_URL, routeSeo, type RouteSeoEntry } from './site-config.ts';
 import type { BlogPost } from '../types/blog';
 
-const DEFAULT_OG_IMAGE = absoluteUrl('/og-logo.jpg');
+const DEFAULT_OG_IMAGE = absoluteUrl('/og-leadership-v2.jpg');
+const DEFAULT_OG_IMAGE_ALT = 'Leadership Learners. Build a stronger team. Speak with more confidence.';
 export const TAMMY_OG_IMAGE = absoluteUrl('/og-tammy.jpg');
 
 /** Finds the static route entry for a pathname, or null if it needs special handling. */
@@ -34,7 +35,7 @@ export type HeadTag =
 // Tags that only some pages have; applyPageMeta removes them when absent.
 const OPTIONAL_TAGS = {
   links: ['canonical'],
-  meta: ['article:published_time', 'article:modified_time'],
+  meta: ['article:published_time', 'article:modified_time', 'og:image:type', 'og:image:width', 'og:image:height', 'og:image:alt', 'twitter:image:alt'],
   jsonld: ['ld-breadcrumb', 'ld-article'],
 };
 
@@ -66,6 +67,16 @@ export function headTags(meta: PageMeta): HeadTag[] {
     { kind: 'meta', attribute: 'name', key: 'twitter:description', content: meta.description },
     { kind: 'meta', attribute: 'name', key: 'twitter:image', content: ogImage },
   );
+
+  if (ogImage === DEFAULT_OG_IMAGE) {
+    tags.push(
+      { kind: 'meta', attribute: 'property', key: 'og:image:type', content: 'image/jpeg' },
+      { kind: 'meta', attribute: 'property', key: 'og:image:width', content: '1200' },
+      { kind: 'meta', attribute: 'property', key: 'og:image:height', content: '630' },
+      { kind: 'meta', attribute: 'property', key: 'og:image:alt', content: DEFAULT_OG_IMAGE_ALT },
+      { kind: 'meta', attribute: 'name', key: 'twitter:image:alt', content: DEFAULT_OG_IMAGE_ALT },
+    );
+  }
 
   const post = meta.article;
   if (post) {
@@ -226,7 +237,8 @@ export function applyPageMeta(meta: PageMeta) {
     if (!present.has(`link:${rel}`)) document.head.querySelector(`link[rel="${rel}"]`)?.remove();
   }
   for (const key of OPTIONAL_TAGS.meta) {
-    if (!present.has(`meta:${key}`)) document.head.querySelector(`meta[property="${key}"]`)?.remove();
+    // twitter:* tags use name=, Open Graph and article:* tags use property=.
+    if (!present.has(`meta:${key}`)) document.head.querySelector(`meta[property="${key}"], meta[name="${key}"]`)?.remove();
   }
   for (const id of OPTIONAL_TAGS.jsonld) {
     if (!present.has(`jsonld:${id}`)) document.getElementById(id)?.remove();
