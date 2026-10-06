@@ -15,9 +15,9 @@
       overwrites all of this per route once React mounts (see its own comment for why
       Organization/WebSite/Person stay static here instead of moving there).
 
-      SITE_URL below is the confirmed production origin (www.leadershiplearners.com), but the
-      site is not public yet — see src/lib/site-config.ts, the source of truth for the
-      React app. If the origin ever changes, keep this file's SITE_URL literals in sync.
+      SITE_URL below is the production origin (www.leadershiplearners.com) — see
+      src/lib/site-config.ts, the source of truth for the React app. If the origin ever
+      changes, keep this file's SITE_URL literals in sync.
 
       The route-meta markers let the blog page function (netlify/lib/html-document.ts)
       replace these defaults with server-rendered, page-specific tags. Keep them.

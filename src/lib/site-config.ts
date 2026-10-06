@@ -1,18 +1,12 @@
 // Single source of truth for site-wide SEO facts: the production URL, brand
 // identity, confirmed contact details, and per-route title/description copy.
 //
-// SITE_URL is the confirmed production origin. It uses www because that is
-// the host the current public site (and every published /post/<slug> URL)
-// lives on: https://leadershiplearners.com permanently redirects to it. The
-// site is not public yet (confirmed with the project owner) — nothing here
-// causes indexing on its own; public/robots.txt disallows all crawling until
-// launch. Canonical/OG/sitemap URLs are pre-wired against the real origin so
-// going live only means flipping robots.txt. If the origin ever changes, update
-// it in two places:
+// SITE_URL is the production origin. It uses www because every published
+// /post/<slug> URL from the Wix site uses that host. Canonical, OG and sitemap
+// URLs are all built from it, and public/robots.txt allows crawling. If the
+// origin ever changes, update it in two places:
 //   1. SITE_URL below (also used by the server-rendered blog pages and sitemap).
 //   2. The matching literals in index.html (search for SITE_URL).
-// To actually go live once ready: replace public/robots.txt with the "Allow"
-// version described in its own comments.
 export const SITE_URL = 'https://www.leadershiplearners.com';
 
 export const SITE_NAME = 'Leadership Learners';

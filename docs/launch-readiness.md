@@ -1,5 +1,10 @@
 # Leadership Learners launch handoff
 
+Status checked October 6, 2026: both public hostnames resolve to Netlify and
+serve the new site over HTTPS, and `public/robots.txt` now allows crawling
+(step 6). Step 2 is still open: `www` redirects to the apex, while canonical,
+sitemap, and Open Graph URLs use `www`.
+
 Status checked September 28, 2026. The public `leadershiplearners.com` and
 `www.leadershiplearners.com` DNS records still resolve through Wix. Changing a
 Netlify deploy or reviewing a Deploy Preview does not move those visitors.
