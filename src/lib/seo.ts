@@ -237,7 +237,8 @@ export function applyPageMeta(meta: PageMeta) {
     if (!present.has(`link:${rel}`)) document.head.querySelector(`link[rel="${rel}"]`)?.remove();
   }
   for (const key of OPTIONAL_TAGS.meta) {
-    if (!present.has(`meta:${key}`)) document.head.querySelector(`meta[property="${key}"]`)?.remove();
+    // twitter:* tags use name=, Open Graph and article:* tags use property=.
+    if (!present.has(`meta:${key}`)) document.head.querySelector(`meta[property="${key}"], meta[name="${key}"]`)?.remove();
   }
   for (const id of OPTIONAL_TAGS.jsonld) {
     if (!present.has(`jsonld:${id}`)) document.getElementById(id)?.remove();

@@ -49,6 +49,10 @@ test('an article responds 200 with its own metadata, body and embedded data', as
   // The shell's homepage defaults are replaced, not duplicated.
   assert.equal(html.match(/<title>/g)?.length, 1);
   assert.equal(html.match(/rel="canonical"/g)?.length, 1);
+  // The article's own cover is shared, without the default image's size or description.
+  assert.ok(html.includes(`<meta property="og:image" content="${post.coverImage?.src}" />`));
+  assert.equal(html.match(/property="og:image"/g)?.length, 1);
+  assert.doesNotMatch(html, /og:image:(type|width|height|alt)|twitter:image:alt|og-leadership-v2/);
   // Site-wide Organization structured data stays.
   assert.ok(html.includes('"@type": "Organization"'));
 });
@@ -88,6 +92,11 @@ test('the listing renders every post and non-production responses are noindex', 
   assert.equal(response.headers.get('X-Robots-Tag'), 'noindex, nofollow');
   assert.ok(html.includes('<link rel="canonical" href="https://www.leadershiplearners.com/blog" />'));
   assert.ok(html.includes(`"path":"/post/${SLUG}"`));
+  // Pages without their own image share the default 1200 × 630 image, once.
+  assert.equal(html.match(/property="og:image"/g)?.length, 1);
+  assert.ok(html.includes('<meta property="og:image" content="https://www.leadershiplearners.com/og-leadership-v2.jpg" />'));
+  assert.ok(html.includes('<meta property="og:image:width" content="1200" />'));
+  assert.ok(html.includes('<meta property="og:image:height" content="630" />'));
 });
 
 test('text and data from Wix cannot break out of their HTML context', () => {
