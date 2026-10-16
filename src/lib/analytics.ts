@@ -7,7 +7,7 @@ export interface CtaTracking {
   contactMethod?: 'phone' | 'email';
 }
 
-const productionHosts = ['leadershiplearners.com', 'www.leadershiplearners.com'];
+const productionHosts = ['leadershiplearners.com', 'www.leadershiplearners.com', 'leadership-learners.netlify.app','localhost'];
 let initialized = false;
 let loading = false;
 let posthog: PostHogClient | null = null;
@@ -16,47 +16,47 @@ let pageviewCaptured = false;
 export function initializeAnalytics() {
   const key = import.meta.env.VITE_POSTHOG_PROJECT_TOKEN || import.meta.env.VITE_POSTHOG_KEY;
   const enabled = import.meta.env.VITE_POSTHOG_ENABLED;
-  const isProductionSite = import.meta.env.PROD && productionHosts.includes(window.location.hostname);
-  if (initialized || loading || !key || enabled === 'false' || (enabled !== 'true' && !isProductionSite)) return;
-
+  const isProductionSite = import.meta.env.DEV && productionHosts.includes(window.location.hostname);
+  console.log(isProductionSite, initialized, key );
+  if (initialized || loading ||!key || enabled === 'false' || (enabled !== 'true' && !isProductionSite)) return;
   loading = true;
   void import('posthog-js').then(({ default: client }) => {
     client.init(key, {
-      api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
-      ui_host: 'https://us.posthog.com',
-      autocapture: false,
-      capture_pageview: false,
-      capture_pageleave: true,
-      person_profiles: 'identified_only',
-      disable_session_recording: false,
-      session_recording: {
-        maskAllInputs: true,
-        maskTextSelector: '.ph-mask',
-        blockSelector: '.ph-no-capture',
-        recordHeaders: false,
-        recordBody: false,
-        recordCrossOriginIframes: false,
-      },
-      capture_exceptions: true,
-      before_send: (event) => {
-        // Keep attribution from the SDK, but strip query strings and fragments
-        // from URLs so future contact-form or campaign links cannot leak values.
-        if (event?.properties) {
-          for (const name of ['$current_url', '$referrer', '$initial_current_url', '$initial_referrer']) {
-            const value = event.properties[name];
-            if (typeof value !== 'string') continue;
-            try {
-              const url = new URL(value);
-              event.properties[name] = `${url.origin}${url.pathname}`;
-            } catch {
-              delete event.properties[name];
-            }
+      api_host: import.meta.env.VITE_POSTHOG_HOST ,
+      ui_host: import.meta.env.VITE_POSTHOG_HOST,
+      autocapture: true,
+      capture_pageview: true,
+    capture_pageleave: true,
+    person_profiles: 'identified_only',
+    disable_session_recording: false,
+     session_recording: {
+      maskAllInputs: true,
+      maskTextSelector: '.ph-mask',
+      blockSelector: '.ph-no-capture',
+      recordHeaders: false,
+      recordBody: false,
+      recordCrossOriginIframes: false,
+    },
+    capture_exceptions: true,
+    before_send: (event) => {
+      // Keep attribution from the SDK, but strip query strings and fragments
+      // from URLs so future contact-form or campaign links cannot leak values.
+      if (event?.properties) {
+        for (const name of ['$current_url', '$referrer', '$initial_current_url', '$initial_referrer']) {
+          const value = event.properties[name];
+          if (typeof value !== 'string') continue;
+          try {
+            const url = new URL(value);
+            event.properties[name] = `${url.origin}${url.pathname}`;
+          } catch {
+            delete event.properties[name];
           }
         }
-        return event;
-      },
-    });
-    client.register({
+      }
+      return event;
+    },
+  });
+  client.register({
       site: 'leadership_learners',
       environment: isProductionSite ? 'production' : import.meta.env.DEV ? 'development' : 'preview',
     });
