@@ -69,6 +69,25 @@
   to = "/corporate"
   status = 301
 
+# Wix booking pages Google still has from the old site. The leadership-game
+# bookings match the service redirects above; any other booking goes to
+# /contact, like /book-online. Past event pages stay a real 404 (see
+# docs/launch-readiness.md).
+[[redirects]]
+  from = "/booking-calendar/in-person-leadership-game"
+  to = "/corporate"
+  status = 301
+
+[[redirects]]
+  from = "/booking-calendar/virtual-leadership-game-session"
+  to = "/corporate"
+  status = 301
+
+[[redirects]]
+  from = "/booking-calendar/*"
+  to = "/contact"
+  status = 301
+
 # Blog functions (netlify/functions): /blog and /post/:slug are server-rendered,
 # /api/blog/posts[/:slug] feed client-side navigation, /sitemap.xml tracks the
 # Wix archive. Functions with a `config.path` run before the rewrite below.

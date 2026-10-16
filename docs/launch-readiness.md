@@ -28,6 +28,12 @@ new pages. The past event pages have no matching event on the new site and
 should return a real 404 rather than send visitors to an unrelated page.
 All 12 redirects returned HTTP 301 on the [updated deploy](https://6abab329cda2d20008f52287--leadership-learners.netlify.app/); an unmatched event returned HTTP 404.
 
+Search Console, checked October 16, 2026, also knew two Wix
+`/booking-calendar/` URLs that were not in the sitemap inventory. The two
+leadership-game bookings now redirect to `/corporate`, and any other
+`/booking-calendar/*` URL redirects to `/contact`. The past event URL that
+Search Console lists still returns 404, as intended.
+
 Before cutover, compare the Wix sitemap inventory with Search Console's
 indexed pages, linked pages, and search traffic if access is available. Add
 any important URL missing from the sitemap to the redirect map when it has a
