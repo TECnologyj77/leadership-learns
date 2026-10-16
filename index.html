@@ -5,14 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Start Inter downloading with the HTML rather than after first render; these are the Latin files main.tsx loads. -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2" />
+
     <!--
       Static, non-JS-visible defaults for the homepage. src/components/seo/RouteSeo.tsx
       overwrites all of this per route once React mounts (see its own comment for why
       Organization/WebSite/Person stay static here instead of moving there).
 
-      SITE_URL below is the confirmed production origin (www.leadershiplearners.com), but the
-      site is not public yet — see src/lib/site-config.ts, the source of truth for the
-      React app. If the origin ever changes, keep this file's SITE_URL literals in sync.
+      SITE_URL below is the production origin (www.leadershiplearners.com) — see
+      src/lib/site-config.ts, the source of truth for the React app. If the origin ever
+      changes, keep this file's SITE_URL literals in sync.
 
       The route-meta markers let the blog page function (netlify/lib/html-document.ts)
       replace these defaults with server-rendered, page-specific tags. Keep them.
@@ -34,7 +39,11 @@
       content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
     />
     <meta property="og:url" content="https://www.leadershiplearners.com/" />
-    <meta property="og:image" content="https://www.leadershiplearners.com/og-logo.jpg" />
+    <meta property="og:image" content="https://www.leadershiplearners.com/og-leadership-v2.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Leadership Learners. Build a stronger team. Speak with more confidence." />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Leadership Learners | Leadership Training & Coaching" />
@@ -42,7 +51,8 @@
       name="twitter:description"
       content="Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers."
     />
-    <meta name="twitter:image" content="https://www.leadershiplearners.com/og-logo.jpg" />
+    <meta name="twitter:image" content="https://www.leadershiplearners.com/og-leadership-v2.jpg" />
+    <meta name="twitter:image:alt" content="Leadership Learners. Build a stronger team. Speak with more confidence." />
     <!-- route-meta:end -->
 
     <!-- Organization, WebSite and Person facts, confirmed elsewhere on the site

@@ -14,7 +14,8 @@ import ClientLogo from '../components/marketing/ClientLogo';
 import VideoPlayer from '../components/ui/VideoPlayer';
 import { trackCta } from '../lib/analytics';
 import overallVideo from '../assets/Overall Video (9x16).mp4';
-import tammyImg from '../assets/tammy.jpg';
+import videoPoster from '../assets/video-poster.webp';
+import tammyImg from '../assets/tammy-home.webp';
 import { homeTestimonials } from '../content/testimonials';
 import { homeClients } from '../content/clients';
 
@@ -71,7 +72,7 @@ const Home: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <VideoPlayer src={overallVideo} variant="vertical" />
+                <VideoPlayer src={overallVideo} poster={videoPoster} variant="vertical" />
               </Box>
             </Grid>
           </Grid>
@@ -169,7 +170,10 @@ const Home: React.FC = () => {
                 component="img"
                 src={tammyImg}
                 alt="Tammy Summers, leadership trainer and coach"
-                sx={{ width: '100%', borderRadius: 4, boxShadow: 4, display: 'block' }}
+                width={480}
+                height={722}
+                loading="lazy"
+                sx={{ width: '100%', height: 'auto', borderRadius: 4, boxShadow: 4, display: 'block' }}
               />
             </Grid>
             <Grid size={{ xs: 12, md: 7 }}>

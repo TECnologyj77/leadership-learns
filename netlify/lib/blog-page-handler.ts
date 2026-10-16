@@ -9,7 +9,7 @@ import { headTags, notFoundMeta, postPageMeta, staticRouteMeta, unavailableMeta,
 import type { BlogService } from './blog-service.ts';
 import { blogServiceFor, type HandlerContext } from './handler-context.ts';
 import { renderHtmlDocument } from './html-document.ts';
-import { CACHE, robotsHeaders } from './http.ts';
+import { CACHE, robotsHeaders, SECURITY_HEADERS } from './http.ts';
 
 interface Page {
   status: number;
@@ -67,14 +67,14 @@ export function createBlogPageHandler({
     const page = slug !== null ? await postPage(service, slug, url.pathname) : await listPage(service);
 
     if ('redirect' in page) {
-      return new Response(null, { status: 301, headers: { Location: new URL(page.redirect, url).href, ...CACHE.fresh } });
+      return new Response(null, { status: 301, headers: { Location: new URL(page.redirect, url).href, ...CACHE.fresh, ...SECURITY_HEADERS } });
     }
 
     const { html, styles } = renderApp(url.pathname, page.blogData);
     const document = renderHtmlDocument({ template, headTags: headTags(page.meta), styles, appHtml: html, blogData: page.blogData });
     return new Response(document, {
       status: page.status,
-      headers: { 'Content-Type': 'text/html; charset=utf-8', ...page.cache, ...robotsHeaders(ctx) },
+      headers: { 'Content-Type': 'text/html; charset=utf-8', ...page.cache, ...SECURITY_HEADERS, ...robotsHeaders(ctx) },
     });
   };
 }

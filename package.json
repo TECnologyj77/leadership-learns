@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && vite build --ssr",
+    "build": "tsc -b && vite build && vite build --ssr && node scripts/prerender-static.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "node --test \"netlify/**/*.test.ts\"",
@@ -17,7 +17,6 @@
     "@emotion/server": "11.11.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/inter": "^5.2.8",
-    "@fontsource/manrope": "^5.2.8",
     "@mui/icons-material": "^9.0.0",
     "@mui/material": "^9.0.0",
     "@netlify/blobs": "11.1.1",

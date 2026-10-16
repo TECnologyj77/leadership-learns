@@ -5,7 +5,7 @@ import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
-import tammyImg from '../assets/tammy.jpg';
+import tammyImg from '../assets/tammy.webp';
 import tammyWithMaxwellImg from '../assets/tammy_with_jon.png';
 
 const About: React.FC = () => {
@@ -31,8 +31,11 @@ const About: React.FC = () => {
                 component="img" 
                 src={tammyImg} 
                 alt="Tammy Summers, leadership trainer and coach" 
+                width={759}
+                height={1142}
                 sx={{ 
                   width: '100%', 
+                  height: 'auto',
                   borderRadius: 4, 
                   boxShadow: 4 
                 }} 

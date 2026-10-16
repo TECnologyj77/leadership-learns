@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Paper } from '@mui/material';
+import { Grid, Box, Paper, Avatar } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
@@ -15,7 +15,8 @@ import ProcessSteps from '../components/marketing/ProcessSteps';
 import speechCoachingImg from '../assets/services/Speech Coaching.jpg';
 import studentDiscImg from '../assets/services/Student + Career DISC Assessment and Debrief.jpeg';
 import salesDiscImg from '../assets/services/Sales DISC Assessment and Debrief.jpg';
-import { individualTestimonials } from '../content/testimonials';
+import tammyWithAustinImg from '../assets/tammy_with_austin.jpg';
+import { austinMoralesTestimonial, individualTestimonials } from '../content/testimonials';
 
 const Individual: React.FC = () => {
   return (
@@ -41,6 +42,54 @@ const Individual: React.FC = () => {
               <AppText variant="body2" color="text.secondary" sx={{ mt: 2 }}>
                 Call or email to discuss your communication goals and coaching or assessment options.
               </AppText>
+            </Grid>
+            <Grid size={{ xs: 12, md: 5 }}>
+              <Box sx={{ position: 'relative', maxWidth: { xs: 360, md: 440 }, mx: 'auto', mb: { xs: 0, md: 3 } }}>
+                <Box
+                  component="img"
+                  src={tammyWithAustinImg}
+                  alt="Tammy Summers with her public speaking client Austin Morales"
+                  sx={{
+                    display: 'block',
+                    width: '100%',
+                    aspectRatio: '4 / 5',
+                    objectFit: 'cover',
+                    borderRadius: 4,
+                    boxShadow: 4
+                  }}
+                />
+                {/* Austin's result, pulled from his testimonial */}
+                <Paper
+                  component="figure"
+                  sx={{
+                    position: 'absolute',
+                    left: { xs: 12, md: -32 },
+                    bottom: { xs: 12, md: -24 },
+                    maxWidth: 260,
+                    m: 0,
+                    p: 2,
+                    borderRadius: 3,
+                    boxShadow: 6,
+                    borderLeft: '4px solid',
+                    borderLeftColor: 'secondary.main'
+                  }}
+                >
+                  <AppText component="blockquote" variant="body1" sx={{ fontStyle: 'italic', fontWeight: 600, m: 0, mb: 1.5 }}>
+                    "It's my new job."
+                  </AppText>
+                  <Box component="figcaption" sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Avatar src={austinMoralesTestimonial.avatar} alt="" sx={{ width: 40, height: 40 }} />
+                    <Box>
+                      <AppText variant="subtitle2" component="p" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+                        {austinMoralesTestimonial.author}
+                      </AppText>
+                      <AppText variant="caption" color="text.secondary">
+                        {austinMoralesTestimonial.role}
+                      </AppText>
+                    </Box>
+                  </Box>
+                </Paper>
+              </Box>
             </Grid>
           </Grid>
         </AppContainer>

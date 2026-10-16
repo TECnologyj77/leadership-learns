@@ -7,5 +7,5 @@ export interface RenderedApp {
   styles: string;
 }
 
-/** Server-side render of the whole app at `url`, using already-loaded blog data. */
-export type RenderApp = (url: string, blogData: BlogInitialData) => RenderedApp;
+/** Server-side render of the whole app at `url`, with data for blog routes. */
+export type RenderApp = (url: string, blogData: BlogInitialData | null) => RenderedApp;

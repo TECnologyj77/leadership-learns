@@ -43,9 +43,6 @@ const BlogPost: React.FC = () => {
         <AppContainer maxWidth="md">
           {data === null && (
             <Box aria-busy="true">
-              <AppText role="status" variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-                Loading the post…
-              </AppText>
               <Box aria-hidden="true">
                 <Skeleton variant="text" sx={{ fontSize: '3rem' }} />
                 <Skeleton variant="text" width="40%" sx={{ mb: 4 }} />

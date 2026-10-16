@@ -33,7 +33,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster, variant = 'horiz
           component="video"
           controls
           playsInline
+          preload="none"
           poster={poster}
+          aria-label="Leadership Learners overview video"
           sx={{
             position: 'absolute',
             top: 0,

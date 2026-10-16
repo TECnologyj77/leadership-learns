@@ -1,0 +1,42 @@
+/*
+  Arial resized to Inter's metrics, used while Inter downloads (Fontsource
+  uses font-display: swap). Text drawn in plain Arial is narrower and has a
+  different line height, so the page reflowed when Inter arrived — visible
+  layout shift, and a hit to CLS.
+
+  size-adjust is Inter's rendered width over Arial's, measured on the
+  homepage copy per weight (Arial has no 600, so 600 matches Arial Bold).
+  The vertical overrides are Inter's own (ascender 1984, descender 494,
+  no line gap, 2048 units per em) divided by size-adjust, since size-adjust
+  scales them too. Where Arial isn't installed (Android) these faces don't
+  load and the next family in the theme's stack applies, as before.
+*/
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('ArialMT');
+  font-weight: 100 500;
+  size-adjust: 106.49%;
+  ascent-override: 90.97%;
+  descent-override: 22.65%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 600;
+  size-adjust: 100.93%;
+  ascent-override: 95.98%;
+  descent-override: 23.9%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 700 900;
+  size-adjust: 101.95%;
+  ascent-override: 95.02%;
+  descent-override: 23.66%;
+  line-gap-override: 0%;
+}
