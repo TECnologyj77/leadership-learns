@@ -5,6 +5,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import PersonIcon from '@mui/icons-material/Person';
 import AppText from '../components/ui/AppText';
 import AppButton from '../components/ui/AppButton';
+import DirectCta from '../components/marketing/DirectCta';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import CoachingPathCard from '../components/marketing/CoachingPathCard';
@@ -37,9 +38,7 @@ const Home: React.FC = () => {
               <AppText variant="body1" sx={{ mb: 4, maxWidth: 600, fontWeight: 600 }}>
                 Training, coaching, and DISC assessments led by Tammy Summers.
               </AppText>
-              <AppButton analytics={{ id: 'home_hero_contact', location: 'hero', intent: 'contact' }} variant="contained" color="primary" size="large" component={RouterLink} to="/contact">
-                Contact Tammy
-              </AppButton>
+              <DirectCta id="home_hero" location="hero" color="primary" surface="light" />
               <AppText variant="body2" color="text.secondary" sx={{ mt: 2, maxWidth: 600 }}>
                 Call or email to discuss your goals and the support you're looking for.
               </AppText>
@@ -282,11 +281,7 @@ const Home: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Tell Tammy what you or your team would like to improve, and discuss which support fits your goals.
           </AppText>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton analytics={{ id: 'home_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-              Contact Tammy
-            </AppButton>
-          </Box>
+          <DirectCta id="home_final" location="final_cta" align="center" />
         </AppContainer>
       </AppSection>
     </>

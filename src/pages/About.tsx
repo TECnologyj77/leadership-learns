@@ -5,6 +5,7 @@ import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
+import DirectCta from '../components/marketing/DirectCta';
 import tammyImg from '../assets/tammy.webp';
 import tammyWithMaxwellImg from '../assets/tammy_with_jon.png';
 
@@ -195,14 +196,11 @@ const About: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Read the blog for insights on leadership and neurodiversity, or get in touch to start a conversation.
           </AppText>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton analytics={{ id: 'about_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-              Contact Tammy
-            </AppButton>
+          <DirectCta id="about_final" location="final_cta" align="center">
             <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
               Read the Blog
             </AppButton>
-          </Box>
+          </DirectCta>
         </AppContainer>
       </AppSection>
     </>

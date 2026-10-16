@@ -85,7 +85,12 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        html: { scrollPaddingTop: 'calc(var(--site-header-height, 64px) + 16px)' },
+        html: {
+          scrollPaddingTop: 'calc(var(--site-header-height, 64px) + 16px)',
+          // Room for the phone action bar (PhoneActionBar), which is gone from sm up.
+          scrollPaddingBottom: 'calc(76px + env(safe-area-inset-bottom))',
+          '@media (min-width: 600px)': { scrollPaddingBottom: 0 },
+        },
         body: { overflowWrap: 'anywhere' },
         ':where(a, button, video, summary, [tabindex]):focus-visible': focusRing,
         '@media (prefers-reduced-motion: reduce)': {

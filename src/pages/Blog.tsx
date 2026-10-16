@@ -1,10 +1,9 @@
 import React from 'react';
 import { Grid, Box, Paper, Skeleton } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
-import AppButton from '../components/ui/AppButton';
+import DirectCta from '../components/marketing/DirectCta';
 import BlogPostCard from '../components/blog/BlogPostCard';
 import BlogUnavailable from '../components/blog/BlogUnavailable';
 import { fetchPostList, type PostListState } from '../lib/blog-api';
@@ -82,9 +81,7 @@ const Blog: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch and tell Tammy what you or your team are working on.
           </AppText>
-          <AppButton analytics={{ id: 'blog_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-            Contact Tammy
-          </AppButton>
+          <DirectCta id="blog_final" location="final_cta" align="center" />
         </AppContainer>
       </AppSection>
     </>

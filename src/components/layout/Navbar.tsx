@@ -1,58 +1,73 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { 
-  AppBar, 
-  Toolbar, 
-  Box, 
-  IconButton, 
-  Drawer, 
-  List, 
-  ListItem, 
-  ListItemButton, 
-  ListItemText,
+import {
+  AppBar,
+  Toolbar,
+  Box,
   useTheme,
-  useMediaQuery,
   styled
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import { NavLink as RouterLink } from 'react-router-dom';
 import AppButton from '../ui/AppButton';
 import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
+import MobileMenu from './MobileMenu';
+import type { MenuItem } from './MobileMenu';
+import { useHideOnScroll } from '../../lib/use-hide-on-scroll';
+import { CALL_LABEL, ORG_PHONE_E164 } from '../../lib/site-config';
 import logo from '../../assets/logo.svg';
 
+// The underline fades in on hover and stays, thicker, on the current page, so
+// the current page never relies on colour alone.
 const NavLink = styled(RouterLink)(({ theme }) => ({
-  textDecoration: 'none',
+  textDecorationLine: 'underline',
+  textDecorationColor: 'transparent',
+  textDecorationThickness: 2,
+  textUnderlineOffset: '0.45em',
   color: theme.palette.text.primary,
   fontWeight: 500,
   fontSize: '0.95rem',
-  transition: 'color 0.2s',
+  transition: 'color 0.2s, text-decoration-color 0.2s',
   display: 'inline-flex',
   alignItems: 'center',
   minHeight: 44,
   '&:hover': {
     color: theme.palette.primary.main,
+    textDecorationColor: theme.palette.gold.accent,
   },
   '&.active': {
     color: theme.palette.primary.main,
-    fontWeight: 700,
-    textDecoration: 'underline',
-    textUnderlineOffset: '0.3em',
+    textDecorationColor: theme.palette.gold.accent,
+    textDecorationThickness: 3,
   },
 }));
 
-const navItems = [
+const navItems: MenuItem[] = [
   { name: 'Corporate', path: '/corporate' },
   { name: 'Individual', path: '/individual' },
   { name: 'About', path: '/about' },
   { name: 'Blog', path: '/blog' },
 ];
 
+// The phone menu lists Contact as a page like the rest; the call button itself
+// lives in the header from sm up and in the action bar on phones.
+const menuItems: MenuItem[] = [
+  ...navItems,
+  { name: 'Contact', path: '/contact', analytics: { id: 'nav_menu_contact', location: 'mobile_menu', intent: 'contact' } },
+];
+
+// Phones: logo, name and Menu; the header slides away while the visitor reads
+// down and returns when they scroll up. From sm: the call button joins Menu
+// and the header stays put. From md: the page links replace Menu.
 const Navbar: React.FC = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const headerRef = useRef<HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [keyboardFocusInside, setKeyboardFocusInside] = useState(false);
+  const scrolledDown = useHideOnScroll(`(min-width: ${theme.breakpoints.values.sm}px)`);
+  // Never slides away while the menu is open or a keyboard user is in it.
+  // While away it is inert, so Tab never lands on a control nobody can see.
+  const hidden = scrolledDown && !menuOpen && !keyboardFocusInside;
 
   useEffect(() => {
     const header = headerRef.current;
@@ -64,87 +79,31 @@ const Navbar: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((open) => !open);
-  };
-
-  const handleDrawerClose = () => {
-    setMobileOpen(false);
-  };
-
-  const drawer = (
-    <Box component="nav" aria-label="Primary navigation" sx={{ textAlign: 'center', p: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <IconButton aria-label="Close navigation menu" onClick={handleDrawerClose} sx={{ width: 44, height: 44 }}>
-          <CloseIcon />
-        </IconButton>
-      </Box>
-      <Box 
-        component={RouterLink} 
-        to="/"
-        onClick={handleDrawerClose}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 1,
-          flexWrap: 'wrap',
-          my: 2,
-          textDecoration: 'none'
-        }}
-      >
-        <Box component="img" src={logo} alt="" sx={{ height: 32 }} />
-        <AppText
-          variant="subtitle1"
-          component="span"
-          sx={{ fontWeight: 700, color: 'primary.main', fontSize: '1rem', whiteSpace: 'nowrap' }}
-        >
-          Leadership Learners
-        </AppText>
-      </Box>
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.name} disablePadding>
-            <ListItemButton 
-              component={RouterLink} 
-              to={item.path}
-              onClick={handleDrawerClose}
-              sx={{
-                textAlign: 'center',
-                '&.active': {
-                  bgcolor: 'action.selected',
-                  '& .MuiListItemText-primary': {
-                    fontWeight: 700,
-                    textDecoration: 'underline',
-                    textUnderlineOffset: '0.3em',
-                  },
-                },
-              }}
-            >
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <AppButton
-        analytics={{ id: 'nav_drawer_contact', location: 'mobile_drawer', intent: 'contact' }}
-        variant="contained"
-        color="primary"
-        fullWidth
-        component={RouterLink}
-        to="/contact"
-        onClick={handleDrawerClose}
-        sx={{ mt: 2 }}
-      >
-        Contact Tammy
-      </AppButton>
-    </Box>
-  );
-
   return (
-    <AppBar ref={headerRef} component="header" position="sticky" color="default" elevation={1} sx={{ bgcolor: 'background.paper' }}>
+    <AppBar
+      ref={headerRef}
+      component="header"
+      position="sticky"
+      color="default"
+      elevation={0}
+      inert={hidden}
+      onFocus={(event: React.FocusEvent<HTMLElement>) => setKeyboardFocusInside(event.target.matches(':focus-visible'))}
+      onBlur={(event: React.FocusEvent<HTMLElement>) => {
+        if (!(event.relatedTarget instanceof Node && event.currentTarget.contains(event.relatedTarget))) setKeyboardFocusInside(false);
+      }}
+      sx={{
+        bgcolor: 'rgba(255, 255, 255, 0.92)',
+        backdropFilter: 'saturate(180%) blur(12px)',
+        boxShadow: 'none',
+        borderBottom: 1,
+        borderColor: 'divider',
+        transition: 'transform 200ms ease-out',
+        transform: hidden ? 'translateY(-100%)' : 'none',
+      }}
+    >
       <AppContainer>
-        <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0 } }}>
+        {/* Static, so the menu panel hangs from the full-width header, not the padded toolbar. */}
+        <Toolbar sx={{ position: 'static', justifyContent: 'space-between', gap: 2, px: { xs: 0 } }}>
           <Box
             component={RouterLink}
             to="/"
@@ -152,11 +111,12 @@ const Navbar: React.FC = () => {
             sx={{
               display: 'flex',
               alignItems: 'center',
+              minWidth: 0,
               textDecoration: 'none'
             }}
           >
             {/* The wordmark beside it names this link; the aria-label above covers
-                the narrow widths where that text is hidden. */}
+                the narrowest widths where that text is hidden. */}
             <Box
               component="img"
               src={logo}
@@ -166,77 +126,44 @@ const Navbar: React.FC = () => {
                 mr: 1
               }}
             />
-            <AppText 
-              variant="h6" 
-              component="span" 
-              sx={{ 
-                fontWeight: 700, 
-                color: 'primary.main', 
+            <AppText
+              variant="h6"
+              component="span"
+              sx={{
+                fontWeight: 700,
+                color: 'primary.main',
                 fontSize: { xs: '1.1rem', md: '1.4rem' },
-                display: { xs: 'none', sm: 'block' }
+                whiteSpace: 'nowrap',
+                display: 'none',
+                '@media (min-width: 360px)': { display: 'block' },
               }}
             >
               Leadership Learners
             </AppText>
           </Box>
 
-          {!isMobile ? (
-            <Box component="nav" aria-label="Primary navigation" sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1.5, sm: 1, md: 3, lg: 4 }, flexShrink: 0 }}>
+            <Box component="nav" aria-label="Primary navigation" sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: { md: 3, lg: 4 } }}>
               {navItems.map((item) => (
                 <NavLink key={item.name} to={item.path}>
                   {item.name}
                 </NavLink>
               ))}
-              <AppButton
-                analytics={{ id: 'nav_desktop_contact', location: 'desktop_nav', intent: 'contact' }}
-                variant="contained"
-                color="primary" 
-                component={RouterLink} 
-                to="/contact"
-              >
-                Contact Tammy
-              </AppButton>
             </Box>
-          ) : (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
-              <AppButton
-                analytics={{ id: 'nav_mobile_contact', location: 'mobile_nav', intent: 'contact' }}
-                variant="contained"
-                color="primary"
-                component={RouterLink}
-                to="/contact"
-                sx={{ minHeight: 44, px: 2, whiteSpace: 'nowrap' }}
-              >
-                Contact Tammy
-              </AppButton>
-              <IconButton
-                color="inherit"
-                aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                aria-controls={mobileOpen ? 'mobile-navigation' : undefined}
-                aria-haspopup="dialog"
-                aria-expanded={mobileOpen}
-                onClick={handleDrawerToggle}
-                sx={{ width: 48, height: 48 }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Box>
-          )}
+            <AppButton
+              analytics={{ id: 'header_call', location: 'header', intent: 'contact', contactMethod: 'phone' }}
+              variant="contained"
+              color="primary"
+              href={`tel:${ORG_PHONE_E164}`}
+              startIcon={<PhoneOutlinedIcon />}
+              sx={{ display: { xs: 'none', sm: 'inline-flex' }, px: { sm: 2, lg: 3 }, fontSize: { sm: '0.95rem', lg: '1rem' }, whiteSpace: 'nowrap' }}
+            >
+              {CALL_LABEL}
+            </AppButton>
+            <MobileMenu items={menuItems} open={menuOpen} onOpenChange={setMenuOpen} />
+          </Box>
         </Toolbar>
       </AppContainer>
-
-      {isMobile && <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerClose}
-        slotProps={{ paper: { role: 'dialog', 'aria-modal': true, 'aria-label': 'Navigation menu' } }}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
-        }}
-      >
-        <Box id="mobile-navigation">{drawer}</Box>
-      </Drawer>}
     </AppBar>
   );
 };

@@ -38,33 +38,39 @@ if (!live) {
 
 try {
   await page.goto(process.env.ANALYTICS_TEST_URL || 'http://127.0.0.1:5174/?utm_source=analytics_qa&private=do-not-collect#private');
-  await page.locator('[data-cta-id="home_hero_contact"]').click();
-  await page.waitForURL('**/contact');
   // Prevent external phone/email applications after React handles the click.
   await page.evaluate(() => document.addEventListener('click', (event) => {
     if (event.target.closest('a[href^="tel:"], a[href^="mailto:"]')) event.preventDefault();
   }));
+  await page.locator('[data-cta-id="home_hero_call"]').click();
+  await page.locator('[data-cta-id="home_hero_email"]').click();
+  await page.getByRole('contentinfo').getByRole('link', { name: 'Contact Tammy', exact: true }).click();
+  await page.waitForURL('**/contact');
   await page.locator('[data-cta-id="contact_phone"]').click();
   await page.locator('[data-cta-id="contact_email"]').click();
   await page.getByRole('link', { name: '(858) 603-6709', exact: true }).click();
   await page.locator('[data-cta-id="contact_explore_corporate"]').click();
   await page.waitForURL('**/corporate');
-  await page.locator('[data-cta-id="corporate_hero_contact"]').click();
-  await page.waitForURL('**/contact');
+  await page.locator('[data-cta-id="corporate_hero_call"]').click();
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole('button', { name: 'Open navigation menu' }).click();
-  await page.locator('[data-cta-id="nav_drawer_contact"]').click();
-  await assert.doesNotReject(() => page.getByRole('button', { name: 'Open navigation menu' }).waitFor());
+  const menuButton = page.locator('header summary');
+  await menuButton.click();
+  await page.locator('[data-cta-id="nav_menu_contact"]').click();
+  await page.waitForURL('**/contact');
+  await assert.doesNotReject(() => page.waitForFunction(() => !document.querySelector('header details')?.open));
+  await assert.doesNotReject(() => menuButton.getByText('Menu', { exact: true }).waitFor());
   await page.waitForTimeout(12000);
 
   const pageviews = events.filter((event) => event.event === '$pageview');
   assert.deepEqual(pageviews.map((event) => event.properties.page_path), ['/', '/contact', '/corporate', '/contact']);
   const contacts = events.filter((event) => event.event === 'contact_attempted');
   assert.deepEqual(contacts.map((event) => [event.properties.cta_id, event.properties.contact_method]), [
+    ['home_hero_call', 'phone'], ['home_hero_email', 'email'],
     ['contact_phone', 'phone'], ['contact_email', 'email'], ['footer_phone', 'phone'],
+    ['corporate_hero_call', 'phone'],
   ]);
   assert.equal(events.filter((event) => event.event === 'contact_page_viewed').length, 2);
-  assert.equal(events.filter((event) => event.event === 'cta_clicked' && event.properties.cta_id === 'nav_drawer_contact').length, 1);
+  assert.equal(events.filter((event) => event.event === 'cta_clicked' && event.properties.cta_id === 'nav_menu_contact').length, 1);
   for (const event of events.filter((event) => ['$pageview', 'cta_clicked', 'contact_attempted'].includes(event.event))) {
     assert.equal(event.properties.environment, 'development');
     assert.ok(!event.properties.$current_url?.includes('private='));

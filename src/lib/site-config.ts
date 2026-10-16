@@ -18,6 +18,12 @@ export const SITE_TIME_ZONE = 'America/Los_Angeles';
 // Confirmed contact details already published in Footer.tsx / Contact.tsx.
 export const ORG_EMAIL = 't.summers@leadershiplearners.org';
 export const ORG_PHONE_E164 = '+18586036709';
+export const ORG_PHONE_DISPLAY = '(858) 603-6709';
+
+// The direct CTA is a phone call, worded identically everywhere it appears
+// (DirectCta, the header and the phone action bar); email is the secondary way in.
+export const CALL_LABEL = `Call ${ORG_PHONE_DISPLAY}`;
+export const EMAIL_LABEL = 'Email Tammy';
 
 export interface RouteSeoEntry {
   path: string;

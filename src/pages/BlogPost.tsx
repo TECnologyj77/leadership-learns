@@ -5,6 +5,7 @@ import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
+import DirectCta from '../components/marketing/DirectCta';
 import BlogArticle from '../components/blog/BlogArticle';
 import BlogUnavailable from '../components/blog/BlogUnavailable';
 import NotFound from './NotFound';
@@ -68,14 +69,11 @@ const BlogPost: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Get in touch and tell Tammy what you or your team are working on.
           </AppText>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton analytics={{ id: 'blog_post_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-              Contact Tammy
-            </AppButton>
+          <DirectCta id="blog_post" location="final_cta" align="center">
             <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
               Read the Blog
             </AppButton>
-          </Box>
+          </DirectCta>
         </AppContainer>
       </AppSection>
     </>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Box, Link, Stack } from '@mui/material';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
+import { CALL_LABEL, ORG_PHONE_E164 } from '../lib/site-config';
 
 const NotFound: React.FC = () => {
   return (
@@ -23,8 +25,15 @@ const NotFound: React.FC = () => {
           <AppButton variant="contained" color="primary" size="large" component={RouterLink} to="/">
             Back to Home
           </AppButton>
-          <AppButton analytics={{ id: 'not_found_contact', location: 'recovery', intent: 'contact' }} variant="outlined" color="secondary" size="large" component={RouterLink} to="/contact">
-            Contact Tammy
+          <AppButton
+            analytics={{ id: 'not_found_call', location: 'recovery', intent: 'contact', contactMethod: 'phone' }}
+            variant="outlined"
+            color="primary"
+            size="large"
+            href={`tel:${ORG_PHONE_E164}`}
+            startIcon={<PhoneOutlinedIcon />}
+          >
+            {CALL_LABEL}
           </AppButton>
         </Box>
         <Stack direction="row" spacing={3} sx={{ justifyContent: 'center', flexWrap: 'wrap', mt: 4 }}>

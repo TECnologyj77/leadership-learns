@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import PhoneActionBar from './PhoneActionBar';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -43,6 +44,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         {children}
       </Box>
       <Footer />
+      <PhoneActionBar />
     </Box>
   );
 };
