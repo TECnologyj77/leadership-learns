@@ -4,11 +4,10 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
-import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
-import AppButton from '../components/ui/AppButton';
+import DirectCta from '../components/marketing/DirectCta';
 import ServiceCard from '../components/marketing/ServiceCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
 import ProcessSteps from '../components/marketing/ProcessSteps';
@@ -36,9 +35,7 @@ const Individual: React.FC = () => {
               <AppText variant="h5" component="p" color="text.secondary" sx={{ mb: 4 }}>
                 1:1 Coaching for neurodivergent professionals and individuals. Discover and strengthen your voice through authentic connection.
               </AppText>
-              <AppButton analytics={{ id: 'individual_hero_contact', location: 'hero', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-                Contact Tammy
-              </AppButton>
+              <DirectCta id="individual_hero" location="hero" surface="light" />
               <AppText variant="body2" color="text.secondary" sx={{ mt: 2 }}>
                 Call or email to discuss your communication goals and coaching or assessment options.
               </AppText>
@@ -286,11 +283,7 @@ const Individual: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Contact Tammy to discuss public speaking, everyday communication, or understanding your communication style.
           </AppText>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton analytics={{ id: 'individual_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-              Contact Tammy
-            </AppButton>
-          </Box>
+          <DirectCta id="individual_final" location="final_cta" align="center" />
         </AppContainer>
       </AppSection>
     </>

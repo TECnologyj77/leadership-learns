@@ -1,8 +1,9 @@
 import React from 'react';
 import { Alert, Box } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import AppText from '../ui/AppText';
 import AppButton from '../ui/AppButton';
+import { CALL_LABEL, ORG_PHONE_E164 } from '../../lib/site-config';
 
 /** Shown when blog content couldn't be loaded (Wix unreachable and no saved copy). */
 const BlogUnavailable: React.FC<{ message: string; onRetry: () => void }> = ({ message, onRetry }) => (
@@ -15,13 +16,13 @@ const BlogUnavailable: React.FC<{ message: string; onRetry: () => void }> = ({ m
         Try again
       </AppButton>
       <AppButton
-        analytics={{ id: 'blog_unavailable_contact', location: 'blog_unavailable', intent: 'contact' }}
+        analytics={{ id: 'blog_unavailable_call', location: 'blog_unavailable', intent: 'contact', contactMethod: 'phone' }}
         variant="outlined"
         color="primary"
-        component={RouterLink}
-        to="/contact"
+        href={`tel:${ORG_PHONE_E164}`}
+        startIcon={<PhoneOutlinedIcon />}
       >
-        Contact Tammy
+        {CALL_LABEL}
       </AppButton>
     </Box>
   </Alert>

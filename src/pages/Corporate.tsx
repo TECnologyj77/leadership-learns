@@ -1,11 +1,10 @@
 import React from 'react';
 import { Grid, Box, Paper } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined';
-import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
-import AppButton from '../components/ui/AppButton';
+import DirectCta from '../components/marketing/DirectCta';
 import ServiceCard from '../components/marketing/ServiceCard';
 import TestimonialCard from '../components/marketing/TestimonialCard';
 import ProcessSteps from '../components/marketing/ProcessSteps';
@@ -31,9 +30,7 @@ const Corporate: React.FC = () => {
               <AppText variant="h5" component="p" sx={{ mb: 4, opacity: 0.9 }}>
                 Strategic leadership development and organizational systems for high-growth teams.
               </AppText>
-              <AppButton analytics={{ id: 'corporate_hero_contact', location: 'hero', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-                Contact Tammy
-              </AppButton>
+              <DirectCta id="corporate_hero" location="hero" />
               <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
                 Call or email to discuss leadership training or DISC assessments for your team.
               </AppText>
@@ -190,11 +187,7 @@ const Corporate: React.FC = () => {
           <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
             Contact Tammy to discuss leadership training, workshops, or DISC assessments for your team.
           </AppText>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <AppButton analytics={{ id: 'corporate_final_contact', location: 'final_cta', intent: 'contact' }} variant="contained" color="secondary" size="large" component={RouterLink} to="/contact">
-              Contact Tammy
-            </AppButton>
-          </Box>
+          <DirectCta id="corporate_final" location="final_cta" align="center" />
         </AppContainer>
       </AppSection>
     </>
