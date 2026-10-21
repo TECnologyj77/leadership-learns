@@ -1,6 +1,4 @@
-import ivcLogo from '../assets/ivc-logo.webp';
-
-export type ClientMark = 'college' | 'biotech' | 'realEstate';
+export type ClientMark = 'biotech' | 'realEstate';
 
 export type Client = {
   /** Full organisation name, used for the accessible label. */
@@ -16,13 +14,6 @@ export type Client = {
   logo?: string;
 };
 
-const imperialValleyCollege: Client = {
-  name: 'Imperial Valley College',
-  mark: 'college',
-  wordmark: ['Imperial Valley', 'College'],
-  logo: ivcLogo,
-};
-
 const biotechPartners: Client = {
   name: 'Biotech Partners',
   mark: 'biotech',
@@ -36,7 +27,6 @@ const realEstateDynamics: Client = {
 };
 
 export const homeClients: Client[] = [
-  imperialValleyCollege,
   biotechPartners,
   realEstateDynamics,
 ];

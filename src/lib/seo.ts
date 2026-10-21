@@ -2,7 +2,16 @@
 // are written by the browser (applyPageMeta, via RouteSeo and the article
 // page) and by the server when it renders /blog and /post/<slug> HTML.
 // (Explicit .ts extension: this module also runs under Node in server tests.)
-import { absoluteUrl, notFoundSeo, SITE_NAME, SITE_URL, routeSeo, type RouteSeoEntry } from './site-config.ts';
+import {
+  absoluteUrl,
+  notFoundSeo,
+  ORG_EMAIL,
+  ORG_PHONE_SCHEMA,
+  SITE_NAME,
+  SITE_URL,
+  routeSeo,
+  type RouteSeoEntry,
+} from './site-config.ts';
 import type { BlogPost } from '../types/blog';
 
 const DEFAULT_OG_IMAGE = absoluteUrl('/og-leadership-v2.jpg');
@@ -24,6 +33,8 @@ export interface PageMeta {
   ogImage?: string;
   breadcrumb?: Array<{ name: string; path: string }>;
   article?: BlogPost;
+  /** Adds the ProfessionalService JSON-LD, described with this page's description (the Home page). */
+  professionalService?: boolean;
 }
 
 export type HeadTag =
@@ -36,7 +47,7 @@ export type HeadTag =
 const OPTIONAL_TAGS = {
   links: ['canonical'],
   meta: ['article:published_time', 'article:modified_time', 'og:image:type', 'og:image:width', 'og:image:height', 'og:image:alt', 'twitter:image:alt'],
-  jsonld: ['ld-breadcrumb', 'ld-article'],
+  jsonld: ['ld-breadcrumb', 'ld-article', 'ld-professional-service'],
 };
 
 function clampDescription(text: string, max = 300): string {
@@ -122,6 +133,29 @@ export function headTags(meta: PageMeta): HeadTag[] {
       },
     });
   }
+
+  // Service areas only, deliberately no street address.
+  if (meta.professionalService) {
+    tags.push({
+      kind: 'jsonld',
+      id: 'ld-professional-service',
+      data: {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        '@id': `${SITE_URL}/#professional-service`,
+        name: SITE_NAME,
+        url: absoluteUrl('/'),
+        telephone: ORG_PHONE_SCHEMA,
+        email: ORG_EMAIL,
+        founder: { '@type': 'Person', '@id': `${SITE_URL}/#tammy-summers`, name: 'Tammy Summers' },
+        areaServed: [
+          { '@type': 'AdministrativeArea', name: 'San Diego County, CA' },
+          { '@type': 'AdministrativeArea', name: 'Imperial County, CA' },
+        ],
+        description: meta.description,
+      },
+    });
+  }
   return tags;
 }
 
@@ -143,6 +177,7 @@ export function staticRouteMeta(pathname: string): PageMeta | null {
             { name: 'Home', path: '/' },
             { name: entry.breadcrumb, path: entry.path },
           ],
+    professionalService: entry.path === '/',
   };
 }
 

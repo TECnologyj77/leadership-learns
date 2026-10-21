@@ -2,11 +2,13 @@ import React from 'react';
 import { Box, Paper, Stack } from '@mui/material';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
+import { SERVICE_AREA } from '../lib/site-config';
 
 const PHONE_DISPLAY = '(858) 603-6709';
 const PHONE_HREF = 'tel:+18586036709';
@@ -17,12 +19,36 @@ const Contact: React.FC = () => {
     <>
       <AppSection variant="light">
         <AppContainer maxWidth="sm">
-          <Box sx={{ mb: 8, textAlign: 'center' }}>
+          <Box sx={{ mb: { xs: 4, md: 5 }, textAlign: 'center' }}>
             <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
               Contact Tammy
             </AppText>
             <AppText variant="h5" component="p" color="text.secondary">
               Reach out to Tammy directly by phone or email to start a conversation.
+            </AppText>
+            <AppText variant="body1" color="text.secondary" sx={{ mt: 2 }}>
+              {SERVICE_AREA}
+            </AppText>
+          </Box>
+
+          {/* Availability: a calm note, not a warning, so new clients write first */}
+          <Box
+            role="note"
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 1.5,
+              mb: { xs: 4, md: 5 },
+              p: { xs: 2.5, md: 3 },
+              borderRadius: 2,
+              borderLeft: '4px solid',
+              borderLeftColor: 'primary.main',
+              bgcolor: 'rgba(30, 58, 95, 0.06)',
+            }}
+          >
+            <EventNoteOutlinedIcon color="primary" sx={{ mt: '2px', flexShrink: 0 }} />
+            <AppText variant="body1">
+              Tammy&apos;s calendar is full right now. Send a message about what you&apos;d like to work on, and she&apos;ll reply to let you know when she can begin.
             </AppText>
           </Box>
 

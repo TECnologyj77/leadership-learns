@@ -12,6 +12,7 @@ import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/team_disc_session_wide.jpg';
 import teamDiscSessionImg from '../assets/team_disc_session.jpg';
 import { corporateTestimonials } from '../content/testimonials';
+import { SERVICE_AREA_SHORT } from '../lib/site-config';
 
 const Corporate: React.FC = () => {
   return (
@@ -188,6 +189,9 @@ const Corporate: React.FC = () => {
             Contact Tammy to discuss leadership training, workshops, or DISC assessments for your team.
           </AppText>
           <DirectCta id="corporate_final" location="final_cta" align="center" />
+          <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
+            {SERVICE_AREA_SHORT}
+          </AppText>
         </AppContainer>
       </AppSection>
     </>

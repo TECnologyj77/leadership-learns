@@ -16,6 +16,7 @@ import studentDiscImg from '../assets/services/Student + Career DISC Assessment 
 import salesDiscImg from '../assets/services/Sales DISC Assessment and Debrief.jpg';
 import tammyWithAustinImg from '../assets/tammy_with_austin.jpg';
 import { austinMoralesTestimonial, individualTestimonials } from '../content/testimonials';
+import { SERVICE_AREA_SHORT } from '../lib/site-config';
 
 const Individual: React.FC = () => {
   return (
@@ -284,6 +285,9 @@ const Individual: React.FC = () => {
             Contact Tammy to discuss public speaking, everyday communication, or understanding your communication style.
           </AppText>
           <DirectCta id="individual_final" location="final_cta" align="center" />
+          <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
+            {SERVICE_AREA_SHORT}
+          </AppText>
         </AppContainer>
       </AppSection>
     </>
