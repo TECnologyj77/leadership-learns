@@ -4,13 +4,6 @@ import AppText from '../ui/AppText';
 import type { Client, ClientMark } from '../../content/clients';
 
 const marks: Record<ClientMark, React.ReactNode> = {
-  college: (
-    <>
-      <path d="M20 4.5L32.5 8.5V19c0 7.6-5.4 12.6-12.5 15.5C12.9 31.6 7.5 26.6 7.5 19V8.5z" />
-      <path d="M13 16.5c2.3-1.4 4.7-1.4 7 .4v7.6c-2.3-1.8-4.7-1.8-7-.4z" />
-      <path d="M27 16.5c-2.3-1.4-4.7-1.4-7 .4v7.6c2.3-1.8 4.7-1.8 7-.4z" />
-    </>
-  ),
   biotech: (
     <>
       <path d="M9 5c0 8 22 9 22 15s-22 7-22 15" />

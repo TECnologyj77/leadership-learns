@@ -19,6 +19,13 @@ export const SITE_TIME_ZONE = 'America/Los_Angeles';
 export const ORG_EMAIL = 't.summers@leadershiplearners.org';
 export const ORG_PHONE_E164 = '+18586036709';
 export const ORG_PHONE_DISPLAY = '(858) 603-6709';
+// The same number in the hyphenated form used by the ProfessionalService JSON-LD.
+export const ORG_PHONE_SCHEMA = '+1-858-603-6709';
+
+// Where Tammy works, in her own wording: the footer and Contact page use the
+// full line, the Corporate and Individual closing CTAs the short one.
+export const SERVICE_AREA = 'San Diego County and the Imperial Valley, plus virtual sessions anywhere';
+export const SERVICE_AREA_SHORT = 'In person across San Diego County & the Imperial Valley · Virtual sessions anywhere';
 
 // The direct CTA is a phone call, worded identically everywhere it appears
 // (DirectCta, the header and the phone action bar); email is the secondary way in.
@@ -43,7 +50,7 @@ export const routeSeo: RouteSeoEntry[] = [
     path: '/',
     title: 'Leadership Learners | Leadership Training & Coaching',
     description:
-      'Leadership training, group workshops, and DISC assessments for organizations, plus 1:1 coaching for individuals and neurodivergent professionals, led by Tammy Summers.',
+      'Leadership training, DISC assessments, and 1:1 coaching, including for neurodivergent professionals, led by Tammy Summers in San Diego and the Imperial Valley.',
     breadcrumb: 'Home',
   },
   {
@@ -78,7 +85,7 @@ export const routeSeo: RouteSeoEntry[] = [
     path: '/contact',
     title: 'Contact Tammy | Leadership Learners',
     description:
-      'Reach out to Tammy Summers by phone or email to start a conversation about corporate leadership training or individual coaching.',
+      'Reach out to Tammy Summers by phone or email about corporate leadership training or individual coaching in San Diego and the Imperial Valley.',
     breadcrumb: 'Contact',
   },
 ];

@@ -7,6 +7,7 @@ import AppText from '../ui/AppText';
 import AppContainer from '../ui/AppContainer';
 import logo from '../../assets/logo.svg';
 import { trackCta } from '../../lib/analytics';
+import { SERVICE_AREA } from '../../lib/site-config';
 
 const footerLinkSx = { display: 'inline-flex', alignItems: 'center', minHeight: 36 } as const;
 
@@ -29,6 +30,9 @@ const Footer: React.FC = () => {
             </Box>
             <AppText variant="body2" sx={{ opacity: 0.8, maxWidth: 300 }}>
               Connect with Tammy today and discover what&apos;s possible when learning meets leadership.
+            </AppText>
+            <AppText variant="body2" sx={{ mt: 1, opacity: 0.7, maxWidth: 300 }}>
+              {SERVICE_AREA}
             </AppText>
             <Stack spacing={1} sx={{ mt: 2 }}>
               <Link
