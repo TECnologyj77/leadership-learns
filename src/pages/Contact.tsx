@@ -1,114 +1,77 @@
 import React from 'react';
-import { Box, Paper, Stack } from '@mui/material';
-import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
-import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import { Box } from '@mui/material';
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
+import SectionHeading from '../components/ui/SectionHeading';
+import ServiceAreaLine from '../components/ui/ServiceAreaLine';
+import CtaGroup from '../components/marketing/CtaGroup';
+import DirectCta from '../components/marketing/DirectCta';
+import SecondaryCta from '../components/marketing/SecondaryCta';
 import { SERVICE_AREA } from '../lib/site-config';
-
-const PHONE_DISPLAY = '(858) 603-6709';
-const PHONE_HREF = 'tel:+18586036709';
-const EMAIL = 't.summers@leadershiplearners.org';
 
 const Contact: React.FC = () => {
   return (
-    <>
-      <AppSection variant="light">
-        <AppContainer maxWidth="sm">
-          <Box sx={{ mb: { xs: 4, md: 5 }, textAlign: 'center' }}>
-            <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
-              Contact Tammy
-            </AppText>
-            <AppText variant="h5" component="p" color="text.secondary">
-              Reach out to Tammy directly by phone or email to start a conversation.
-            </AppText>
-            <AppText variant="body1" color="text.secondary" sx={{ mt: 2 }}>
-              {SERVICE_AREA}
-            </AppText>
-          </Box>
+    <AppSection tone="cream" sx={{ pt: { xs: 6, md: 10 } }}>
+      <AppContainer maxWidth="sm">
+        <SectionHeading
+          level="h1"
+          title="Contact Tammy"
+          subtitle="Reach out to Tammy directly by phone or email to start a conversation."
+          sx={{ mb: { xs: 4, md: 5 } }}
+        />
 
-          {/* Availability: a calm note, not a warning, so new clients write first */}
-          <Box
-            role="note"
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: 1.5,
-              mb: { xs: 4, md: 5 },
-              p: { xs: 2.5, md: 3 },
-              borderRadius: 2,
-              borderLeft: '4px solid',
-              borderLeftColor: 'primary.main',
-              bgcolor: 'rgba(30, 58, 95, 0.06)',
-            }}
-          >
-            <EventNoteOutlinedIcon color="primary" sx={{ mt: '2px', flexShrink: 0 }} />
-            <AppText variant="body1">
-              Tammy&apos;s calendar is full right now. Send a message about what you&apos;d like to work on, and she&apos;ll reply to let you know when she can begin.
-            </AppText>
-          </Box>
+        {/* Availability: a calm note, not a warning, so new clients write first */}
+        <Box
+          role="note"
+          sx={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 1.5,
+            mb: 4,
+            p: { xs: 2.5, md: 3 },
+            borderRadius: 4,
+            bgcolor: 'brand.sand',
+            border: 1,
+            borderColor: 'brand.cardBorder',
+          }}
+        >
+          <EventNoteOutlinedIcon aria-hidden="true" sx={{ mt: '2px', flexShrink: 0, color: 'brand.navy' }} />
+          <AppText variant="body1">
+            Tammy&apos;s calendar is full right now. Send a message about what you&apos;d like to work on, and she&apos;ll reply to let you know when she can begin.
+          </AppText>
+        </Box>
 
-          <Paper sx={{ p: { xs: 3, md: 4 }, borderRadius: 3 }}>
-            <Stack spacing={2}>
-              <AppButton
-                analytics={{ id: 'contact_phone', location: 'contact_details', intent: 'contact', contactMethod: 'phone' }}
-                variant="contained"
-                color="primary"
-                size="large"
-                fullWidth
-                href={PHONE_HREF}
-                startIcon={<PhoneOutlinedIcon />}
-                sx={{ justifyContent: 'flex-start', py: 2 }}
-              >
-                Call {PHONE_DISPLAY}
-              </AppButton>
+        <CtaGroup stacked>
+          <DirectCta id="contact" location="contact_details" />
+          <SecondaryCta id="contact" location="contact_details" long />
+        </CtaGroup>
+        <ServiceAreaLine sx={{ mt: 2.5 }}>{SERVICE_AREA}</ServiceAreaLine>
+        <AppText variant="body2" sx={{ mt: 1.5, color: 'text.secondary' }}>
+          You can start by sharing whether you're looking for support for yourself or your team, and what you'd like to improve. Ask about the service, cost, and next steps.
+        </AppText>
 
-              <AppButton
-                analytics={{ id: 'contact_email', location: 'contact_details', intent: 'contact', contactMethod: 'email' }}
-                variant="outlined"
-                color="primary"
-                size="large"
-                fullWidth
-                href={`mailto:${EMAIL}`}
-                startIcon={<MailOutlinedIcon />}
-                sx={{ justifyContent: 'flex-start', py: 2, wordBreak: 'break-word', textAlign: 'left' }}
-              >
-                Email {EMAIL}
-              </AppButton>
-
-              <AppText variant="body2" color="text.secondary">
-                You can start by sharing whether you're looking for support for yourself or your team, and what you'd like to improve. Ask about the service, cost, and next steps.
-              </AppText>
-            </Stack>
-          </Paper>
-
-          <Box sx={{ mt: 8, textAlign: 'center' }}>
-            <AppText variant="h5" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              Want to learn more first?
-            </AppText>
-            <AppText variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-              Explore how Tammy works with each type of client.
-            </AppText>
-            <Stack
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={2}
-              sx={{ justifyContent: 'center' }}
-            >
-              <AppButton analytics={{ id: 'contact_explore_corporate', location: 'explore_services', intent: 'corporate' }} variant="contained" color="primary" component={RouterLink} to="/corporate">
-                Explore Corporate
-              </AppButton>
-              <AppButton analytics={{ id: 'contact_explore_individual', location: 'explore_services', intent: 'individual' }} variant="contained" color="secondary" component={RouterLink} to="/individual">
-                Explore Individual
-              </AppButton>
-            </Stack>
-          </Box>
-        </AppContainer>
-      </AppSection>
-    </>
+        <Box sx={{ mt: { xs: 8, md: 10 }, pt: { xs: 6, md: 8 }, borderTop: 1, borderColor: 'brand.cardBorder', textAlign: 'center' }}>
+          <AppText variant="h3" component="h2" sx={{ mb: 1.5 }}>
+            Want to learn more first?
+          </AppText>
+          <AppText variant="body1" sx={{ mb: 3, color: 'text.secondary' }}>
+            Explore how Tammy works with each type of client.
+          </AppText>
+          <CtaGroup align="center">
+            <AppButton analytics={{ id: 'contact_explore_corporate', location: 'explore_services', intent: 'corporate' }} variant="outlined" color="primary" size="large" component={RouterLink} to="/corporate">
+              Explore Corporate
+            </AppButton>
+            <AppButton analytics={{ id: 'contact_explore_individual', location: 'explore_services', intent: 'individual' }} variant="outlined" color="primary" size="large" component={RouterLink} to="/individual">
+              Explore Individual
+            </AppButton>
+          </CtaGroup>
+        </Box>
+      </AppContainer>
+    </AppSection>
   );
 };
 

@@ -1,47 +1,32 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import type { BoxProps } from '@mui/material';
+import type { BoxProps, SxProps, Theme } from '@mui/material';
 
-interface AppSectionProps extends BoxProps {
-  variant?: 'light' | 'dark' | 'white';
+export type SectionTone = 'cream' | 'sand' | 'white' | 'navy';
+
+interface AppSectionProps extends Omit<BoxProps, 'sx'> {
+  /** Cream is the page background; sand alternates with it; navy is the navy band. */
+  tone?: SectionTone;
+  sx?: SxProps<Theme>;
 }
 
-const AppSection: React.FC<AppSectionProps> = ({ 
-  children, 
-  variant = 'white', 
-  sx, 
-  ...props 
-}) => {
-  const getBgColor = () => {
-    switch (variant) {
-      case 'light':
-        return 'background.default';
-      case 'dark':
-        return 'primary.main';
-      case 'white':
-      default:
-        return 'background.paper';
-    }
-  };
+const lightBackground = { cream: 'brand.cream', sand: 'brand.sand', white: 'brand.white' } as const;
 
-  const getTextColor = () => {
-    return variant === 'dark' ? 'primary.contrastText' : 'text.primary';
-  };
-
-  return (
-    <Box
-      component="section"
-      sx={{
-        py: { xs: 8, md: 12 }, // 64px to 96px, or 80-120 range as requested
-        backgroundColor: getBgColor(),
-        color: getTextColor(),
-        ...sx,
-      }}
-      {...props}
-    >
-      {children}
-    </Box>
-  );
-};
+// A full-width page section: 96px of vertical padding (72px on phones). The
+// navy tone switches headings, text, accents and focus rings to their on-navy
+// colours.
+const AppSection: React.FC<AppSectionProps> = ({ children, tone = 'cream', sx, ...props }) => (
+  <Box
+    component="section"
+    {...props}
+    sx={[
+      tone === 'navy' ? (theme) => theme.mixins.navySurface : { bgcolor: lightBackground[tone] },
+      { py: { xs: 9, md: 12 } },
+      ...(Array.isArray(sx) ? sx : [sx]),
+    ]}
+  >
+    {children}
+  </Box>
+);
 
 export default AppSection;

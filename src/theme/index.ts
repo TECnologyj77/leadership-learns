@@ -1,97 +1,199 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import type { CSSProperties } from '@mui/material/styles';
+import { brand, fonts, surfaceVars, textOnLight, textOnNavy } from './tokens';
+
+type SurfaceColors = Record<'heading' | 'body' | 'muted' | 'eyebrow' | 'accent' | 'outline' | 'focus', string>;
 
 declare module '@mui/material/styles' {
   interface Palette {
-    gold: { accent: string; text: string; hover: string; pressed: string };
+    brand: typeof brand;
+    onNavy: typeof textOnNavy;
+    /** Colours that follow the surface behind them (see surfaceVars in tokens.ts). */
+    surface: SurfaceColors;
   }
   interface PaletteOptions {
-    gold?: Palette['gold'];
+    brand?: typeof brand;
+    onNavy?: typeof textOnNavy;
+    surface?: SurfaceColors;
+  }
+  interface TypeText {
+    /** Running text on light backgrounds; primary is the strong shade, secondary the muted one. */
+    body: string;
+  }
+  interface TypographyVariants {
+    eyebrow: CSSProperties;
+    lead: CSSProperties;
+    statement: CSSProperties;
+    quote: CSSProperties;
+  }
+  interface TypographyVariantsOptions {
+    eyebrow?: CSSProperties;
+    lead?: CSSProperties;
+    statement?: CSSProperties;
+    quote?: CSSProperties;
+  }
+  interface Mixins {
+    /** Navy background, with headings, text, accents and focus rings switched to their on-navy colours. */
+    navySurface: CSSProperties;
+    /** Puts a light surface (such as a white card) back on the light-surface colours inside a navy one. */
+    lightSurface: CSSProperties;
   }
 }
 
-// Accent gold works for fills, large text and icons. Use text gold on light
-// surfaces only; it does not have sufficient contrast against the brand navy.
-const gold = {
-  accent: '#A77F20',
-  text: '#745816',
-  hover: '#AD8526',
-  pressed: '#B58C2B',
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    eyebrow: true;
+    lead: true;
+    statement: true;
+    quote: true;
+  }
+}
+
+const surface: SurfaceColors = {
+  heading: 'var(--ll-heading)',
+  body: 'var(--ll-body)',
+  muted: 'var(--ll-muted)',
+  eyebrow: 'var(--ll-eyebrow)',
+  accent: 'var(--ll-accent)',
+  outline: 'var(--ll-outline)',
+  focus: 'var(--ll-focus)',
 };
+
+// One ring everywhere: navy on light surfaces, gold on navy ones.
 const focusRing = {
-  outline: '3px solid #1E3A5F',
+  outline: `3px solid ${surface.focus}`,
   outlineOffset: 3,
-  boxShadow: '0 0 0 3px #FFFFFF',
 };
-// Outlined and text secondary buttons sit on light surfaces, so they use text gold.
-const goldTextButton = {
-  color: gold.text,
-  '&:hover': { backgroundColor: 'rgba(116, 88, 22, 0.06)' },
-  '&:active': { backgroundColor: 'rgba(116, 88, 22, 0.12)' },
+
+const heading = {
+  fontFamily: fonts.serif,
+  fontWeight: 600,
+  color: surface.heading,
 };
 
 const theme = createTheme({
   palette: {
-    gold,
+    brand,
+    onNavy: textOnNavy,
+    surface,
     primary: {
-      main: '#1E3A5F',
-      contrastText: '#FFFFFF',
+      main: brand.navy,
+      dark: brand.navyDeep,
+      contrastText: brand.white,
     },
+    // Accessible gold for icons and text on light surfaces. The gold fill
+    // belongs to DirectCta alone, so no button uses this colour.
     secondary: {
-      main: gold.accent,
-      dark: gold.text,
-      contrastText: '#1C1C1C',
+      main: brand.goldText,
+      contrastText: brand.white,
     },
     background: {
-      default: '#F7F8FA',
-      paper: '#FFFFFF',
+      default: brand.cream,
+      paper: brand.white,
     },
     text: {
-      primary: '#1C1C1C',
-      secondary: '#5A5A5A',
+      primary: textOnLight.strong,
+      secondary: textOnLight.muted,
+      body: textOnLight.body,
     },
+    divider: brand.cardBorder,
   },
   typography: {
-    // "Inter Fallback" (theme/fonts.css) is Arial sized to match Inter, so text doesn't reflow when Inter loads.
-    fontFamily: '"Inter", "Inter Fallback", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: fonts.sans,
     h1: {
-      fontWeight: 700,
+      ...heading,
+      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+      lineHeight: 1.05,
       letterSpacing: '-0.02em',
+      textWrap: 'balance',
     },
     h2: {
-      fontWeight: 700,
+      ...heading,
+      fontSize: 'clamp(2rem, 3.5vw, 2.75rem)',
+      lineHeight: 1.1,
+      letterSpacing: '-0.015em',
+      textWrap: 'balance',
+    },
+    // Cards; step cards set their own 24px.
+    h3: {
+      ...heading,
+      fontSize: '1.875rem',
+      lineHeight: 1.2,
       letterSpacing: '-0.01em',
     },
-    h3: {
-      fontWeight: 600,
-    },
     h4: {
-      fontWeight: 600,
+      ...heading,
+      fontSize: '1.5rem',
+      lineHeight: 1.25,
+      letterSpacing: '-0.01em',
     },
-    h5: {
-      fontWeight: 600,
+    h5: { fontWeight: 600, fontSize: '1.25rem', lineHeight: 1.4 },
+    h6: { fontWeight: 600, fontSize: '1.125rem', lineHeight: 1.4 },
+    body1: { fontSize: '1.0625rem', lineHeight: 1.6 },
+    body2: { fontSize: '0.9375rem', lineHeight: 1.6 },
+    lead: {
+      fontFamily: fonts.sans,
+      fontSize: '1.25rem',
+      lineHeight: 1.55,
     },
-    h6: {
-      fontWeight: 600,
+    eyebrow: {
+      fontFamily: fonts.sans,
+      fontSize: '0.8125rem',
+      fontWeight: 700,
+      lineHeight: 1.4,
+      letterSpacing: '0.13em',
+      textTransform: 'uppercase',
+      color: surface.eyebrow,
+    },
+    // A section's closing line, e.g. the problem section's "You deserve…".
+    statement: {
+      fontFamily: fonts.serif,
+      fontStyle: 'italic',
+      fontWeight: 500,
+      fontSize: '1.3125rem',
+      lineHeight: 1.4,
+      color: surface.heading,
+    },
+    // Testimonial quotes, always on a white card.
+    quote: {
+      fontFamily: fonts.serif,
+      fontStyle: 'italic',
+      fontWeight: 500,
+      fontSize: '1.1875rem',
+      lineHeight: 1.5,
+      color: brand.navy,
     },
     button: {
       textTransform: 'none',
-      fontWeight: 600,
+      fontWeight: 700,
     },
   },
   spacing: 8,
   shape: {
     borderRadius: 4,
   },
+  mixins: {
+    navySurface: {
+      ...surfaceVars.navy,
+      backgroundColor: brand.navy,
+      color: surface.body,
+    },
+    lightSurface: {
+      ...surfaceVars.light,
+      color: surface.body,
+    },
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        ':root': surfaceVars.light,
         html: {
           scrollPaddingTop: 'calc(var(--site-header-height, 64px) + 16px)',
           // Room for the phone action bar (PhoneActionBar), which is gone from sm up.
           scrollPaddingBottom: 'calc(76px + env(safe-area-inset-bottom))',
           '@media (min-width: 600px)': { scrollPaddingBottom: 0 },
         },
-        body: { overflowWrap: 'anywhere' },
+        body: { overflowWrap: 'anywhere', color: surface.body },
         ':where(a, button, video, summary, [tabindex]):focus-visible': focusRing,
         '@media (prefers-reduced-motion: reduce)': {
           '*, *::before, *::after': {
@@ -103,45 +205,61 @@ const theme = createTheme({
         },
       },
     },
+    MuiTypography: {
+      defaultProps: {
+        variantMapping: { eyebrow: 'p', lead: 'p', statement: 'p', quote: 'p' },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: { paddingLeft: 24, paddingRight: 24 },
+      },
+    },
     MuiButtonBase: {
       styleOverrides: {
         root: {
-          // Two bands remain distinguishable on light, navy and gold surfaces.
           '&.Mui-focusVisible': focusRing,
         },
       },
     },
     MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
       styleOverrides: {
         root: {
-          padding: '10px 24px',
-          borderRadius: 8,
+          padding: '10px 22px',
+          borderRadius: 10,
           fontSize: '1rem',
+          lineHeight: 1.4,
           minHeight: 44, // comfortable touch target on mobile
           '&.Mui-disabled': {
             color: 'rgba(0, 0, 0, 0.26)',
             '&.MuiButton-contained': { backgroundColor: 'rgba(0, 0, 0, 0.12)' },
           },
-          // MUI v9 no longer emits combined classes such as MuiButton-outlinedSecondary,
+          // MUI v9 no longer emits combined classes such as MuiButton-outlinedPrimary,
           // so match variant and color by props. These stay below the disabled rule's
           // specificity, so disabled buttons still render grey.
           variants: [
             {
-              props: { variant: 'contained', color: 'secondary' },
+              props: { size: 'large' },
+              style: { minHeight: 52, padding: '12px 26px' },
+            },
+            {
+              props: { variant: 'contained', color: 'primary' },
+              style: { '&:hover': { backgroundColor: brand.navyDeep } },
+            },
+            // Navy outline on light surfaces, white outline on navy ones.
+            {
+              props: { variant: 'outlined', color: 'primary' },
               style: {
-                color: '#1C1C1C',
-                backgroundColor: gold.accent,
-                '&:hover': { backgroundColor: gold.hover },
-                '&:active': { backgroundColor: gold.pressed },
+                color: surface.outline,
+                border: `1.5px solid ${surface.outline}`,
+                '&:hover': {
+                  border: `1.5px solid ${surface.outline}`,
+                  backgroundColor: `color-mix(in srgb, ${surface.outline} 8%, transparent)`,
+                },
               },
-            },
-            {
-              props: { variant: 'outlined', color: 'secondary' },
-              style: { ...goldTextButton, borderColor: gold.text },
-            },
-            {
-              props: { variant: 'text', color: 'secondary' },
-              style: goldTextButton,
             },
           ],
         },
@@ -157,4 +275,4 @@ const theme = createTheme({
   },
 });
 
-export default responsiveFontSizes(theme);
+export default theme;

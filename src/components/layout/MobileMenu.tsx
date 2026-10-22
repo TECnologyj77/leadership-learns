@@ -5,8 +5,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { NavLink } from 'react-router-dom';
 import AppContainer from '../ui/AppContainer';
+import DirectCta from '../marketing/DirectCta';
 import { trackCta } from '../../lib/analytics';
 import type { CtaTracking } from '../../lib/analytics';
+import { fonts } from '../../theme/tokens';
 
 export interface MenuItem {
   name: string;
@@ -19,6 +21,16 @@ interface MobileMenuProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+// Pixel strings: in sx, a bare 1 means 100%.
+const visuallyHidden = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  whiteSpace: 'nowrap',
+} as const;
 
 const panelIn = keyframes`
   from { opacity: 0; transform: translateY(-8px); }
@@ -115,25 +127,34 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ items, open, onOpenChange }) =>
           minHeight: 44,
           pl: 1.25,
           pr: 1.75,
-          borderRadius: 2,
+          borderRadius: 2.5,
           border: 1,
-          borderColor: 'rgba(30, 58, 95, 0.25)',
-          color: 'primary.main',
+          borderColor: 'onNavy.divider',
+          color: 'onNavy.nav',
           fontWeight: 600,
           fontSize: '0.95rem',
           whiteSpace: 'nowrap',
           cursor: 'pointer',
           listStyle: 'none',
           userSelect: 'none',
-          transition: 'background-color 0.2s',
+          transition: 'background-color 0.2s, color 0.2s',
           '&::-webkit-details-marker': { display: 'none' },
-          '&:hover, details[open] > &': { bgcolor: 'rgba(30, 58, 95, 0.06)' },
+          '&:hover, details[open] > &': { bgcolor: 'color-mix(in srgb, currentColor 10%, transparent)' },
+          '&:hover': { color: 'brand.gold' },
+          // From sm the direct CTA shares the header, so the button keeps just
+          // its icon on screen; the word stays for screen readers.
+          [theme.breakpoints.up('sm')]: {
+            justifyContent: 'center',
+            minWidth: 44,
+            px: 0,
+            '& .menu-label': visuallyHidden,
+          },
         }}
       >
         <MenuIcon className="menu-open" fontSize="small" />
         <CloseIcon className="menu-close" fontSize="small" />
-        <span className="menu-open">Menu</span>
-        <span className="menu-close">Close</span>
+        <span className="menu-open menu-label">Menu</span>
+        <span className="menu-close menu-label">Close</span>
       </Box>
 
       {/* Mouse and touch only: keyboard users close with Escape or the Close button. */}
@@ -153,21 +174,23 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ items, open, onOpenChange }) =>
         component="nav"
         aria-label="Menu"
         onClick={handleNavigate}
-        sx={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: '100%',
-          maxHeight: 'calc(100dvh - 100%)',
-          overflowY: 'auto',
-          bgcolor: 'background.paper',
-          borderBottom: 1,
-          borderColor: 'divider',
-          boxShadow: '0 24px 48px -16px rgba(15, 27, 45, 0.35)',
-          pt: 1,
-          pb: 3,
-          animation: `${panelIn} 180ms ease-out`,
-        }}
+        sx={[
+          (t) => t.mixins.navySurface,
+          {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: '100%',
+            maxHeight: 'calc(100dvh - 100%)',
+            overflowY: 'auto',
+            borderBottom: '3px solid',
+            borderBottomColor: 'brand.gold',
+            boxShadow: '0 24px 48px -16px rgba(15, 27, 45, 0.45)',
+            pt: 1,
+            pb: 3,
+            animation: `${panelIn} 180ms ease-out`,
+          },
+        ]}
       >
         <AppContainer>
           <Box component="ul" sx={{ listStyle: 'none', m: 0, p: 0 }}>
@@ -175,7 +198,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ items, open, onOpenChange }) =>
               <Box
                 component="li"
                 key={item.path}
-                sx={{ '& + &': { borderTop: 1, borderColor: 'divider' } }}
+                sx={{ '& + &': { borderTop: 1, borderColor: 'onNavy.divider' } }}
               >
                 <Box
                   component={NavLink}
@@ -191,18 +214,19 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ items, open, onOpenChange }) =>
                     gap: 2,
                     minHeight: 60,
                     py: 1.5,
-                    color: 'text.primary',
+                    color: 'onNavy.nav',
+                    fontFamily: fonts.serif,
                     fontSize: '1.5rem',
                     fontWeight: 600,
                     letterSpacing: '-0.01em',
                     textDecoration: 'none',
-                    '& svg': { color: 'text.secondary', transition: 'transform 0.2s' },
-                    '&:hover': { color: 'primary.main', '& svg': { transform: 'translateX(3px)' } },
+                    '& svg': { color: 'onNavy.body', transition: 'transform 0.2s' },
+                    '&:hover, &:focus-visible': { color: 'brand.gold', '& svg': { color: 'brand.gold', transform: 'translateX(3px)' } },
                     '&.active': {
-                      color: 'primary.main',
+                      color: 'brand.white',
                       '& span': {
                         textDecoration: 'underline',
-                        textDecorationColor: theme.palette.gold.accent,
+                        textDecorationColor: theme.palette.brand.gold,
                         textDecorationThickness: 3,
                         textUnderlineOffset: '0.3em',
                       },
@@ -215,6 +239,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ items, open, onOpenChange }) =>
               </Box>
             ))}
           </Box>
+          <DirectCta id="mobile_menu" location="mobile_menu" fullWidth sx={{ mt: 2 }} />
         </AppContainer>
       </Box>
     </Box>

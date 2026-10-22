@@ -30,17 +30,17 @@ const BlogArticle: React.FC<{ post: BlogPost }> = ({ post }) => (
       </Box>
     )}
 
-    <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
+    <AppText variant="h1" sx={{ mb: 2 }}>
       {post.title}
     </AppText>
 
-    <AppText variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+    <AppText variant="body1" sx={{ mb: 4, color: 'text.secondary' }}>
       <time dateTime={post.publishedAt}>{formatPostDate(post.publishedAt)}</time>
       {post.minutesToRead && ` · ${post.minutesToRead} min read`}
     </AppText>
 
     {post.heroImage && (
-      <BlogImage image={post.heroImage} sizes={ARTICLE_IMAGE_SIZES} priority sx={{ borderRadius: 3, mb: 5 }} />
+      <BlogImage image={post.heroImage} sizes={ARTICLE_IMAGE_SIZES} priority sx={{ borderRadius: 5, mb: 5 }} />
     )}
 
     <Box data-post-body>

@@ -4,19 +4,20 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import { useLocation } from 'react-router-dom';
 import AppButton from '../ui/AppButton';
-import { CALL_LABEL, EMAIL_LABEL, ORG_EMAIL, ORG_PHONE_E164 } from '../../lib/site-config';
+import DirectCta from '../marketing/DirectCta';
+import { SECONDARY_CTA } from '../../lib/site-config';
 
-// The page's own call buttons (DirectCta, and the Contact page's). The bar
-// steps aside while one is fully on screen.
-const PAGE_CTA_SELECTOR = 'main a[data-cta-id][href^="tel:"]';
+// The page's own direct CTAs. The bar steps aside while one is fully on screen.
+const PAGE_CTA_SELECTOR = 'main [data-direct-cta]';
 // How long no page CTA must be in view before the bar returns, so scrolling
 // past the short gap between two page CTAs never flashes it in and out.
 const RETURN_DELAY_MS = 150;
 // Kept free under the footer, so the bar never covers its last line.
 const BAR_SPACE = 'calc(76px + env(safe-area-inset-bottom))';
 
-// Phones only: keeps the call button, and email beside it, in thumb reach at
-// the bottom of the screen, without doubling a call button already on screen.
+// Phones only: keeps the direct CTA, and the other way in beside it, in thumb
+// reach at the bottom of the screen, without doubling a direct CTA already on
+// screen.
 const PhoneActionBar: React.FC = () => {
   const { pathname } = useLocation();
   // Starts hidden, so the prerendered page never flashes a bar that hydration
@@ -54,40 +55,41 @@ const PhoneActionBar: React.FC = () => {
 
   return (
     <>
-      <Box aria-hidden="true" sx={{ display: { xs: 'block', sm: 'none' }, height: BAR_SPACE, bgcolor: 'primary.main' }} />
+      <Box aria-hidden="true" sx={{ display: { xs: 'block', sm: 'none' }, height: BAR_SPACE, bgcolor: 'brand.navyDeep' }} />
       <Box
         inert={hidden}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
-          position: 'fixed',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          // Below the header, so the open menu's scrim covers the bar too.
-          zIndex: (theme) => theme.zIndex.appBar - 1,
-          px: 2,
-          pt: 1.5,
-          pb: 'calc(12px + env(safe-area-inset-bottom))',
-          bgcolor: 'rgba(255, 255, 255, 0.94)',
-          backdropFilter: 'saturate(180%) blur(12px)',
-          borderTop: 1,
-          borderColor: 'divider',
-          boxShadow: '0 -8px 24px rgba(15, 27, 45, 0.08)',
-          transition: 'transform 200ms ease-out, visibility 200ms',
-          ...(hidden && { transform: 'translateY(100%)', visibility: 'hidden' }),
-        }}
+        sx={[
+          (theme) => theme.mixins.navySurface,
+          {
+            display: { xs: 'block', sm: 'none' },
+            position: 'fixed',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            // Below the header, so the open menu's scrim covers the bar too.
+            zIndex: (theme) => theme.zIndex.appBar - 1,
+            px: 2,
+            pt: 1.5,
+            pb: 'calc(12px + env(safe-area-inset-bottom))',
+            borderTop: 1,
+            borderColor: 'onNavy.divider',
+            boxShadow: '0 -8px 24px rgba(15, 27, 45, 0.18)',
+            transition: 'transform 200ms ease-out, visibility 200ms',
+          },
+          hidden && { transform: 'translateY(100%)', visibility: 'hidden' },
+        ]}
       >
         <Box sx={{ display: 'flex', gap: 1, maxWidth: 560, mx: 'auto' }}>
           <AppButton
-            analytics={{ id: 'action_bar_email', location: 'action_bar', intent: 'contact', contactMethod: 'email' }}
+            analytics={{ id: `action_bar_${SECONDARY_CTA.idSuffix}`, location: 'action_bar', intent: 'contact', contactMethod: SECONDARY_CTA.method }}
             variant="outlined"
             color="primary"
-            href={`mailto:${ORG_EMAIL}`}
-            aria-label={EMAIL_LABEL}
-            startIcon={<MailOutlinedIcon />}
+            href={SECONDARY_CTA.href}
+            aria-label={SECONDARY_CTA.label}
+            startIcon={SECONDARY_CTA.method === 'phone' ? <PhoneOutlinedIcon /> : <MailOutlinedIcon />}
             sx={{
               flexShrink: 0,
-              // Just the envelope on the narrowest phones, so the call label never gets cut off.
+              // Just the icon on the narrowest phones, so the direct CTA's label never gets cut off.
               minWidth: 48,
               px: 1.5,
               '& .MuiButton-startIcon': { mx: 0 },
@@ -99,18 +101,9 @@ const PhoneActionBar: React.FC = () => {
               },
             }}
           >
-            <span className="label">Email</span>
+            <span className="label">{SECONDARY_CTA.method === 'phone' ? 'Call' : 'Email'}</span>
           </AppButton>
-          <AppButton
-            analytics={{ id: 'action_bar_call', location: 'action_bar', intent: 'contact', contactMethod: 'phone' }}
-            variant="contained"
-            color="primary"
-            href={`tel:${ORG_PHONE_E164}`}
-            startIcon={<PhoneOutlinedIcon />}
-            sx={{ flex: 1, px: 1.5, whiteSpace: 'nowrap' }}
-          >
-            {CALL_LABEL}
-          </AppButton>
+          <DirectCta id="action_bar" location="action_bar" size="header" sx={{ flex: 1, px: 1.5 }} />
         </Box>
       </Box>
     </>

@@ -60,7 +60,7 @@ const Block: React.FC<{ block: BlogBlock }> = ({ block }) => {
       );
     case 'heading':
       return (
-        <AppText variant={headingVariant[block.level]} component={`h${block.level}`} sx={{ mt: 5, mb: 2, fontWeight: 700 }}>
+        <AppText variant={headingVariant[block.level]} component={`h${block.level}`} sx={{ mt: 5, mb: 2 }}>
           <InlineText content={block.content} />
         </AppText>
       );
@@ -108,7 +108,7 @@ const Block: React.FC<{ block: BlogBlock }> = ({ block }) => {
     }
     case 'quote':
       return (
-        <Box component="blockquote" sx={{ my: 4, mx: 0, pl: 3, borderLeft: 4, borderColor: 'secondary.main', color: 'text.secondary' }}>
+        <Box component="blockquote" sx={{ my: 4, mx: 0, pl: 3, borderLeft: 4, borderColor: 'brand.navy', color: 'text.secondary' }}>
           <BlogRichContent blocks={block.content} />
         </Box>
       );

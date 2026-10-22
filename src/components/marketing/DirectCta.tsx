@@ -1,57 +1,46 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import AppButton from '../ui/AppButton';
-import { CALL_LABEL, EMAIL_LABEL, ORG_EMAIL, ORG_PHONE_E164 } from '../../lib/site-config';
+import { PRIMARY_CTA } from '../../lib/site-config';
 
 interface DirectCtaProps {
-  /** e.g. 'home_hero': the buttons report home_hero_call and home_hero_email. */
+  /** Where it sits, e.g. 'home_hero': the button reports home_hero_call. */
   id: string;
   location: string;
-  /** The call button's fill: navy or gold, as the section's design calls for. */
-  color?: 'primary' | 'secondary';
-  /** The section behind the buttons; on navy the email button is outlined in white. */
-  surface?: 'light' | 'dark';
-  align?: 'flex-start' | 'center';
-  /** Further buttons that share the row, after the email button. */
-  children?: React.ReactNode;
+  /** 'header' is the 44px version for the site header. */
+  size?: 'large' | 'header';
+  fullWidth?: boolean;
+  sx?: SxProps<Theme>;
 }
 
-// The direct CTA: call Tammy, with email as the secondary way in. Full width
-// on phones, where a thumb reaches for it; natural width from sm up.
-const DirectCta: React.FC<DirectCtaProps> = ({ id, location, color = 'secondary', surface = 'dark', align = 'flex-start', children }) => (
-  <Box
-    sx={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: 1.5,
-      justifyContent: align,
-      '& > *': { width: { xs: '100%', sm: 'auto' } },
-    }}
+// The direct CTA, and the only gold-filled control on the site. Its label and
+// link come from PRIMARY_CTA, so changing that one constant swaps it
+// everywhere. data-direct-cta lets the phone action bar step aside while one
+// is on screen.
+const DirectCta: React.FC<DirectCtaProps> = ({ id, location, size = 'large', fullWidth, sx }) => (
+  <AppButton
+    data-direct-cta=""
+    analytics={{ id: `${id}_${PRIMARY_CTA.idSuffix}`, location, intent: 'contact', contactMethod: PRIMARY_CTA.method }}
+    variant="contained"
+    size={size === 'header' ? 'medium' : 'large'}
+    fullWidth={fullWidth}
+    href={PRIMARY_CTA.href}
+    startIcon={PRIMARY_CTA.method === 'phone' ? <PhoneOutlinedIcon /> : <MailOutlinedIcon />}
+    sx={[
+      {
+        bgcolor: 'brand.gold',
+        color: 'brand.ink',
+        whiteSpace: 'nowrap',
+        '&:hover, &:active': { bgcolor: 'brand.goldHover' },
+      },
+      size === 'header' && { minHeight: 44, px: 2.25 },
+      ...(Array.isArray(sx) ? sx : [sx]),
+    ]}
   >
-    <AppButton
-      analytics={{ id: `${id}_call`, location, intent: 'contact', contactMethod: 'phone' }}
-      variant="contained"
-      color={color}
-      size="large"
-      href={`tel:${ORG_PHONE_E164}`}
-      startIcon={<PhoneOutlinedIcon />}
-    >
-      {CALL_LABEL}
-    </AppButton>
-    <AppButton
-      analytics={{ id: `${id}_email`, location, intent: 'contact', contactMethod: 'email' }}
-      variant="outlined"
-      color={surface === 'dark' ? 'inherit' : 'primary'}
-      size="large"
-      href={`mailto:${ORG_EMAIL}`}
-      startIcon={<MailOutlinedIcon />}
-    >
-      {EMAIL_LABEL}
-    </AppButton>
-    {children}
-  </Box>
+    {PRIMARY_CTA.label}
+  </AppButton>
 );
 
 export default DirectCta;
