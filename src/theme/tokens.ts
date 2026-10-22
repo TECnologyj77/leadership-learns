@@ -17,8 +17,14 @@ export const brand = {
   gold: '#FDC40A',
   /** DirectCta's hover and pressed fill. */
   goldHover: '#F2B600',
-  /** Gold-coloured text on light backgrounds (eyebrows, italic accent words). */
+  /** Gold-coloured text on light backgrounds at any size (eyebrows, small text). 4.78:1 on sand. */
   goldText: '#8A6100',
+  /**
+   * Brighter gold for large text and icons on light backgrounds only: headline
+   * accent words (32px and up) and the service-area pin. 3.51:1 on sand clears
+   * the 3:1 large-text minimum but not 4.5:1, so never use it for small text.
+   */
+  goldAccent: '#A67500',
   /** Decorative quote marks only. */
   quoteGold: '#E0A800',
   /** Default page background. */
@@ -68,7 +74,7 @@ export const surfaceVars = {
     '--ll-body': textOnLight.body,
     '--ll-muted': textOnLight.muted,
     '--ll-eyebrow': brand.goldText,
-    '--ll-accent': brand.goldText,
+    '--ll-accent': brand.goldAccent,
     '--ll-outline': brand.navy,
     '--ll-focus': brand.navy,
   },
