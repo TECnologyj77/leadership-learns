@@ -46,7 +46,7 @@ try {
   await page.locator('[data-cta-id="home_hero_email"]').click();
   await page.getByRole('contentinfo').getByRole('link', { name: 'Contact Tammy', exact: true }).click();
   await page.waitForURL('**/contact');
-  await page.locator('[data-cta-id="contact_phone"]').click();
+  await page.locator('[data-cta-id="contact_call"]').click();
   await page.locator('[data-cta-id="contact_email"]').click();
   await page.getByRole('link', { name: '(858) 603-6709', exact: true }).click();
   await page.locator('[data-cta-id="contact_explore_corporate"]').click();
@@ -66,7 +66,7 @@ try {
   const contacts = events.filter((event) => event.event === 'contact_attempted');
   assert.deepEqual(contacts.map((event) => [event.properties.cta_id, event.properties.contact_method]), [
     ['home_hero_call', 'phone'], ['home_hero_email', 'email'],
-    ['contact_phone', 'phone'], ['contact_email', 'email'], ['footer_phone', 'phone'],
+    ['contact_call', 'phone'], ['contact_email', 'email'], ['footer_phone', 'phone'],
     ['corporate_hero_call', 'phone'],
   ]);
   assert.equal(events.filter((event) => event.event === 'contact_page_viewed').length, 2);

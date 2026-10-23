@@ -1,13 +1,20 @@
 import React from 'react';
-import { Grid, Box, Paper } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutlined';
+import { Grid, Box } from '@mui/material';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
+import SectionHeading from '../components/ui/SectionHeading';
+import PhotoFrame from '../components/ui/PhotoFrame';
+import PointGrid from '../components/ui/PointGrid';
+import ServiceAreaLine from '../components/ui/ServiceAreaLine';
+import Accent from '../components/brand/Accent';
+import CtaGroup from '../components/marketing/CtaGroup';
 import DirectCta from '../components/marketing/DirectCta';
+import SecondaryCta from '../components/marketing/SecondaryCta';
 import ServiceCard from '../components/marketing/ServiceCard';
-import TestimonialCard from '../components/marketing/TestimonialCard';
-import ProcessSteps from '../components/marketing/ProcessSteps';
+import TestimonialsBand from '../components/marketing/TestimonialsBand';
+import StepPlanSection from '../components/marketing/StepPlanSection';
+import ClosingCtaBand from '../components/marketing/ClosingCtaBand';
 import groupTrainingImg from '../assets/services/Group Leadership Training.jpg';
 import organizationDiscImg from '../assets/team_disc_session_wide.jpg';
 import teamDiscSessionImg from '../assets/team_disc_session.jpg';
@@ -18,80 +25,71 @@ const Corporate: React.FC = () => {
   return (
     <>
       {/* Hero */}
-      <AppSection variant="dark" sx={{ py: { xs: 10, md: 15 } }}>
+      <AppSection tone="cream" sx={{ pt: { xs: 6, md: 10 } }}>
         <AppContainer>
-          <Grid container spacing={6} sx={{ alignItems: 'center' }}>
+          <Grid container spacing={{ xs: 6, md: 8 }} sx={{ alignItems: 'center' }}>
             <Grid size={{ xs: 12, md: 7 }}>
-              <AppText variant="overline" component="p" sx={{ opacity: 0.9, fontWeight: 700, letterSpacing: '0.08em' }}>
-                For organizations & teams
+              <AppText variant="eyebrow" color="primary" sx={{ mb: 2 }}>
+                For organizations &amp; teams
               </AppText>
-              <AppText variant="h1" gutterBottom sx={{ fontWeight: 800 }}>
-                Scale Your Impact, Not Your Stress.
+              <AppText variant="h1" sx={{ mb: 3 }}>
+                Scale Your Impact, <Accent>Not Your Stress.</Accent>
               </AppText>
-              <AppText variant="h5" component="p" sx={{ mb: 4, opacity: 0.9 }}>
+              <AppText variant="lead" sx={{ mb: 4, maxWidth: 600 }}>
                 Strategic leadership development and organizational systems for high-growth teams.
               </AppText>
-              <DirectCta id="corporate_hero" location="hero" />
-              <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
+              <CtaGroup>
+                <DirectCta id="corporate_hero" location="hero" />
+                <SecondaryCta id="corporate_hero" location="hero" />
+              </CtaGroup>
+              <AppText variant="body2" sx={{ mt: 2, color: 'text.secondary' }}>
                 Call or email to discuss leadership training or DISC assessments for your team.
               </AppText>
             </Grid>
             <Grid size={{ xs: 12, md: 5 }}>
-              <Box
-                component="img"
-                src={teamDiscSessionImg}
-                alt="Tammy Summers with a team after her Cultural Sensitivity in the Workspace session."
-                sx={{
-                  display: 'block',
-                  width: '100%',
-                  maxWidth: { xs: 480, md: 520 },
-                  mx: 'auto',
-                  aspectRatio: '6 / 5',
-                  objectFit: 'cover',
-                  borderRadius: 4,
-                  boxShadow: 6
-                }}
-              />
+              <PhotoFrame variant="offset" sx={{ maxWidth: { xs: 480, md: 500 }, mx: 'auto' }}>
+                <Box
+                  component="img"
+                  src={teamDiscSessionImg}
+                  alt="Tammy Summers with a team after her Cultural Sensitivity in the Workspace session."
+                  width={1200}
+                  height={1000}
+                  sx={{ width: '100%', height: 'auto', aspectRatio: '6 / 5', objectFit: 'cover' }}
+                />
+              </PhotoFrame>
             </Grid>
           </Grid>
         </AppContainer>
       </AppSection>
 
-      <AppSection variant="light">
+      {/* Pain points. No CTA here. */}
+      <AppSection tone="sand">
         <AppContainer maxWidth="md">
-          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 4, fontWeight: 700 }}>
-            Leadership is hard. Scaling is harder.
-          </AppText>
-          <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 6 }}>
-            As organizations grow, communication breaks down, decision-making slows, and founders often find themselves bogged down in operational chaos instead of leading.
-          </AppText>
-          <Grid container spacing={3}>
-            {[
+          <SectionHeading
+            title="Leadership is hard. Scaling is harder."
+            subtitle="As organizations grow, communication breaks down, decision-making slows, and founders often find themselves bogged down in operational chaos instead of leading."
+          />
+          <PointGrid
+            kind="pain"
+            tone="navy"
+            items={[
               'Siloed communication across departments',
               'Founder bottlenecking in decision-making',
               'Lack of cultural alignment in remote teams',
               'Inefficient meeting and feedback frameworks'
-            ].map((item) => (
-              <Grid size={{ xs: 12, sm: 6 }} key={item}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <CheckCircleOutlineIcon color="primary" />
-                  <AppText variant="body1">{item}</AppText>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
+            ]}
+          />
         </AppContainer>
       </AppSection>
 
       {/* Services breakdown */}
-      <AppSection variant="white">
+      <AppSection tone="cream">
         <AppContainer>
-          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
-            Our Corporate Solutions
-          </AppText>
-          <Grid container spacing={4}>
+          <SectionHeading title="Our Corporate Solutions" />
+          <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <ServiceCard 
+              <ServiceCard
+                accent="navy"
                 title="Group Leadership Training"
                 description="Custom training programs for new managers and senior executives to build high-performance cultures."
                 image={groupTrainingImg}
@@ -100,7 +98,8 @@ const Corporate: React.FC = () => {
               />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <ServiceCard 
+              <ServiceCard
+                accent="navy"
                 title="Organizational DISC Assessments"
                 description="In-depth behavioral analysis for teams to improve communication and psychological safety."
                 image={organizationDiscImg}
@@ -112,88 +111,51 @@ const Corporate: React.FC = () => {
         </AppContainer>
       </AppSection>
 
-      <AppSection variant="light">
+      <AppSection tone="sand">
         <AppContainer maxWidth="md">
-          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: { xs: 5, md: 8 }, fontWeight: 700 }}>
-            What we work toward together.
-          </AppText>
-          <Grid container spacing={3}>
-            {[
+          <SectionHeading title="What we work toward together." />
+          <PointGrid
+            kind="outcome"
+            tone="navy"
+            items={[
               'Reduced founder dependency for day-to-day decisions.',
               'Faster project completion through clearer communication.',
               'Improved employee retention and engagement.',
               'Scalable culture that survives rapid growth.'
-            ].map((text) => (
-              <Grid size={{ xs: 12, sm: 6 }} key={text}>
-                <Paper sx={{ p: 3, height: '100%', display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                  <CheckCircleOutlineIcon color="primary" sx={{ mt: '2px' }} />
-                  <AppText variant="body1">{text}</AppText>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
-        </AppContainer>
-      </AppSection>
-
-      {/* Testimonials */}
-      <AppSection variant="white">
-        <AppContainer>
-          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 8, fontWeight: 700 }}>
-            Client Success
-          </AppText>
-          <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
-            {corporateTestimonials.map((testimonial) => (
-              <Grid size={{ xs: 12, md: 6 }} key={testimonial.author}>
-                <TestimonialCard {...testimonial} />
-              </Grid>
-            ))}
-          </Grid>
-        </AppContainer>
-      </AppSection>
-
-      {/* Plan: what working together looks like */}
-      <AppSection variant="light">
-        <AppContainer maxWidth="md">
-          <AppText variant="h3" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 700 }}>
-            How to get started with your team
-          </AppText>
-          <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 8 }}>
-            Start with a conversation about your team and what you'd like to improve.
-          </AppText>
-          <ProcessSteps
-            color="primary"
-            steps={[
-              {
-                title: 'Tell Tammy your goal',
-                description: 'Call or email Tammy about your team and the leadership or communication skills you\'d like to develop.',
-              },
-              {
-                title: 'Choose the right support',
-                description: 'Discuss whether group training, a workshop, or DISC assessments fit your team. Ask about the approach, cost, and next steps.',
-              },
-              {
-                title: 'Begin working together',
-                description: 'Start the training, workshop, or assessments you\'ve discussed.',
-              },
             ]}
           />
         </AppContainer>
       </AppSection>
 
-      <AppSection variant="dark" sx={{ textAlign: 'center' }}>
-        <AppContainer maxWidth="sm">
-          <AppText variant="h3" component="h2" gutterBottom>
-            Take the next step in developing your team.
-          </AppText>
-          <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Contact Tammy to discuss leadership training, workshops, or DISC assessments for your team.
-          </AppText>
-          <DirectCta id="corporate_final" location="final_cta" align="center" />
-          <AppText variant="body2" sx={{ mt: 2, opacity: 0.9 }}>
-            {SERVICE_AREA_SHORT}
-          </AppText>
-        </AppContainer>
-      </AppSection>
+      <TestimonialsBand title="Client Success" testimonials={corporateTestimonials} ctaId="corporate_testimonials" />
+
+      {/* Plan: what working together looks like */}
+      <StepPlanSection
+        title="How to get started with your team"
+        subtitle="Start with a conversation about your team and what you'd like to improve."
+        ctaId="corporate_plan"
+        steps={[
+          {
+            title: 'Tell Tammy your goal',
+            description: 'Call or email Tammy about your team and the leadership or communication skills you\'d like to develop.',
+          },
+          {
+            title: 'Choose the right support',
+            description: 'Discuss whether group training, a workshop, or DISC assessments fit your team. Ask about the approach, cost, and next steps.',
+          },
+          {
+            title: 'Begin working together',
+            description: 'Start the training, workshop, or assessments you\'ve discussed.',
+          },
+        ]}
+      />
+
+      <ClosingCtaBand
+        title={<>Take the next step in <Accent>developing your team.</Accent></>}
+        subtitle="Contact Tammy to discuss leadership training, workshops, or DISC assessments for your team."
+        ctaId="corporate_final"
+        note={<ServiceAreaLine>{SERVICE_AREA_SHORT}</ServiceAreaLine>}
+      />
     </>
   );
 };

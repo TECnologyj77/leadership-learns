@@ -8,7 +8,7 @@
       <stop offset="1" stop-color="#FDE20B"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="13" fill="#17103C"/>
+  <rect width="64" height="64" rx="13" fill="#1E3A5F"/>
   <g transform="translate(13.7 6) scale(.591)" fill="url(#llFav)">
     <path d="M0 0h26L0 68z"/>
     <path d="M54 0h8v62H32z"/>

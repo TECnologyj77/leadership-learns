@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useParams, Navigate, Link as RouterLink } from 'react-router-dom';
 import { Box, Skeleton } from '@mui/material';
-import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
 import AppButton from '../components/ui/AppButton';
-import DirectCta from '../components/marketing/DirectCta';
+import Accent from '../components/brand/Accent';
+import ClosingCtaBand from '../components/marketing/ClosingCtaBand';
 import BlogArticle from '../components/blog/BlogArticle';
 import BlogUnavailable from '../components/blog/BlogUnavailable';
 import NotFound from './NotFound';
@@ -40,7 +40,7 @@ const BlogPost: React.FC = () => {
 
   return (
     <>
-      <AppSection variant="white">
+      <AppSection tone="cream" sx={{ pt: { xs: 6, md: 8 } }}>
         <AppContainer maxWidth="md">
           {data === null && (
             <Box aria-busy="true">
@@ -61,21 +61,16 @@ const BlogPost: React.FC = () => {
         </AppContainer>
       </AppSection>
 
-      <AppSection variant="dark" sx={{ textAlign: 'center' }}>
-        <AppContainer maxWidth="sm">
-          <AppText variant="h3" component="h2" gutterBottom>
-            Have a question of your own?
-          </AppText>
-          <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Get in touch and tell Tammy what you or your team are working on.
-          </AppText>
-          <DirectCta id="blog_post" location="final_cta" align="center">
-            <AppButton variant="outlined" color="inherit" size="large" component={RouterLink} to="/blog">
-              Read the Blog
-            </AppButton>
-          </DirectCta>
-        </AppContainer>
-      </AppSection>
+      <ClosingCtaBand
+        title={<>Have a question <Accent>of your own?</Accent></>}
+        subtitle="Get in touch and tell Tammy what you or your team are working on."
+        ctaId="blog_post"
+        extraActions={
+          <AppButton analytics={{ id: 'blog_post_blog', location: 'final_cta', intent: 'blog' }} variant="outlined" color="primary" size="large" component={RouterLink} to="/blog">
+            Read the Blog
+          </AppButton>
+        }
+      />
     </>
   );
 };

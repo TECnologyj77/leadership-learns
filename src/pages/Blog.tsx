@@ -1,9 +1,12 @@
 import React from 'react';
-import { Grid, Box, Paper, Skeleton } from '@mui/material';
+import { Grid, Box, Skeleton } from '@mui/material';
 import AppText from '../components/ui/AppText';
 import AppSection from '../components/ui/AppSection';
 import AppContainer from '../components/ui/AppContainer';
-import DirectCta from '../components/marketing/DirectCta';
+import AppCard from '../components/ui/AppCard';
+import SectionHeading from '../components/ui/SectionHeading';
+import Accent from '../components/brand/Accent';
+import ClosingCtaBand from '../components/marketing/ClosingCtaBand';
 import BlogPostCard from '../components/blog/BlogPostCard';
 import BlogUnavailable from '../components/blog/BlogUnavailable';
 import { fetchPostList, type PostListState } from '../lib/blog-api';
@@ -20,23 +23,16 @@ const Blog: React.FC = () => {
 
   return (
     <>
-      <AppSection variant="light">
+      <AppSection tone="cream" sx={{ pt: { xs: 6, md: 10 } }}>
         <AppContainer>
-          <Box sx={{ mb: 8, textAlign: 'center' }}>
-            <AppText variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
-              The Clear Mind Blog
-            </AppText>
-            <AppText variant="h5" component="p" color="text.secondary">
-              Insights on leadership, systems, and neurodiversity.
-            </AppText>
-          </Box>
+          <SectionHeading level="h1" title="The Clear Mind Blog" subtitle="Insights on leadership, systems, and neurodiversity." />
 
           {data === null && (
             <Box aria-busy="true">
               <Grid container spacing={4} aria-hidden="true">
                 {[0, 1, 2].map((index) => (
                   <Grid size={gridItemSize} key={index}>
-                    <Paper sx={{ borderRadius: 3, overflow: 'hidden' }}>
+                    <AppCard padded={false}>
                       <Skeleton variant="rectangular" sx={{ aspectRatio: '16 / 9', height: 'auto' }} />
                       <Box sx={{ p: 3 }}>
                         <Skeleton variant="text" sx={{ fontSize: '1.5rem' }} />
@@ -44,7 +40,7 @@ const Blog: React.FC = () => {
                         <Skeleton variant="text" />
                         <Skeleton variant="text" width="70%" />
                       </Box>
-                    </Paper>
+                    </AppCard>
                   </Grid>
                 ))}
               </Grid>
@@ -56,7 +52,7 @@ const Blog: React.FC = () => {
           )}
 
           {data?.status === 'ok' && data.posts.length === 0 && (
-            <AppText variant="body1" color="text.secondary" sx={{ textAlign: 'center' }}>
+            <AppText variant="body1" sx={{ textAlign: 'center', color: 'text.secondary' }}>
               No posts have been published yet. Check back soon.
             </AppText>
           )}
@@ -73,17 +69,11 @@ const Blog: React.FC = () => {
         </AppContainer>
       </AppSection>
 
-      <AppSection variant="dark" sx={{ textAlign: 'center' }}>
-        <AppContainer maxWidth="sm">
-          <AppText variant="h3" component="h2" gutterBottom>
-            Have a question of your own?
-          </AppText>
-          <AppText variant="body1" sx={{ mb: 4, opacity: 0.9 }}>
-            Get in touch and tell Tammy what you or your team are working on.
-          </AppText>
-          <DirectCta id="blog_final" location="final_cta" align="center" />
-        </AppContainer>
-      </AppSection>
+      <ClosingCtaBand
+        title={<>Have a question <Accent>of your own?</Accent></>}
+        subtitle="Get in touch and tell Tammy what you or your team are working on."
+        ctaId="blog_final"
+      />
     </>
   );
 };

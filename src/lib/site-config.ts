@@ -23,14 +23,44 @@ export const ORG_PHONE_DISPLAY = '(858) 603-6709';
 export const ORG_PHONE_SCHEMA = '+1-858-603-6709';
 
 // Where Tammy works, in her own wording: the footer and Contact page use the
-// full line, the Corporate and Individual closing CTAs the short one.
+// full line, the Corporate and Individual closing CTAs the short one, and the
+// Home hero the compact one.
 export const SERVICE_AREA = 'San Diego County and the Imperial Valley, plus virtual sessions anywhere';
 export const SERVICE_AREA_SHORT = 'In person across San Diego County & the Imperial Valley · Virtual sessions anywhere';
+export const SERVICE_AREA_COMPACT = 'San Diego County & the Imperial Valley · virtual sessions anywhere';
 
-// The direct CTA is a phone call, worded identically everywhere it appears
-// (DirectCta, the header and the phone action bar); email is the secondary way in.
-export const CALL_LABEL = `Call ${ORG_PHONE_DISPLAY}`;
-export const EMAIL_LABEL = 'Email Tammy';
+export interface ContactCta {
+  method: 'phone' | 'email';
+  /** Ends each button's analytics id, e.g. home_hero_call. */
+  idSuffix: 'call' | 'email';
+  label: string;
+  /** Spells out the number or address, for the Contact page. */
+  longLabel: string;
+  href: string;
+}
+
+export const CALL_CTA: ContactCta = {
+  method: 'phone',
+  idSuffix: 'call',
+  label: `Call ${ORG_PHONE_DISPLAY}`,
+  longLabel: `Call ${ORG_PHONE_DISPLAY}`,
+  href: `tel:${ORG_PHONE_E164}`,
+};
+
+export const EMAIL_CTA: ContactCta = {
+  method: 'email',
+  idSuffix: 'email',
+  label: 'Email Tammy',
+  longLabel: `Email ${ORG_EMAIL}`,
+  href: `mailto:${ORG_EMAIL}`,
+};
+
+// The direct CTA: the one gold button (DirectCta), worded identically
+// everywhere it appears. Set this to EMAIL_CTA to make "Email Tammy" the
+// direct CTA across the site; the call then becomes the secondary button
+// (SecondaryCta) beside it.
+export const PRIMARY_CTA: ContactCta = CALL_CTA;
+export const SECONDARY_CTA: ContactCta = PRIMARY_CTA.method === 'phone' ? EMAIL_CTA : CALL_CTA;
 
 export interface RouteSeoEntry {
   path: string;

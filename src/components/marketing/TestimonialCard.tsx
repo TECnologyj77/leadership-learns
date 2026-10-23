@@ -1,48 +1,34 @@
 import React from 'react';
-import { Box, Paper, Avatar } from '@mui/material';
+import { Box, Avatar } from '@mui/material';
 import AppText from '../ui/AppText';
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import AppCard from '../ui/AppCard';
+import type { Testimonial } from '../../content/testimonials';
+import { fonts } from '../../theme/tokens';
 
-interface TestimonialCardProps {
-  quote: string;
-  author: string;
-  role: string;
-  avatar?: string;
-}
-
-const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, author, role, avatar }) => {
-  return (
-    <Paper 
-      component="figure"
-      sx={{ 
-        p: 4, 
-        m: 0,
-        height: '100%', 
-        borderRadius: 4, 
-        display: 'flex', 
-        flexDirection: 'column',
-        position: 'relative'
-      }}
+const TestimonialCard: React.FC<Testimonial> = ({ quote, author, role, avatar }) => (
+  <AppCard component="figure" sx={{ m: 0, height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Box
+      aria-hidden="true"
+      sx={{ fontFamily: fonts.serif, fontWeight: 600, fontSize: '56px', lineHeight: 1, height: 36, color: 'brand.quoteGold' }}
     >
-      <Box sx={{ color: 'primary.light', mb: 2, opacity: 0.3 }}>
-        <FormatQuoteIcon sx={{ fontSize: 40 }} />
+      &ldquo;
+    </Box>
+    <AppText component="blockquote" variant="quote" sx={{ m: 0, mt: 1.5, mb: 3, flexGrow: 1 }}>
+      {quote}
+    </AppText>
+    <Box component="figcaption" sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+      {/* The name beside it says who this is. */}
+      {avatar && <Avatar src={avatar} alt="" sx={{ width: 48, height: 48 }} />}
+      <Box>
+        <AppText component="p" sx={{ fontWeight: 700, lineHeight: 1.3, color: 'text.primary' }}>
+          {author}
+        </AppText>
+        <AppText variant="body2" sx={{ color: 'text.secondary' }}>
+          {role}
+        </AppText>
       </Box>
-      <AppText component="blockquote" variant="body1" sx={{ fontStyle: 'italic', m: 0, mb: 4, flexGrow: 1 }}>
-        "{quote}"
-      </AppText>
-      <Box component="figcaption" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        {avatar && <Avatar src={avatar} alt={author} sx={{ width: 48, height: 48 }} />}
-        <Box>
-          <AppText variant="subtitle1" component="p" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
-            {author}
-          </AppText>
-          <AppText variant="body2" color="text.secondary">
-            {role}
-          </AppText>
-        </Box>
-      </Box>
-    </Paper>
-  );
-};
+    </Box>
+  </AppCard>
+);
 
 export default TestimonialCard;
