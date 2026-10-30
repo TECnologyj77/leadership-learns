@@ -25,7 +25,8 @@ export function initializeAnalytics() {
       api_host: import.meta.env.VITE_POSTHOG_HOST ,
       ui_host: import.meta.env.VITE_POSTHOG_HOST,
       autocapture: true,
-      capture_pageview: true,
+      // trackPageview sends every $pageview, the first one included.
+      capture_pageview: false,
     capture_pageleave: true,
     person_profiles: 'identified_only',
     disable_session_recording: false,
