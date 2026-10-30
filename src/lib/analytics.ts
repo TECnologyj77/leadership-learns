@@ -7,7 +7,7 @@ export interface CtaTracking {
   contactMethod?: 'phone' | 'email';
 }
 
-const productionHosts = ['leadershiplearners.com', 'www.leadershiplearners.com', 'leadership-learners.netlify.app','localhost'];
+const productionHosts = ['leadershiplearners.com', 'www.leadershiplearners.com', 'leadership-learners.netlify.app'];
 let initialized = false;
 let loading = false;
 let posthog: PostHogClient | null = null;
@@ -16,9 +16,11 @@ let pageviewCaptured = false;
 export function initializeAnalytics() {
   const key = import.meta.env.VITE_POSTHOG_PROJECT_TOKEN || import.meta.env.VITE_POSTHOG_KEY;
   const enabled = import.meta.env.VITE_POSTHOG_ENABLED;
-  const isProductionSite = import.meta.env.DEV && productionHosts.includes(window.location.hostname);
-  console.log(isProductionSite, initialized, key );
-  if (initialized || loading ||!key || enabled === 'false' || (enabled !== 'true' && !isProductionSite)) return;
+  // Dashboards filter on this label, so only a production build on a live host is 'production'.
+  const environment = import.meta.env.DEV
+    ? 'development'
+    : productionHosts.includes(window.location.hostname) ? 'production' : 'preview';
+  if (initialized || loading || !key || enabled === 'false' || (enabled !== 'true' && environment !== 'production')) return;
   loading = true;
   void import('posthog-js').then(({ default: client }) => {
     client.init(key, {
@@ -38,6 +40,10 @@ export function initializeAnalytics() {
       recordCrossOriginIframes: false,
     },
     capture_exceptions: true,
+    // Runs before the first automatic pageview, so every event carries the label.
+    loaded: (instance) => {
+      instance.register({ site: 'leadership_learners', environment });
+    },
     before_send: (event) => {
       // Keep attribution from the SDK, but strip query strings and fragments
       // from URLs so future contact-form or campaign links cannot leak values.
@@ -56,10 +62,6 @@ export function initializeAnalytics() {
       return event;
     },
   });
-  client.register({
-      site: 'leadership_learners',
-      environment: isProductionSite ? 'production' : import.meta.env.DEV ? 'development' : 'preview',
-    });
     posthog = client;
     initialized = true;
     loading = false;
